@@ -1,0 +1,25 @@
+---
+const { title = "Artificial Impasto" } = Astro.props;
+import Footer from '../components/Footer.svelte';
+import "../styles/global.css";
+---
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="/artificial-impasto/">Home</a>
+        <a href="/artificial-impasto/methode">Methode</a>
+        <a href="/artificial-impasto/ergebnisse">Ergebnisse</a>
+      </nav>
+    </header>
+    <main style="max-width:1100px; margin:24px auto; padding:0 16px;">
+      <slot />
+    </main>
+  </body>
+  <Footer />
+</html>

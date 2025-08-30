@@ -1,0 +1,122 @@
+---
+import { Picture } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+interface Props {
+  before: ImageMetadata;
+  after: ImageMetadata;
+  altBefore?: string;
+  altAfter?: string;
+  value?: number;
+  maxWidth?: number | string;
+  widths?: number[];
+  sizes?: string;
+}
+
+const {
+  before,
+  after,
+  altBefore = "Vorher",
+  altAfter  = "Nachher",
+  value = 50,
+  maxWidth  = "1100px",
+  widths    = [480, 768, 1024, 1280, 1600],
+  sizes     = "(min-width: 1100px) 1100px, 100vw",
+} = Astro.props;
+
+const max = typeof maxWidth === "number" ? `${maxWidth}px` : maxWidth;
+---
+
+<div class="cmp" style={`--split:${value}%; max-width:${max};`}>
+  <Picture src={after} alt={altAfter} widths={widths} sizes={sizes} formats={['avif','webp','jpeg']} />
+  <div class="clip">
+    <Picture src={before} alt={altBefore} widths={widths} sizes={sizes} formats={['avif','webp','jpeg']} />
+  </div>
+
+  <!-- Divider ist Slider + Grab-Zone -->
+  <div class="divider" role="slider"
+       aria-valuemin="0" aria-valuemax="100" aria-valuenow={value}
+       aria-label="Vergleichsregler" tabindex="0"></div>
+</div>
+
+<style>
+  .cmp { position: relative; width: 100%; user-select: none; }
+  .cmp picture, .cmp img { display: block; width: 100%; height: auto; }
+  .cmp .clip {
+    position: absolute; inset: 0; overflow: hidden;
+    clip-path: inset(0 calc(100% - var(--split, 50%)) 0 0);
+  }
+
+  /* Divider = schmaler sichtbarer Balken + breite unsichtbare Hitbox */
+  .cmp .divider {
+    position: absolute; top: 0; bottom: 0;
+    left: var(--split, 50%);
+    transform: translateX(-50%);
+    cursor: grab;
+  }
+  .cmp .divider::before {
+    content: "";
+    position: absolute; top: 0; bottom: 0; left: 50%;
+    width: 2px;
+    background: #fff; /* sichtbare Linie */
+    transform: translateX(-50%);
+    z-index: 2;
+  }
+  .cmp .divider::after {
+    content: "";
+    position: absolute; top: 0; bottom: 0; left: 50%;
+    width: 30px; /* UNSICHTBARE Grab-Zone */
+    transform: translateX(-50%);
+    background: transparent;
+    cursor: inherit;
+    z-index: 1;
+  }
+
+  .cmp .divider:active { cursor: grabbing; }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".cmp").forEach(root => {
+      const divider = root.querySelector(".divider");
+      const set = v => {
+        root.style.setProperty("--split", v + "%");
+        divider.setAttribute("aria-valuenow", Math.round(v));
+      };
+
+      // Initial
+      set(parseFloat(root.style.getPropertyValue("--split")) || 50);
+
+      const updateFromClientX = (clientX) => {
+        const rect = root.getBoundingClientRect();
+        let v = ((clientX - rect.left) / rect.width) * 100;
+        v = Math.max(0, Math.min(100, v));
+        set(v);
+      };
+
+      // Drag mit Maus/Finger
+      let dragging = false;
+      divider.addEventListener("pointerdown", e => {
+        dragging = true;
+        divider.setPointerCapture(e.pointerId);
+        updateFromClientX(e.clientX);
+      });
+      divider.addEventListener("pointermove", e => {
+        if (dragging) updateFromClientX(e.clientX);
+      });
+      divider.addEventListener("pointerup", e => {
+        dragging = false;
+        divider.releasePointerCapture(e.pointerId);
+      });
+
+      // Tastatur
+      divider.addEventListener("keydown", e => {
+        let v = parseFloat(root.style.getPropertyValue("--split")) || 50;
+        const step = e.shiftKey ? 5 : 3;
+        if (e.key === "ArrowLeft" || e.key === "ArrowDown") v -= step;
+        if (e.key === "ArrowRight" || e.key === "ArrowUp") v += step;
+        if (!isNaN(v)) set(Math.max(0, Math.min(100, v)));
+      });
+    });
+  });
+</script>

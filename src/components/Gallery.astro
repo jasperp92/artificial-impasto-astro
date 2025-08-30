@@ -1,0 +1,30 @@
+---
+interface Props {
+  path: string; // z. B. "urlaub" oder "museum"
+}
+
+const { path } = Astro.props;
+
+// Alle Bilder in allen Unterordnern importieren
+const allImages = import.meta.glob("../assets/gallery/**/*.{jpg,jpeg,png}", { eager: true });
+
+// In ein Array umwandeln, nur die gewünschten aus "path" nehmen
+const imageList = Object.entries(allImages)
+  .filter(([file]) => file.includes(`/gallery/${path}/`))
+  .map(([_, mod]: any) => mod.default);
+---
+
+<div class="grid gap-3 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+  {imageList.map((img) => (
+    <div class="overflow-hidden">
+      <img
+        src={img.src}
+        width={img.width}
+        height={img.height}
+        alt=""
+        loading="lazy"
+        class="block w-full h-auto"
+      />
+    </div>
+  ))}
+</div>
