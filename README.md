@@ -1,10 +1,52 @@
+# Artificial Impasto 
+
+## TODO
+- Technisches:
+    - Englisch/Deutsch? 
+    - Wie Seiten Navigieren? 1,2,3,4... als Kapitel, Mit Tasten zu nächstem H2,H3 Anchor springen? 
+- projectstructure
+    - Forschungsfrage und Methodik, 
+        - Problematik
+        - gesellschaftliche Relevanz
+        - Forschungsfrage
+    - Theorie
+        - Generative KI Basics
+        - Neuraler Stiltransfer
+        - Graphic Novel Basics
+        - Beispiel von KI-Graphic Novels.
+    - Methodik, Problemfelder generativer KI
+        - Dissonanz Anwender/Entwickler -> Autiobiografisches Design
+        - Stile & Content Disentaglement -> 
+        - Fehlende Verkörperlichung ->
+        - Linguistische Limitation von Text ->
+        - 
+    - Praxis
+        - Beispiel Neuronaler Stiltransfer.
+        - kommerzielle Bildgeneratoren
+        - B-LoRa
+        - LoRA
+        - IP-Adapter
+        - Vergleich
+    -  Ergebnisse (ComfyUI-Link Github?)
+        - finaler Workflow
+    - Diskussion
+        - Ästhetische Qualität
+        - Ökonomie und Effizienz
+        - Autonomie
+        - Ethische Implikationen
+    - Schlussteil
+       - Masterthesis Bilder Buch
+       - Reflexion
+
+----
+
+> 🧑‍🚀 **Seasoned astronaut?** Not yet... still learning though and keep this part to not forget my commands
+
 # Astro Starter Kit: Basics
 
 ```sh
 npm create astro@latest -- --template basics
 ```
-
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
 
 ## 🚀 Project Structure
 

@@ -7,7 +7,7 @@
 
 @font-face {
     font-family: "Terminal Grotesque";
-    src: url("public/fonts/terminal-grotesque.otf") format("opentype");
+    src: url("/artificial-impasto/fonts/terminal-grotesque.otf") format("opentype");
     font-weight: 200;
     font-style: normal;
     font-display: swap;
@@ -15,7 +15,7 @@
 
   @font-face {
     font-family: "Terminal Grotesque Open";
-    src: url("public/fonts/terminal-grotesque_open.otf") format("opentype");
+    src: url("/artificial-impasto/fonts/terminal-grotesque_open.otf") format("opentype");
     font-style: normal;
     font-display: swap;
   }
@@ -32,6 +32,6 @@
         font-family: "Terminal Grotesque Open", sans-serif;}
     h2 { @apply text-6xl; 
         font-family: "Terminal Grotesque", sans-serif;}
-    h3 { @apply text-2xl font-semibold; }
+    h3 { @apply text-3xl; }
     p  { @apply leading-relaxed; }
   }

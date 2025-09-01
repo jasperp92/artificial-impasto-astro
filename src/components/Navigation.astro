@@ -1,0 +1,17 @@
+---
+const pages = await Astro.glob('../pages/*.{astro,mdx}');
+
+// Filter: Nur Seiten nehmen, die ein Frontmatter.title haben
+const navPages = pages
+  .filter(p => p.frontmatter?.title)
+  .map(p => ({
+    url: p.url,
+    title: p.frontmatter.title
+  }));
+---
+
+<nav class="flex gap-6">
+  {navPages.map(page => (
+    <a href={page.url} class="hover:underline">{page.title}</a>
+  ))}
+</nav>

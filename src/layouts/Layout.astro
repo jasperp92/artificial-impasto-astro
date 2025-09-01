@@ -1,7 +1,9 @@
 ---
 const { title = "Artificial Impasto" } = Astro.props;
 import Footer from '../components/Footer.svelte';
+import Navigation from '../components/Navigation.astro';
 import "../styles/global.css";
+
 ---
 <html lang="de">
   <head>
@@ -16,6 +18,7 @@ import "../styles/global.css";
         <a href="/artificial-impasto/methode">Methode</a>
         <a href="/artificial-impasto/ergebnisse">Ergebnisse</a>
       </nav>
+	<Navigation />
     </header>
     <main style="max-width:1100px; margin:24px auto; padding:0 16px;">
       <slot />
