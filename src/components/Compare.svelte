@@ -1,7 +1,7 @@
 <script>
     // Props ohne führenden Slash übergeben, z. B. "img/skizze.jpg"
-    export let before = "img/skizze.jpg";
-    export let after  = "img/oel.jpg";
+    export let before;
+    export let after;
   
     // Astros Basis-Pfad, z. B. "/artificial-impasto/"
     const BASE = import.meta.env.BASE_URL;

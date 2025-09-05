@@ -1,0 +1,35 @@
+---
+title: Test
+layout: "@layouts/Layout.astro"
+parent: "Articial Impasto"
+order: 6
+---
+import { Image } from 'astro:assets';
+import Compare from "../components/Compare.astro";
+import Layout from '../layouts/Layout.astro';
+import beforeImg from "../assets/compare/schilf_1.jpg";
+import afterImg  from "../assets/compare/schilf_2.jpg";
+import Gallery from "../components/Gallery.astro";
+
+
+# Methode
+
+<Compare client:load before={beforeImg} after={afterImg} maxWidth={1100} value={50} />
+
+# h1
+## h2
+### h3
+<b>bold Text</b><br />
+
+<q class="block border-l-4 border-gray-400 pl-4 italic text-xl">
+  Hier kommt ein Zitat rein
+</q>
+Hier kommt ganz normaler Text hin
+<Gallery path="ip-adapter" />
+
+<Compare before={beforeImg} after={afterImg} maxWidth={1100} value={30} />
+
+
+
+
+

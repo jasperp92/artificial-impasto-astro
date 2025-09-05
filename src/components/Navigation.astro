@@ -1,17 +1,110 @@
 ---
-const pages = await Astro.glob('../pages/*.{astro,mdx}');
+import ThemeToggle from "../components/ThemeToggle.astro";
 
-// Filter: Nur Seiten nehmen, die ein Frontmatter.title haben
-const navPages = pages
-  .filter(p => p.frontmatter?.title)
-  .map(p => ({
-    url: p.url,
-    title: p.frontmatter.title
-  }));
+let currentPath = Astro.url.pathname;
+if (!currentPath.endsWith("/")) currentPath += "/";
+
+const modules = import.meta.glob("../pages/**/*.{astro,mdx}", { eager: true });
+
+const navPages = Object.values(modules)
+  .map((m: any) => ({
+    url: m.url.endsWith("/") ? m.url : m.url + "/",
+    title: m.frontmatter?.title,
+    parent: m.frontmatter?.parent || null,
+    order: m.frontmatter?.order || 0,
+  }))
+  .filter((p) => p.title);
+
+const children: Record<string, any[]> = {};
+for (const page of navPages) {
+  if (page.parent) {
+    children[page.parent] ??= [];
+    children[page.parent].push(page);
+  }
+}
+
+const rootPages = navPages
+  .filter((p) => !p.parent)
+  .sort((a, b) => a.order - b.order);
 ---
 
-<nav class="flex gap-6">
-  {navPages.map(page => (
-    <a href={page.url} class="hover:underline">{page.title}</a>
-  ))}
+<nav class="font-mono space-y-2">
+  {
+    rootPages.map((page) => (
+      <div class="mt-4">
+        <div class="mb-2">
+          <a href={page.url} class="font-bold hover:font-bold">
+            {page.title}
+          </a>
+        </div>
+
+        {children[page.title] && (
+          <ul>
+            {children[page.title]
+              .sort((a, b) => a.order - b.order)
+              .map((child, idx, arr) => {
+                const isLast = idx === arr.length - 1;
+
+                const hasGrandchildren = children[child.title] ?? [];
+                const isActiveBranch =
+                  currentPath.startsWith(child.url) ||
+                  hasGrandchildren.some((grand) =>
+                    currentPath.startsWith(grand.url)
+                  );
+
+                return (
+                  <li
+                    class={`relative pl-2 -mb-2.5 pb-4 ${
+                      !isLast ? "border-l border-zinc-900 dark:border-zinc-100" : ""
+                    }`}
+                  >
+                    <span class="absolute top-2.5 left-0 h-px w-2 bg-zinc-900 dark:bg-zinc-100" />
+
+                    <a
+                      href={child.url}
+                      class={`hover:font-bold ml-1 ${
+                        currentPath === child.url ? "underline" : ""
+                      }`}
+                    >
+                      {child.title}
+                    </a>
+
+                    {children[child.title] && isActiveBranch && (
+                      <ul class="pl-2">
+                        {children[child.title]
+                          .sort((a, b) => a.order - b.order)
+                          .map((grand, gidx, garr) => {
+                            const gLast = gidx === garr.length - 1;
+                            return (
+                              <li
+                                class={`relative pl-3 -mb-2.5 pb-3 ${
+                                  !gLast ? "border-l border-zinc-900 dark:border-zinc-100" : ""
+                                }`}
+                              >
+                                <span class="absolute top-2.5 left-0 h-px w-2 bg-zinc-900 dark:bg-zinc-100" />
+                                <a
+                                  href={grand.url}
+                                  class={`hover:font-bold text-xs ${
+                                    currentPath === grand.url ? "underline" : ""
+                                  }`}
+                                >
+                                  {grand.title}
+                                </a>
+                              </li>
+                            );
+                          })}
+                      </ul>
+                    )}
+                  </li>
+                );
+              })}
+          </ul>
+        )}
+      </div>
+    ))
+  }
 </nav>
+<div class="mt-4">
+  <ThemeToggle />
+</div>
+

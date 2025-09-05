@@ -1,5 +1,7 @@
 @import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Basic&display=swap');
+@import url("/artificial-impasto/fonts/pixelarticons/pixelart-icons-font.css");
+@custom-variant dark (&:where(.dark, .dark *));
 
 @tailwind base;
 @tailwind components;
@@ -26,7 +28,7 @@
       font-weight: 200;
     }
     body {
-      @apply bg-black text-white;
+      @apply bg-zinc-200 dark:bg-zinc-950 dark:text-white;
     }
     h1 { @apply text-8xl; 
         font-family: "Terminal Grotesque Open", sans-serif;}
@@ -34,4 +36,84 @@
         font-family: "Terminal Grotesque", sans-serif;}
     h3 { @apply text-3xl; }
     p  { @apply leading-relaxed; }
+    ol { @apply list-decimal list-inside; }
+    .footnotes {
+      @apply mt-8 border-t border-gray-300 pt-4 text-sm text-gray-300;
+    }
+    .footnotes ol {
+      @apply list-decimal ml-6 space-y-2;
+      list-style-position: inside; /* Zahl rückt in den Textblock */
+      padding-left: 0;             /* kein Extra-Einzug */
+    }
+    .footnotes a {
+      @apply text-blue-500 hover:underline;
+    }
+    .footnotes h2 {
+      display: none;
+    }
+    .footnotes .data-footnote-backref {
+      display: none;
+    }
+    .font-tg {
+        font-family: "Terminal Grotesque", sans-serif;
+    }
+    .font-tgo {
+      font-family: "Terminal Grotesque Open", sans-serif;
   }
+  }
+
+/* Basis Tabelle */
+table {
+  @apply table-auto border-collapse w-full text-left text-sm;
+}
+
+/* Header */
+table thead th {
+  @apply px-2 py-2 border-b border-gray-300 border-r border-gray-200 font-semibold;
+}
+table thead th:last-child {
+  @apply border-r-0;
+}
+
+/* Zellen */
+table tbody td {
+  @apply px-2 py-2 border-b border-gray-200 border-r border-gray-200;
+}
+table tbody td:last-child {
+  @apply border-r-0;
+}
+
+/* letzte Zeile ohne Unterkante */
+table tbody tr:last-child td {
+  @apply border-b-0;
+}
+
+/* --- Mobile Collapse --- */
+@media (max-width: 640px) {
+  table,
+  thead,
+  tbody,
+  th,
+  td,
+  tr {
+    @apply block w-full;
+  }
+
+  thead {
+    @apply hidden;
+  }
+  tr {
+    @apply mb-4 rounded-lg p-3 border border-gray-100;
+  }
+
+  td {
+    @apply border-none px-2 py-2 text-sm text-white block text-left;
+  }
+  td::before {
+    content: attr(data-label) ":";
+    @apply font-semibold mr-2 text-gray-100;
+  }
+  table tr:last-child {
+    @apply border-1;
+  }
+}

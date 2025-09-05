@@ -7,4 +7,5 @@ export default defineConfig({
     extend: {},
   },
   plugins: [typography],   // hier aktivieren
+  darkMode: 'class', // wichtig!
 })
