@@ -3,6 +3,7 @@ const { title = "Artificial Impasto" } = Astro.props;
 import Footer from '../components/Footer.astro';
 import Navigation from '../components/Navigation.astro';
 import Reference from "../components/Reference.astro";
+import ThemeToggle from "../components/ThemeToggle.astro";
 import "../styles/global.css";
 
 ---
@@ -17,6 +18,10 @@ import "../styles/global.css";
       <aside class="hidden md:block fixed top-0 left-0 h-screen w-48 border-r-0 p-4">
         <Navigation />
       </aside>
+
+      <div class="fixed top-6 right-4">
+        <ThemeToggle />
+      </div>
 
       <!-- Main Content -->
       <main class="flex-1 mt-4 p-6 md:ml-48">

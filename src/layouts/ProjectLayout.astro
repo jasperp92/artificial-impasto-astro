@@ -1,9 +1,6 @@
 ---
-import Footer from "../components/Footer.astro";
-import Navigation from "../components/Navigation.astro";
-import "../styles/global.css";
-import Reference from "../components/Reference.astro";
-
+// Projektlayout.astro
+import Layout from "./Layout.astro";
 
 const {
   frontmatter,
@@ -11,73 +8,52 @@ const {
   description = frontmatter.description,
 } = Astro.props;
 
-// Alle Seiten laden (egal ob index.mdx oder direkt benannt)
 const modules = import.meta.glob("../pages/**/*.{astro,mdx}", { eager: true });
 
-// Parent = aktueller Seitentitel (z. B. "Theorie")
 const parent = frontmatter.title;
 
-// Alle Projekte mit passendem parent herausfiltern
 const children = Object.values(modules)
   .map((m: any) => ({
-    url: m.url, // automatische URL von Astro
+    url: m.url,
     title: m.frontmatter?.title,
     description: m.frontmatter?.description,
     thumbnail: m.frontmatter?.thumbnail,
     parent: m.frontmatter?.parent,
     order: m.frontmatter?.order || 0,
   }))
-  // wichtig: nur die Seiten zeigen, die im Frontmatter explizit den gleichen parent haben
   .filter((p) => p.parent === parent)
   .sort((a, b) => a.order - b.order);
 ---
 
-<html lang="de" class="dark">
-  <head>
-    <meta charset="utf-8" />
-    <title>{title}</title>
-  </head>
-  <body class="font-sans">
-    <div class="flex min-h-screen">
-      <!-- Sidebar -->
-      <aside
-        class="hidden md:block fixed top-0 left-0 h-screen w-48 p-4"
-      >
-        <Navigation />
-      </aside>
+<Layout title={title}>
+  <h1>{title}</h1>
+  <h3>{description}</h3>
 
-      <!-- Main Content -->
-      <main class="flex-1 mt-4 p-6 md:ml-48">
-        <h1>{title}</h1>
-        <h3>{description}</h3>
+  {
+    children.length > 0 && (
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-8 mb-4">
+        {children.map((child) => (
+          <a
+            href={child.url}
+            class="block border-1 rounded overflow-hidden p-2 hover:bg-slate-100/25"
+          >
+            {child.thumbnail && (
+              <img
+                src={child.thumbnail}
+                alt={child.title}
+                class="w-full h-40 object-cover"
+              />
+            )}
+            <h3 class="font-tg text-4xl mt-2">{child.title}</h3>
+            {child.description && (
+              <p class="text-sm">{child.description}</p>
+            )}
+          </a>
+        ))}
+      </div>
+    )
+  }
 
-        {
-          children.length > 0 && (
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-8 mb-4">
-              {children.map((child) => (
-                <a
-                  href={child.url}
-                  class="block border-1 rounded overflow-hidden p-2 hover:bg-slate-100/25"
-                >
-                  {child.thumbnail && (
-                    <img
-                      src={child.thumbnail}
-                      alt={child.title}
-                      class="w-full h-40 object-cover"
-                    />
-                  )}
-                  <h3 class="font-tg text-4xl mt-2">{child.title}</h3>
-                  {child.description && (
-                    <p class="text-sm">{child.description}</p>
-                  )}
-                </a>
-              ))}
-            </div>
-          )
-        }
-        <slot />
-      </main>
-    </div>
-    <Footer />
-  </body>
-</html>
+  <slot />
+</Layout>
+

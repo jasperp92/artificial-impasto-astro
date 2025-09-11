@@ -49,13 +49,15 @@ const rootPages = navPages
                 const isActiveBranch =
                   currentPath.startsWith(child.url) ||
                   hasGrandchildren.some((grand) =>
-                    currentPath.startsWith(grand.url)
+                    currentPath.startsWith(grand.url),
                   );
 
                 return (
                   <li
                     class={`relative pl-2 -mb-2.5 pb-4 ${
-                      !isLast ? "border-l border-zinc-900 dark:border-zinc-100" : ""
+                      !isLast
+                        ? "border-l border-zinc-900 dark:border-zinc-100"
+                        : ""
                     }`}
                   >
                     <span class="absolute top-2.5 left-0 h-px w-2 bg-zinc-900 dark:bg-zinc-100" />
@@ -78,7 +80,9 @@ const rootPages = navPages
                             return (
                               <li
                                 class={`relative pl-3 -mb-2.5 pb-3 ${
-                                  !gLast ? "border-l border-zinc-900 dark:border-zinc-100" : ""
+                                  !gLast
+                                    ? "border-l border-zinc-900 dark:border-zinc-100"
+                                    : ""
                                 }`}
                               >
                                 <span class="absolute top-2.5 left-0 h-px w-2 bg-zinc-900 dark:bg-zinc-100" />
@@ -103,8 +107,84 @@ const rootPages = navPages
       </div>
     ))
   }
+
+  <div class="mt-6 text-sm">
+    <h3 class="font-bold mb-2"></h3>
+    <ul id="headings-nav" class="mb-2"></ul>
+  </div>
 </nav>
-<div class="mt-4">
+<!-- <div class="mt-4">
   <ThemeToggle />
+</div> -->
+<!-- On-page Headings -->
+
+<div class="mt-6 text-sm">
+  <ul id="headings-nav" class="mb-2"></ul>
 </div>
 
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const container = document.querySelector("#headings-nav");
+    if (!container) return;
+
+    const h2s = document.querySelectorAll("main h2");
+    const links = [];
+
+    h2s.forEach((h2) => {
+      let id = h2.id;
+      if (!id) {
+        id = h2.textContent
+          .toLowerCase()
+          .replace(/\s+/g, "-")
+          .replace(/[^a-z0-9-]/g, "");
+        h2.id = id;
+      }
+
+      const li = document.createElement("li");
+      li.innerHTML = `
+        <a href="#${id}"
+           class="relative block mb-2 pl-4
+                  text-zinc-400 before:content-['#'] 
+                  before:absolute before:left-0 
+                  hover:bold">
+          ${h2.textContent}
+        </a>`;
+      container.appendChild(li);
+
+      const el = li.querySelector("a");
+      links.push({ id, el });
+
+      // Klick-Handler → aktiven Link setzen
+      el.addEventListener("click", () => {
+        links.forEach((l) => {
+          l.el.classList.remove("text-black", "dark:text-white", "font-bold");
+          l.el.classList.add("text-zinc-400");
+        });
+        el.classList.remove("text-zinc-400");
+        el.classList.add("text-black", "dark:text-white", "font-bold");
+      });
+    });
+
+    // Intersection Observer → aktives Heading markieren
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const link = links.find((l) => l.id === entry.target.id);
+          if (!link) return;
+
+          if (entry.isIntersecting) {
+            links.forEach((l) => {
+              l.el.classList.remove("text-black", "dark:text-white", "font-bold");
+              l.el.classList.add("text-zinc-400");
+            });
+            link.el.classList.remove("text-zinc-400");
+            link.el.classList.add("text-black", "dark:text-white", "font-bold");
+          }
+        });
+      },
+      { rootMargin: "-40% 0px -40% 0px", threshold: 0 }
+    );
+
+    h2s.forEach((h2) => observer.observe(h2));
+  });
+</script>
