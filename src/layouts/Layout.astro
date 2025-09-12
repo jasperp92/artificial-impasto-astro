@@ -1,21 +1,31 @@
 ---
-const { title = "Artificial Impasto" } = Astro.props;
-import Footer from '../components/Footer.astro';
-import Navigation from '../components/Navigation.astro';
-import Reference from "../components/Reference.astro";
+const { frontmatter } = Astro.props;
+const title = frontmatter?.title || "Artificial Impasto";
+const background = frontmatter?.background || null;
+
+import Footer from "../components/Footer.astro";
+import Navigation from "../components/Navigation.astro";
 import ThemeToggle from "../components/ThemeToggle.astro";
 import "../styles/global.css";
 
+console.log("Frontmatter:", frontmatter);
+
 ---
+
 <html lang="de" class="dark">
   <head>
     <meta charset="utf-8" />
     <title>{Astro.props.title || "Artificial Impasto"}</title>
   </head>
-  <body class="font-sans">
+  <body
+  id="bg-scroll"
+  class={`min-h-screen ${background ? "bg-cover bg-center" : ""}`}
+  style={background ? `background-image: url('${background}')` : ""}>
     <div class="flex min-h-screen">
       <!-- Sidebar -->
-      <aside class="hidden md:block fixed top-0 left-0 h-screen w-48 border-r-0 p-4">
+      <aside
+        class="hidden md:block fixed top-0 left-0 h-screen w-60 border-r-0 p-4"
+      >
         <Navigation />
       </aside>
 
@@ -24,10 +34,29 @@ import "../styles/global.css";
       </div>
 
       <!-- Main Content -->
-      <main class="flex-1 mt-4 p-6 md:ml-48">
+      <main class="flex-1 mt-4 max-w-220 p-6 mr-0 md:ml-60 md:mr-12">
         <slot />
       </main>
     </div>
     <Footer />
   </body>
 </html>
+
+<!-- Hintergrund Bewegung -->
+{background && (
+  <script>
+    const body = document.getElementById("bg-scroll");
+    let ticking = false;
+
+    window.addEventListener("scroll", () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const offset = -20 + window.scrollY * 0.1;
+          body.style.setProperty("background-position", `${offset}px center`);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+  </script>
+)}

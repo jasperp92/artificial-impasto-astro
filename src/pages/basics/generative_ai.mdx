@@ -1,0 +1,130 @@
+---
+title: "Generative KI"
+# thumbnail: "/thumbnails/projekt1.jpg"
+order: 2
+parent: "Grundlagen"
+description: "Grundlagen zur generativen KI"
+layout: "@layouts/Layout.astro"
+---
+
+import { Image } from 'astro:assets';
+import generativeAI from '../../assets/images/generative-ai.webp';
+import ImageSequence from '../../components/ImageSequence.astro';
+
+
+# Generative künstliche Intelligenz
+
+<br />
+
+Unter Künstlicher Intelligenz (KI) versteht man in der Regel einen Sammelbegriff für
+verschiedene Machine-Learning-Algorithmen. Dabei handelt es sich um Methoden
+aus der Informatik, die vorrangig für Entscheidungen, Vorhersagen und Mustererkennung eingesetzt werden. Zu den bekanntesten Vertretern gehören sogenannte
+neuronale Netze, die der Struktur des menschlichen Gehirns nachempfunden sind.
+Ein künstliches neuronales Netz (KNN) besteht aus Knotenpunkten (analog zu Neuronen) und mehreren Ebenen, den sogenannten Layern. Generative KI, die komplexe
+Inhalte wie Bilder, Videos oder Texte erzeugt, gehört zum Bereich des Deep Learning,
+einer Methode, die auf mehrschichtigen neuronalen Netzwerken basiert (Stryker &
+Kavlakoglu, 2024).
+
+<br />
+
+<Image src={generativeAI} alt="Generative AI" class="" />
+<p class="italic text-right text-sm">Bildquelle: <a href="https://www.ibm.com/think/topics/artificial-intelligence">https://www.ibm.com/think/topics/artificial-intelligence</a></p>
+
+<br />
+## Diffusionsmodelle
+
+<div class="grid-layout">
+<div class="">
+  <p>Diffusionsmodelle wie Stable Diffusion sind KI-Verfahren, die von physikalischen Diffusionsprozessen inspiriert sind: Aus einem verrauschten Bild wird schrittweise wieder Struktur rekonstruiert. Zentrales Element ist ein U-Net, das Bildmerkmale von einfachen Kanten bis hin zu komplexen Objekten erkennt und das Rauschen zurückführt.<br />
+  In meinem Fall verwende ich das Diffusionsmodell <a href="https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0">Stable Diffusion XL 1.0</a> verwenden.</p>
+  
+  <br />
+  <Reference 
+  title="IBM: Was sind Diffusion Models?" 
+  type="website"
+  authors="Bergman, D. & Stryker, C." 
+  year="2024" 
+  link="https://www.ibm.com/de-de/think/topics/diffusion-models" />
+  </div>
+<div class="">
+<ImageSequence folder="diffusion" mode="fade"/>
+<p class="italic text-sm">Bildquelle: [Laurent, Wikipedia](https://de.wikipedia.org/wiki/L%C3%B6we#/media/Datei:011_The_lion_king_Tryggve_in_the_Serengeti_National_Park_Photo_by_Giles_Laurent.jpg)<br />Visualisierung eines Diffusionsprozesses von Rauschen zu einem neuen Bild im Ölmalstil</p>
+  </div>
+</div>
+<br />
+
+### Latenter Raum
+
+<div class="flex w-full">
+  <p class="w-1/2 text-left">Eingabebild</p>
+  <p class="w-1/2 text-right">Ausgabebild</p>
+</div>
+
+![Latenter Raum](../../assets/images/latent_space.png)
+
+<div class="grid text-xl mt-4 grid-cols-[40%_20%_40%]">
+  <div class="text-center border-t-2">
+  Encoder
+   </div>
+     <div class="text-center border-t-2 mx-4">
+  Latenter Raum
+   </div>
+        <div class="text-center border-t-2">
+  Decoder
+   </div>
+  </div>
+
+<br />
+Damit der Rechenaufwand nicht zu hoch wird, arbeitet das Modell nicht direkt auf Pixelbasis,
+sondern in einem sogenannten latenten Raum. Dieser Raum ist eine komprimierte,
+mathematische Darstellung der Bildmerkmale und wird mithilfe eines Variational Autoencoders
+(VAE) erzeugt. Der VAE komprimiert das Bild in eine latente Repräsentation und
+dekodiert es später wieder zurück in ein sichtbares Pixelbild.
+
+## Neural Style Transfer
+
+<Reference 
+  title="A Neural Algorithm of Artistic Style" 
+  type="paper"
+  authors="Gatys, L. A., Ecker, A. S., & Bethge, M." 
+  year="2015" 
+  link="https://arxiv.org/abs/1508.06576" />
+
+Gatys, L. A., Ecker, A. S., & Bethge, M. (2015). A Neural Algorithm of Artistic Style (No. arXiv:1508.06576). arXiv. Verfügbar unter: https://doi.org/10.48550/arXiv.1508.06576 ↩︎
+
+
+## Finetuned Models
+
+### LoRA
+
+<div class="grid-layout">
+  <div class="">
+Eine effiziente Form des Finetunings sind LoRAs (Low Rank Adaptation), mit denen
+große KI-Modelle schnell auf spezifische Aufgaben angepasst und erweitert werden
+können. LoRAs funktionieren ähnlich wie Adapter oder Erweiterungen. Dabei werden
+die Gewichte und Parameter des vortrainierten Modells, beispielsweise von Stable
+Diffusion XL, eingefroren und um eine „leichtgewichtige“ Zusatzstruktur in Form einer
+Low-Rank-Matrix ergänzt. Die darin gespeicherten Gewichtungen enthalten kontextspezifische
+Informationen, die erforderlich sind, um einen spezialisierten Anwendungsfall
+abzubilden.
+
+<a class="underline" href="https://huggingface.co/docs/diffusers/training/lora">Huggingface LoRA</a>
+</div>
+
+<Reference 
+  title="LoRA: Low-Rank Adaptation of Large Language Models" 
+  authors="Hu, E. J., Shen, Y., Wallis, P., Allen-Zhu, Z., Li, Y., Wang, S., ... & Chen, W." 
+  year="2021" 
+  link="https://arxiv.org/abs/2106.09685" />
+
+
+</div>
+
+<Reference 
+  title="CivitAI" 
+  type="website"
+  authors="CivitAI" 
+  year="2025" 
+  link="https://civitai.com/"
+  embed={true}
+   />

@@ -1,6 +1,6 @@
 @import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Basic&display=swap');
-@import url("/artificial-impasto/fonts/pixelarticons/pixelart-icons-font.css");
+
 @custom-variant dark (&:where(.dark, .dark *));
 
 @tailwind base;
@@ -8,35 +8,51 @@
 @tailwind utilities;
 
 @font-face {
-    font-family: "Terminal Grotesque";
-    src: url("/artificial-impasto/fonts/terminal-grotesque.otf") format("opentype");
-    font-weight: 200;
-    font-style: normal;
-    font-display: swap;
-  }
+  font-family: "Terminal Grotesque";
+  src: url("/artificial-impasto/fonts/terminal-grotesque.otf") format("opentype");
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
 
-  @font-face {
-    font-family: "Terminal Grotesque Open";
-    src: url("/artificial-impasto/fonts/terminal-grotesque_open.otf") format("opentype");
-    font-style: normal;
-    font-display: swap;
-  }
+@font-face {
+  font-family: "Terminal Grotesque Open";
+  src: url("/artificial-impasto/fonts/terminal-grotesque_open.otf") format("opentype");
+  font-style: normal;
+  font-display: swap;
+}
 
 @layer base {
     html {
       font-family: "Basic", sans-serif;
-      font-weight: 200;
     }
     body {
       @apply bg-zinc-200 dark:bg-zinc-950 dark:text-white;
+      background-size: 120%;
+      background-position-x: -100px center;
     }
     h1 { @apply text-8xl; 
         font-family: "Terminal Grotesque Open", sans-serif;}
-    h2 { @apply text-6xl; 
+    .subtitle { @apply text-6xl mt-4; 
+      font-family: "Terminal Grotesque", sans-serif;}
+    h2 { @apply text-4xl mt-12 mb-2; 
         font-family: "Terminal Grotesque", sans-serif;}
-    h3 { @apply text-3xl; }
+    h3 { @apply text-2xl mt-8 mb-2 font-semibold; }
     p  { @apply leading-relaxed; }
+    q  { @apply italic; }
     ol { @apply list-decimal list-inside; }
+    main p a {
+      @apply underline;
+    }
+    hr {
+      @apply mt-8;
+    }
+    .quote {
+      @apply border-l-1 border-white pl-6 italic my-6;
+    }
+    .grid-layout {
+      @apply grid grid-cols-1 lg:grid-cols-2 gap-4;
+    }
     .footnotes {
       @apply mt-8 border-t border-gray-300 pt-4 text-sm text-gray-300;
     }
