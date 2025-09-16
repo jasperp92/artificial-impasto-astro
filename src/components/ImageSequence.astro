@@ -33,84 +33,96 @@ const images = Object.keys(allImages)
   />
 
   <!-- Alle Frames übereinandergelegt -->
-  {images.map((path, index) => (
-    <Image
-      src={allImages[path]()}
-      alt={`Frame ${index}`}
-      class="absolute inset-0 w-full h-auto object-contain opacity-0 transition-opacity duration-300"
-      data-frame={index}
-      loading="lazy"
-    />
-  ))}
+  {
+    images.map((path, index) => (
+      <Image
+        src={allImages[path]()}
+        alt={`Frame ${index}`}
+        class="absolute inset-0 w-full h-auto object-contain opacity-0"
+        data-frame={index}
+        loading="lazy"
+      />
+    ))
+  }
 </div>
 
 <script>
-    window.addEventListener("DOMContentLoaded", () => {
-        const container = document.querySelector("[data-sequence]");
-        if (!container) return;
+  window.addEventListener("DOMContentLoaded", () => {
+    const container = document.querySelector("[data-sequence]");
+    if (!container) return;
 
-        const mode = container.dataset.mode;
-        const images = Array.from(container.querySelectorAll("[data-frame]"));
-        const total = images.length;
+    const mode = container.dataset.mode;
+    const images = Array.from(container.querySelectorAll("[data-frame]"));
+    const total = images.length;
 
-        let hoverActive = false;
+    let hoverActive = false;
 
-        function renderFrame(exactFrame) {
-            if (mode === "fade") {
-                const baseFrame = Math.floor(exactFrame);
-                const fade = exactFrame - baseFrame;
+    function renderFrame(exactFrame) {
+      if (mode === "fade") {
+        const baseFrame = Math.floor(exactFrame);
+        const fade = exactFrame - baseFrame;
 
-                images.forEach((img, i) => {
-                    if (i === baseFrame) {
-                        img.style.opacity = "1"; // bleibt voll sichtbar
-                        img.style.zIndex = "1";
-                    } else if (i === baseFrame + 1) {
-                        img.style.opacity = String(fade); // blendet drüber
-                        img.style.zIndex = "2"; // liegt oben
-                    } else {
-                        img.style.opacity = "0";
-                        img.style.zIndex = "0";
-                    }
-                });
-            } else {
-                const frame = Math.min(total - 1, Math.round(exactFrame));
-                images.forEach((img, i) => {
-                    img.style.opacity = i === frame ? "1" : "0";
-                    img.style.zIndex = i === frame ? "1" : "0";
-                });
-            }
-        }
-
-        // Scroll control (nur wenn nicht gehovered)
-        function onScroll() {
-            if (hoverActive) return;
-            const maxScroll = document.body.scrollHeight - window.innerHeight;
-            const progress = maxScroll > 0 ? window.scrollY / maxScroll : 0;
-            const exactFrame = progress * (total - 1);
-            renderFrame(exactFrame);
-        }
-
-        // Hover control
-        container.addEventListener("mouseenter", () => {
-            hoverActive = true;
+        images.forEach((img, i) => {
+          if (i === baseFrame) {
+            img.style.opacity = "1"; // bleibt voll sichtbar
+            img.style.zIndex = "1";
+          } else if (i === baseFrame + 1) {
+            img.style.opacity = String(fade); // blendet drüber
+            img.style.zIndex = "2"; // liegt oben
+          } else {
+            img.style.opacity = "0";
+            img.style.zIndex = "0";
+          }
         });
-
-        container.addEventListener("mouseleave", () => {
-            hoverActive = false;
-            onScroll(); // zurück zum Scroll-Frame
+      } else {
+        const frame = Math.min(total - 1, Math.round(exactFrame));
+        images.forEach((img, i) => {
+          img.style.opacity = i === frame ? "1" : "0";
+          img.style.zIndex = i === frame ? "1" : "0";
         });
+      }
+    }
 
-        container.addEventListener("mousemove", (e) => {
-            if (!hoverActive) return;
-            const rect = container.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const progress = Math.min(Math.max(x / rect.width, 0), 1);
-            const exactFrame = progress * (total - 1);
-            renderFrame(exactFrame);
-        });
+    // Scroll control (nur wenn nicht gehovered)
+function onScroll() {
+  if (hoverActive) return;
 
-        // init
-        window.addEventListener("scroll", onScroll, { passive: true });
-        onScroll();
+  const rect = container.getBoundingClientRect();
+  const windowHeight = window.innerHeight;
+  const offset = 200; // Start erst nach 200px Sichtbarkeit
+
+  // Sichtbarkeit mit Offset berechnen
+  let progress =
+    (windowHeight - rect.top - offset) / (windowHeight + rect.height - offset);
+
+  // Auf 0–1 begrenzen
+  progress = Math.min(Math.max(progress, 0), 1);
+
+  const exactFrame = progress * (total - 1);
+  renderFrame(exactFrame);
+}
+
+    // Hover control
+    container.addEventListener("mouseenter", () => {
+      hoverActive = true;
     });
+
+    container.addEventListener("mouseleave", () => {
+      hoverActive = false;
+      onScroll(); // zurück zum Scroll-Frame
+    });
+
+    container.addEventListener("mousemove", (e) => {
+      if (!hoverActive) return;
+      const rect = container.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const progress = Math.min(Math.max(x / rect.width, 0), 1);
+      const exactFrame = progress * (total - 1);
+      renderFrame(exactFrame);
+    });
+
+    // init
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+  });
 </script>

@@ -1,0 +1,111 @@
+---
+title: "Methodik"
+order: 2
+layout: "@layouts/ProjectLayout.astro"
+parent: "Einführung"
+description: "Problemfelder generativer KI und methodische Herangehensweise"
+---
+
+
+<br />
+
+Grundsätzlich habe ich mir die Frage gestellt, ob KI überhaupt eine Anwendung für Illustrator:innen und Künstler:innen finden kann, die selbst das Handwerk des Zeichnens oder Malens erlernt haben. Dabei habe ich verschiedene Problemfelder generativer KI identifiziert, die ich im Folgenden erläutere und daraus eine methodische Herangehensweise abgeleitet.
+
+## Qualitative Dissonanz zwischen Anwender:in und Entwickler:in
+<br />
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+  <div class="">In der Studie von Porquet et al. berichten vier Proband:innen, die angepasste Modelle
+auf Basis ihres eigenen Illustrationsstils für die Generierung neuer Kunstwerke mit
+Text verwendet haben, dass sie die Resultate in der Selbstanwendung am kritischsten
+beurteilten. Ihre persönliche Wahrnehmung deckte sich dabei nicht mit der
+Wahrnehmung der anderen Proband:innen.</div>
+
+
+<Reference 
+  title="Copying style, Extracting value: Illustrators’ Perception of AI Style Transfer and its Impact on Creative Labor" 
+  authors="Porquet, J., Wang, S., & Chilton, L. B." 
+  year="2025" 
+  link="https://arxiv.org/html/2409.17410v2" />
+
+</div>
+
+<br /> 
+
+<p class="quote">„But then, like when I see [P2] it’s like, oh, this is similar. But when I see mine, I’m like [grimace] because I’m trying to judge it against my work. And I know my work best because it’s on my mind rather from… I already have a database in my head that is the most accurate representation of my work. I don’t know, I just don’t feel threatened.“  [Porquet et al., 2025, S. 11 ](https://arxiv.org/html/2409.17410v2)</p>
+
+<div class="inline-flex items-center">
+<svg class="h-8 w-8 mt-4" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"> <path d="M13 2h-2v4h2V2Zm2 6H9v2H7v4h2v4h6v-4h2v-4h-2V8Zm0 2v4h-2v2h-2v-2H9v-4h6ZM9 20h6v2H9v-2Zm14-9v2h-4v-2h4ZM5 13v-2H1v2h4Zm12-7h2v2h-2V6Zm2 0h2V4h-2v2ZM5 6h2v2H5V6Zm0 0V4H3v2h2Z" /> </svg>
+
+<h3>&nbsp;Methode: Autobiografisches Design</h3>
+
+</div>
+
+Da ich meinen eigenen Stil am besten kenne, bin ich im Rahmen des autobiografischen
+Ansatzes in der Lage, die Qualität einer möglichen Stiladaption meines analogen
+Malstils selbst zu beurteilen und einzuschätzen, inwiefern das Gefühl von
+Autor:innenschaft dabei erhalten bleibt.
+<br />
+<div class="grid-layout">
+  <div class="">Da ich selbst das System entwickle, nutze, evaluiere und daran forsche, ist die Forschungsmethode als „autobiografisches Design“ (autobiographical design) einzuordnen: </div>
+<div class="">
+  <Reference class="m-auto"
+  title="Autobiographical Design in HCI Research: Designing and Learning through Use-it-Yourself" 
+  authors="Neustaedter, C., & Sengers, P." 
+  year="2012" 
+  link="https://dl.acm.org/doi/10.1145/2317956.2318034" />
+  </div>
+
+</div>
+
+
+<p class="text-2xl quote">"design research drawing on extensive, genuine usage by those creating or building the system"</p>
+<p class="text-right italic">- Neustaedter & Sengers, 2012, S. 1</p>
+
+<br /> 
+
+
+
+----
+
+## Fehlende Autorschaft
+
+<p class="quote">„Just like a creator wouldn’t want to be writing and drawing for ‘AI’ readers, so
+readers would likely find a completely AI-created work an empty and pointless
+experience. Where generative models can do some spadework — filling-in,
+planning and so on to assist a creator — that’s where they are of value.“</p>
+
+### KI als Werkzeug, Kollaboratuer oder Agent? 
+
+## Semantische Entkopplung von Inhalt und Ästhetik
+
+
+
+
+<div class="grid">
+<p>Text kommt hier hin</p>
+
+</div>
+
+----
+
+## Linguistische Limitation durch Text
+
+
+<q class="italic text-2xl">If you could say it in words,
+there would be no reason to paint.</q><br />
+<p class="text-right italic">- Edward Hopper</p>
+
+## Fehlende Verkörperlichung
+
+<br />
+
+## Zusammenfassung der Methodik
+
+| Problem | Methode | Technologie |  
+| ------------------------------------------------------------ | -------------------------------------------------------------- | --------------------------------------------------------- |  
+| Qualitative Dissonanz zwischen Anwender:in und Entwickler:in | Autobiografisches Design | Alle Systeme |  
+| Fehlende Autorschaft und semantische Kontrolle | KI als Werkzeug, hybrides Medium, Semantik durch eigene Bilder | Digital Painting (Photoshop), ComfyUI, Fine-Tuning (LoRA) |  
+| Fehlende Prozesshaftigkeit und künstlerische Praxis | KI-Finetuning / Interaktion als künstlerischer Prozess | ComfyUI, Photoshop, Fine-Tuning (LoRA) |  
+| Linguistische Limitation durch Text | Bild als Prompt und Kontrolle durch Adapter | IP-Adapter, Image-to-Image, ControlNet |  
+| Fehlende Verkörperlichung und Materialität | KI-Training des eigenen Stils / Duktus | Fine-Tuning (LoRA) mit eigenem Stil |

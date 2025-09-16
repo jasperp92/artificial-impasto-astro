@@ -3,7 +3,7 @@ title: "Generative KI"
 # thumbnail: "/thumbnails/projekt1.jpg"
 order: 2
 parent: "Grundlagen"
-description: "Grundlagen zur generativen KI"
+description: "Grundlagen zur generativen KI, Diffusionsmodelle, Stiltransfer und Finetuning"
 layout: "@layouts/Layout.astro"
 ---
 
@@ -13,6 +13,8 @@ import ImageSequence from '../../components/ImageSequence.astro';
 
 
 # Generative künstliche Intelligenz
+
+<div class="subtitle">Grundlagen zu Diffusionsmodellen, Stiltransfer und Finetuning</div>
 
 <br />
 
@@ -28,7 +30,7 @@ Kavlakoglu, 2024).
 <br />
 
 <Image src={generativeAI} alt="Generative AI" class="" />
-<p class="italic text-right text-sm">Bildquelle: <a href="https://www.ibm.com/think/topics/artificial-intelligence">https://www.ibm.com/think/topics/artificial-intelligence</a></p>
+<p class="image-source">Bildquelle: <a href="https://www.ibm.com/think/topics/artificial-intelligence">https://www.ibm.com/think/topics/artificial-intelligence</a></p>
 
 <br />
 ## Diffusionsmodelle
@@ -83,6 +85,12 @@ dekodiert es später wieder zurück in ein sichtbares Pixelbild.
 
 ## Neural Style Transfer
 
+<div class="grid-layout">
+  <div class="">
+
+Der Stiltransfer ist eine Forschungsdisziplin neuronaler Netze, die den Stil eines Bildes auf den Inhalt eines anderen überträgt (Gatys et al., 2015). Er basiert auf der Trennung von Inhalt und Stil, die in verschiedenen Feature-Schichten des Netzwerks unterschieden werden: Niedrigere Schichten erfassen Farben, Kanten und Texturen, höhere Schichten semantische Inhalte und komplexe Strukturen. In der Forschung wird dies so interpretiert, dass Stil vor allem in den unteren, Inhalt in den oberen Schichten repräsentiert ist. Die saubere Entkopplung von Inhalt und Stil bleibt jedoch ein zentrales Problem des Stiltransfers (Porquet et al., 2025).
+</div>
+
 <Reference 
   title="A Neural Algorithm of Artistic Style" 
   type="paper"
@@ -90,8 +98,25 @@ dekodiert es später wieder zurück in ein sichtbares Pixelbild.
   year="2015" 
   link="https://arxiv.org/abs/1508.06576" />
 
-Gatys, L. A., Ecker, A. S., & Bethge, M. (2015). A Neural Algorithm of Artistic Style (No. arXiv:1508.06576). arXiv. Verfügbar unter: https://doi.org/10.48550/arXiv.1508.06576 ↩︎
 
+</div>
+
+<div class="grid grid-cols-1 sm:grid-cols-[1fr_auto_1fr_auto_1fr] items-center gap-2 mt-4">
+<div>
+![Stiltransfer 1](@images/styletransfer/lion.jpg)
+<div class="image-source text-left">Bildquelle: [Laurent, Wikipedia](https://de.wikipedia.org/wiki/L%C3%B6we#/media/Datei:011_The_lion_king_Tryggve_in_the_Serengeti_National_Park_Photo_by_Giles_Laurent.jpg)</div>
+</div>
+    <div class="text-center text-2xl">+</div>
+  <div>
+![Stiltransfer 2](@images/styletransfer/starry_night.jpg)
+<div class="image-source text-left">Bildquelle: [Vincent van Gogh, Sternennacht, Wikipedia](https://de.wikipedia.org/wiki/Sternennacht#/media/Datei:Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg)</div>
+  </div>
+    <div class="text-center text-2xl">=</div>
+  <div>
+![Stiltransfer 3](@images/styletransfer/styletransfer.png)
+<div class="image-source text-left">Neuronaler Stiltransfer mit IP-Adapter</div>
+  </div>
+  </div>
 
 ## Finetuned Models
 

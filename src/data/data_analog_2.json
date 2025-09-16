@@ -1,0 +1,29 @@
+{
+    "labels": [
+        "am liebsten analog",
+        "lieber analog",
+        "sowohl als auch",
+        "lieber digital",
+        "am liebsten digital"
+    ],
+    "datasets": [
+        {
+            "barPercentage": 1,
+            "label": null,
+            "data": [
+                8,
+                7,
+                12,
+                2,
+                0
+            ],
+            "backgroundColor": [
+                "#333",
+                "#666",
+                "#999",
+                "#ddd",
+                "#fff"
+            ]
+        }
+    ]
+}

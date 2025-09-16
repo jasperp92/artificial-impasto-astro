@@ -1,0 +1,47 @@
+---
+const { src, alt = "", zoom = 2, lensSize = 150 } = Astro.props;
+const imgSrc = typeof src === "string" ? src : src.src;
+---
+
+<div 
+  class="image-zoom relative inline-block overflow-visible" 
+  data-zoom={zoom} 
+  data-lens={lensSize}
+>
+  <img src={imgSrc} alt={alt} class="zoom-image block max-w-full" />
+  <div
+    class="zoom-lens absolute hidden rounded-full border-2 border-white pointer-events-none"
+    style={`width:${lensSize}px; height:${lensSize}px;`}
+  ></div>
+</div>
+
+<script>
+  // 🔥 funktioniert für mehrere Instanzen auf einer Seite
+  document.querySelectorAll(".image-zoom").forEach(container => {
+    const img = container.querySelector(".zoom-image");
+    const lens = container.querySelector(".zoom-lens");
+
+    const zoom = Number(container.dataset.zoom);
+    const lensSize = Number(container.dataset.lens);
+
+    img.addEventListener("mousemove", moveLens);
+    lens.addEventListener("mousemove", moveLens);
+    img.addEventListener("mouseenter", () => (lens.style.display = "block"));
+    img.addEventListener("mouseleave", () => (lens.style.display = "none"));
+
+    function moveLens(e) {
+      const rect = img.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      const half = lensSize / 2;
+      lens.style.left = `${x - half}px`;
+      lens.style.top = `${y - half}px`;
+
+      lens.style.backgroundImage = `url('${img.src}')`;
+      lens.style.backgroundRepeat = "no-repeat";
+      lens.style.backgroundSize = `${img.width * zoom}px ${img.height * zoom}px`;
+      lens.style.backgroundPosition = `-${x * zoom - half}px -${y * zoom - half}px`;
+    }
+  });
+</script>

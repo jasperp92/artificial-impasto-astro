@@ -3,4 +3,76 @@ title: "Ästhetik"
 order: 1
 layout: "@layouts/ProjectLayout.astro"
 parent: "Diskussion"
+description: ""
 ---
+
+import ImageZoom from "../../components/ImageZoom.astro";
+import schuh1 from "../../assets/images/schuh_1.png";
+import schuh2 from "../../assets/images/schuh_2.png";
+import { Image } from 'astro:assets';
+
+import ChartSwitcher from "@components/ChartSwitcher.svelte";
+import data1 from "../../data/data_1.json";
+import data2 from "../../data/data_2.json";
+
+## Ästhetische Qualität
+
+Die Ergebnisse des Stiltransfers mit fine-getunten KI-Modellen wie SDXL übertrafen meine Erwartungen. Auf einem lokalen Rechner konnte überraschend hohe Qualität erzielt werden, wobei Duktus und Texturen nach mehreren Finetuning-Durchläufen überzeugend übertragen wurden. Zwar halten die generierten Bilder meinem kritischen Blick nicht vollständig stand, dennoch weist die Digitalisierung von Ölbildern Nachteile auf, sodass die KI-imitierte Materialität mitunter sogar ästhetisch überlegen wirkt. Ziel ist jedoch nicht der Wettbewerb zwischen analoger und digitaler Ästhetik, sondern deren möglichst nahtlose Kombination, wofür eine ausreichende Qualität erreicht wurde.
+
+## Mikrodetails & Flächigkeit
+
+Durch feine Details lassen sich die Scans der Originale von den KI-imitierten Bildern unterscheiden, insbesondere durch die Mikrotexturen der Leinwand und die feinen Reflexionen in den Pinselstrichen. Ausgehend von der Annahme, dass dies an der begrenzten Auflösung von 1024 × 1024 Pixeln liegt, habe ich ein zweites LoRA trainiert, um feine Strukturen besser zu erhalten. Dennoch sind Artefakte wie Leinwandtexturen und Reflexionen in meinem Prozess selbst schwer umzusetzen und durch das Wesen und die Funktionalität von Image-to-Image begrenzt.
+
+Die Steuerung über den Denoise-Wert ist entscheidend: niedrige Werte bewahren Komposition und Texturen, hohe Werte verstärken zwar Strukturen, verändern jedoch das Bild und erzeugen neue Inhalte. Im Extremfall (Denoise = 1) übernimmt die KI sogar eigene Leinwandstrukturen.
+
+Praktisch kann dies vorteilhaft sein, da Reflexionen gescannter Ölbilder die Ruhe und Flächigkeit stören, während KI-Bilder Präzision und Flächigkeit der digitalen Zeichnungen mit der Dynamik der Ölmalerei kombinieren. Digitale Vorlagen umgehen zudem die Schwierigkeiten der Kunst-Digitalisierung.
+
+<blockquote class="quote">Der Schritt der Digitalisierung entfällt. Oft finde ich es schwer, ein analoges Kunstwerk „gut“ zu fotografieren/ scannen”</blockquote >
+<div class="citation">- anyonymer Teilnehmer:in der Umfrage</div>
+
+<div class="grid-layout">
+<ImageZoom src={schuh1} alt="Bild vom Schuh" zoom={2} lensSize={250} />
+<div class="max-w-full lg:max-w-[90%] mt-4">
+<ImageZoom src={schuh2} alt="Bild vom Schuh" zoom={2} lensSize={250} />
+</div>
+</div>
+
+
+## Stil erfordert semantisches Verständnis
+
+Der Stil durch Stiltransfer unterscheidet sich laut Porquet et al. (2025, S. 7) insofern, dass der Stiltransfer einzelne Elemente wie Farbe, Schattierung und Texturen erfolgreich reproduziert, jedoch selten die Summe aus allem.
+Die Trennung von Inhalt und Stil steht außerdem im Widerspruch dazu, wie Künstler:innen mit Stil arbeiten, da Stil nicht vollständig von der Semantik entkoppelt und dekontextualisiert werden kann. (Porquet et al., 2025, S. 9 ff.)
+
+
+<p class="quote">“This divorce of form from function echoes our findings about the content-style disentanglement” <div class="citation">(Porquet et al., 2025, S. 3)</div></p>
+
+Texturen haben neben einer ästhetischen auch eine inhaltliche Funktion, etwa wenn eine Grastextur nicht nur Oberfläche, sondern auch „Gras“ darstellen soll (Porquet et al., 2025). Stil ergibt sich aus dem Zusammenspiel von Inhalt und Textur, während Modelle wie B-LoRA versuchen, beides zu trennen (Frenkel et al., 2025). In meiner Ölmalerei ist der Einsatz von Textur jedoch inhaltsabhängig, etwa bei Wasser und Gras. Während Text-to-Image-Ansätze semantisch und texturell teilweise differenzieren können, zeigt mein Image-to-Image-Verfahren hier klare Grenzen: Das Modell unterscheidet kaum zwischen Bereichen wie Wasser und Gras. Eine inhaltsspezifische Steuerung des Duktus wäre nur mit zusätzlichem Aufwand über Modelle wie CLIP oder Florence-2 möglich.
+
+<br />
+
+![Schif KI](@images/comparison/schilf_ki.png)
+<div class="image-source">Schilf Text-2-Image</div>
+![Schif Original](@images/comparison/schilf_oil.webp)
+<div class="image-source">Schilf Ölbild</div>
+![Schif Img-2-img](@images/comparison/schilf_img2img.webp)
+<div class="image-source">Schilf Image-to-Image (digitales Bild als Grundlage)</div>
+
+<br  />
+
+## Bewertung imitierter Materialität
+
+Ich habe mich gefragt wie sich die digital-imitierte Materialität formalästhetisch bewertet werden und wie diese wiederum im Verhältnis zu den digitalen Zeichnungen unterscheiden.
+
+Ich habe meinen ästhetischen Test so aufgebaut, dass ich die originalen Ölzeichnungen mit den KI-imitierten sowie die KI-imitierten mit den digitalen Zeichnungen jeweils verglichen habe. Die Teilnehmer:innen der Befragung sollten angeben, welches Bild sie besser finden oder ob sie gleichwertig sind, und ihre Entscheidung begründen.
+
+**Insgesamt werden die KI-überarbeiteten Werke sowohl im Vergleich zu den digitalen Vorlagen als auch zu den analogen Ölbildern besser bewertet.**
+
+
+<ChartSwitcher client:load />
+
+
+### Psychosoziale Faktoren
+
+Leider konnte ich in meiner Studie keine psychosozialen Faktoren abbilden, da ich die Bilder nicht als KI oder „Original“ gelabelt habe. Es gibt jedoch eine Reihe von Effekten und Beeinflussungen, die unsere Bewertung von Kunst prägen, insbesondere auch unsere Einstellungen gegenüber KI, oder Effekte wie beispielsweise die Effort-Heuristik, wonach wir Werke unterschiedlich bewerten, abhängig von unserer Annahme über die Anstrengung im Schaffensprozess.
+
+<p class="quote text-2xl">It won’t matter what such systems will be capable of generating, but what symbolic significance will be ascribed to their productions."<div class="citation">- Manovich & Arielli</div></p>

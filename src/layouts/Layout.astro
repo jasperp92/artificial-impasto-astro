@@ -12,15 +12,23 @@ console.log("Frontmatter:", frontmatter);
 
 ---
 
-<html lang="de" class="dark">
+<html lang="de">
   <head>
     <meta charset="utf-8" />
     <title>{Astro.props.title || "Artificial Impasto"}</title>
+      <script is:inline>
+        const theme = localStorage.getItem('theme') || 'light';
+        if (theme === 'dark') {
+          document.documentElement.classList.add('dark');
+        }
+      </script>
+<link rel="preload" href="/artificial-impasto/fonts/terminal-grotesque.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/artificial-impasto/fonts/terminal-grotesque_open.woff2" as="font" type="font/woff2" crossorigin>
   </head>
   <body
   id="bg-scroll"
-  class={`min-h-screen ${background ? "bg-cover bg-center" : ""}`}
-  style={background ? `background-image: url('${background}')` : ""}>
+  class={`min-h-screen ${background ? "bg-cover bg-center bg-size-[120%]" : ""}`}
+  style={background ? `background-image: url('${background}'); background-blend-mode: difference` : ""}>
     <div class="flex min-h-screen">
       <!-- Sidebar -->
       <aside
@@ -34,7 +42,7 @@ console.log("Frontmatter:", frontmatter);
       </div>
 
       <!-- Main Content -->
-      <main class="flex-1 mt-4 max-w-220 p-6 mr-0 md:ml-60 md:mr-12">
+      <main class="flex-1 mt-4 max-w-260 p-6 mr-0 md:ml-60 md:mr-12">
         <slot />
       </main>
     </div>
@@ -60,3 +68,16 @@ console.log("Frontmatter:", frontmatter);
     });
   </script>
 )}
+
+
+<!-- <script>
+  window.addEventListener("afterprint", () => {
+    if (window.Chart && Chart.registry && Chart.registry.instances) {
+      // Alle aktiven Charts durchgehen und neu berechnen
+      for (const chart of Chart.registry.instances.values()) {
+        chart.resize();
+        console.log('resize')
+      }
+    }
+  });
+</script> -->

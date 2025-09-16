@@ -1,0 +1,26 @@
+{
+    "labels": [
+        "nur digital",
+        "nur analog (bis auf Digitalisierung)",
+        "beides in separaten Projekten",
+        "beides im selben Projekt (hybrid)"
+    ],
+    "datasets": [
+        {
+            "barPercentage": 1,
+            "label": "",
+            "data": [
+                0,
+                5,
+                6,
+                18
+            ],
+            "backgroundColor": [
+                "#222",
+                "#666",
+                "#aaa",
+                "#ddd"
+            ]
+        }
+    ]
+}

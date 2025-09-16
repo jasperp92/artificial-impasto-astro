@@ -1,42 +1,51 @@
 # Artificial Impasto 
 
 ## TODO
-- Technisches:
-    - Englisch/Deutsch? 
-    - Wie Seiten Navigieren? 1,2,3,4... als Kapitel, Mit Tasten zu nächstem H2,H3 Anchor springen? 
-- projectstructure
-    - Forschungsfrage und Methodik, 
-        - Problematik
-        - gesellschaftliche Relevanz
-        - Forschungsfrage
-    - Theorie
-        - Generative KI Basics
-        - Neuraler Stiltransfer
-        - Graphic Novel Basics
-        - Beispiel von KI-Graphic Novels.
-    - Methodik, Problemfelder generativer KI
-        - Dissonanz Anwender/Entwickler -> Autiobiografisches Design
-        - Stile & Content Disentaglement -> 
-        - Fehlende Verkörperlichung ->
-        - Linguistische Limitation von Text ->
-        - 
-    - Praxis
-        - Beispiel Neuronaler Stiltransfer.
-        - kommerzielle Bildgeneratoren
-        - B-LoRa
-        - LoRA
-        - IP-Adapter
-        - Vergleich
-    -  Ergebnisse (ComfyUI-Link Github?)
-        - finaler Workflow
-    - Diskussion
-        - Ästhetische Qualität
-        - Ökonomie und Effizienz
-        - Autonomie
-        - Ethische Implikationen
-    - Schlussteil
-       - Masterthesis Bilder Buch
-       - Reflexion
+
+### Technisches
+- Seite weiter oder nächste Seite Komponente? 
+- Infobox mit versch. SVGs
+- Darkmode/Theme mit sessionstorage
+- Video embed? 
+- Englisch/Deutsch? später.. 
+- Pfeiltasten-Navigation
+    - Für Präsi einbauen, dass beim Pfeil H3 und H2 navigiert wird
+    - 1,2,3,4... als Kapitel
+
+
+### Projektstruktur
+- Forschungsfrage und Methodik, 
+    - Problematik
+    - gesellschaftliche Relevanz
+    - Forschungsfrage
+- Theorie
+    - Generative KI Basics
+    - Neuraler Stiltransfer
+    - Graphic Novel Basics
+    - Beispiel von KI-Graphic Novels.
+- Methodik, Problemfelder generativer KI
+    - Dissonanz Anwender/Entwickler -> Autiobiografisches Design
+    - Stile & Content Disentaglement -> 
+    - Fehlende Verkörperlichung ->
+    - Linguistische Limitation von Text ->
+    - 
+- Praxis
+    - Beispiel Neuronaler Stiltransfer.
+    - kommerzielle Bildgeneratoren
+    - B-LoRa
+    - LoRA
+    - IP-Adapter
+    - Vergleich
+-  Ergebnisse (ComfyUI-Link Github?)
+    - finaler Workflow
+- Diskussion
+    - Ästhetische Qualität
+    - Ökonomie und Effizienz
+    - Autonomie
+    - Ethische Implikationen
+- Schlussteil
+    - Masterthesis Bilder Buch
+    - Reflexion
 
 ----
 

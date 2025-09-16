@@ -34,6 +34,8 @@ export default defineConfig({
         "@layouts": "/src/layouts",
         "@components": "/src/components",
         "@styles": "/src/styles",
+        "@images": "/src/assets/images",
+        "@data": "/src/data",
       },
     },
   },

@@ -31,7 +31,7 @@ const children = Object.values(modules)
 
   {
     children.length > 0 && (
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-8 mb-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 mt-8 mb-4 break-words">
         {children.map((child) => (
           <a
             href={child.url}

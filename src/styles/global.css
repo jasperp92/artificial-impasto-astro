@@ -9,7 +9,8 @@
 
 @font-face {
   font-family: "Terminal Grotesque";
-  src: url("/artificial-impasto/fonts/terminal-grotesque.otf") format("opentype");
+  src: url("/artificial-impasto/fonts/terminal-grotesque.woff2") format("woff2"),
+       url("/artificial-impasto/fonts/terminal-grotesque.otf") format("opentype");
   font-weight: 200;
   font-style: normal;
   font-display: swap;
@@ -17,7 +18,8 @@
 
 @font-face {
   font-family: "Terminal Grotesque Open";
-  src: url("/artificial-impasto/fonts/terminal-grotesque_open.otf") format("opentype");
+  src: url("/artificial-impasto/fonts/terminal-grotesque_open.woff2") format("woff2"),
+       url("/artificial-impasto/fonts/terminal-grotesque_open.otf") format("opentype");
   font-style: normal;
   font-display: swap;
 }
@@ -27,7 +29,7 @@
       font-family: "Basic", sans-serif;
     }
     body {
-      @apply bg-zinc-200 dark:bg-zinc-950 dark:text-white;
+      @apply bg-zinc-50 dark:bg-zinc-950 dark:text-white;
       background-size: 120%;
       background-position-x: -100px center;
     }
@@ -48,10 +50,26 @@
       @apply mt-8;
     }
     .quote {
-      @apply border-l-1 border-white pl-6 italic my-6;
+      @apply border-l-1 border-white pl-6 italic mt-6;
+    }
+    .citation {
+      @apply text-zinc-400 italic mt-1 text-right;
+    }
+    .image-source {
+      @apply text-sm text-zinc-400 italic mt-1 text-right mb-2;
     }
     .grid-layout {
       @apply grid grid-cols-1 lg:grid-cols-2 gap-4;
+    }
+    .comment-left {
+      @apply italic relative mt-6 ml-8 w-fit rounded border p-2
+         before:content-[''] before:absolute before:top-1/2 before:left-0 
+         before:w-8 before:h-px before:bg-current before:-translate-x-full
+    }
+    .comment-right {
+      @apply italic relative mt-6 mr-8 w-fit rounded border p-2 ml-auto
+         before:content-[''] before:absolute before:top-1/2 before:right-0 
+         before:w-8 before:h-px before:bg-current before:translate-x-full
     }
     .footnotes {
       @apply mt-8 border-t border-gray-300 pt-4 text-sm text-gray-300;

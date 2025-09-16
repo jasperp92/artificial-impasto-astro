@@ -1,0 +1,23 @@
+{
+    "labels": [
+        "Digital",
+        "kein Unterschied",
+        "KI-Bild"
+    ],
+    "datasets": [
+        {
+            "barPercentage": 1,
+            "label": "Antworten",
+            "data": [
+                22,
+                19,
+                59
+            ],
+            "backgroundColor": [
+                "black",
+                "#333",
+                "#aaa"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,23 @@
+{
+    "labels": [
+        "Ölbild",
+        "kein Unterschied",
+        "KI-Bild"
+    ],
+    "datasets": [
+        {
+            "barPercentage": 1,
+            "label": "Antworten",
+            "data": [
+                36,
+                10,
+                54
+            ],
+            "backgroundColor": [
+                "black",
+                "#333",
+                "#aaa"
+            ]
+        }
+    ]
+}

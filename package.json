@@ -15,6 +15,8 @@
     "@tailwindcss/vite": "^4.1.12",
     "astro": "^5.13.5",
     "astro-auto-import": "^0.4.4",
+    "chart.js": "^4.5.0",
+    "chartjs-plugin-datalabels": "^2.2.0",
     "pixelarticons": "^1.8.1",
     "svelte": "^5.38.6",
     "tailwindcss": "^4.1.12",
