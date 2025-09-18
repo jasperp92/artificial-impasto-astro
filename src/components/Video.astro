@@ -1,0 +1,37 @@
+---
+const { src, type = "youtube", title = "Video" } = Astro.props;
+
+// YouTube & Vimeo brauchen Iframes, MP4 ein <video>
+let embedHtml = "";
+
+if (type === "youtube") {
+  const id = src.split("v=")[1]?.split("&")[0] || src.split("/").pop();
+  embedHtml = `<iframe 
+    src="https://www.youtube.com/embed/${id}" 
+    title="${title}" 
+    frameborder="0" 
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+    allowfullscreen
+    class="w-full h-full"
+  ></iframe>`;
+} else if (type === "vimeo") {
+  const id = src.split("/").pop();
+  embedHtml = `<iframe 
+    src="https://player.vimeo.com/video/${id}" 
+    title="${title}" 
+    frameborder="0" 
+    allow="autoplay; fullscreen; picture-in-picture" 
+    allowfullscreen
+    class="w-full h-full"
+  ></iframe>`;
+} else if (type === "mp4") {
+  embedHtml = `<video controls class="w-full h-full">
+    <source src="${src}" type="video/mp4">
+    Dein Browser unterstützt das Video-Tag nicht.
+  </video>`;
+}
+---
+
+<div class="relative w-full aspect-video rounded overflow-hidden">
+  <Fragment set:html={embedHtml} />
+</div>

@@ -2,13 +2,23 @@
 const { frontmatter } = Astro.props;
 const title = frontmatter?.title || "Artificial Impasto";
 const background = frontmatter?.background || null;
+// effect(s) tolerant einlesen (Array oder Komma-String)
+const effectsRaw = frontmatter?.effects ?? frontmatter?.effect ?? [];
+const effects = Array.isArray(effectsRaw)
+  ? effectsRaw
+  : String(effectsRaw || "")
+      .split(",")
+      .map(s => s.trim())
+      .filter(Boolean);
 
 import Footer from "../components/Footer.astro";
 import Navigation from "../components/Navigation.astro";
 import ThemeToggle from "../components/ThemeToggle.astro";
+import Background from "@components/Background.astro";
 import "../styles/global.css";
 
 console.log("Frontmatter:", frontmatter);
+
 
 ---
 
@@ -16,20 +26,31 @@ console.log("Frontmatter:", frontmatter);
   <head>
     <meta charset="utf-8" />
     <title>{Astro.props.title || "Artificial Impasto"}</title>
-      <script is:inline>
-        const theme = localStorage.getItem('theme') || 'light';
-        if (theme === 'dark') {
-          document.documentElement.classList.add('dark');
-        }
-      </script>
-<link rel="preload" href="/artificial-impasto/fonts/terminal-grotesque.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="/artificial-impasto/fonts/terminal-grotesque_open.woff2" as="font" type="font/woff2" crossorigin>
+    <script is:inline>
+      const theme = localStorage.getItem("theme") || "light";
+      if (theme === "dark") {
+        document.documentElement.classList.add("dark");
+      }
+    </script>
+    <link
+      rel="preload"
+      href="/artificial-impasto/fonts/terminal-grotesque.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/artificial-impasto/fonts/terminal-grotesque_open.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
   </head>
-  <body
-  id="bg-scroll"
-  class={`min-h-screen ${background ? "bg-cover bg-center bg-size-[120%]" : ""}`}
-  style={background ? `background-image: url('${background}'); background-blend-mode: difference` : ""}>
-    <div class="flex min-h-screen">
+  <body class="min-h-screen relative">
+    <Background background={background} effects={effects} />
+
+    <div class="flex min-h-screen relative z-10">
       <!-- Sidebar -->
       <aside
         class="hidden md:block fixed top-0 left-0 h-screen w-60 border-r-0 p-4"
@@ -49,35 +70,3 @@ console.log("Frontmatter:", frontmatter);
     <Footer />
   </body>
 </html>
-
-<!-- Hintergrund Bewegung -->
-{background && (
-  <script>
-    const body = document.getElementById("bg-scroll");
-    let ticking = false;
-
-    window.addEventListener("scroll", () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          const offset = -20 + window.scrollY * 0.1;
-          body.style.setProperty("background-position", `${offset}px center`);
-          ticking = false;
-        });
-        ticking = true;
-      }
-    });
-  </script>
-)}
-
-
-<!-- <script>
-  window.addEventListener("afterprint", () => {
-    if (window.Chart && Chart.registry && Chart.registry.instances) {
-      // Alle aktiven Charts durchgehen und neu berechnen
-      for (const chart of Chart.registry.instances.values()) {
-        chart.resize();
-        console.log('resize')
-      }
-    }
-  });
-</script> -->

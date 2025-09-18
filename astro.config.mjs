@@ -15,6 +15,7 @@ export default defineConfig({
         // generates:
         // import A from './src/components/A.astro';
         './src/components/Reference.astro',
+        './src/components/PageNav.astro',
       ],
     }),
     mdx(),

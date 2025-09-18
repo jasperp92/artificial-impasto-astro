@@ -1,6 +1,4 @@
 ---
-import ThemeToggle from "../components/ThemeToggle.astro";
-
 let currentPath = Astro.url.pathname;
 if (!currentPath.endsWith("/")) currentPath += "/";
 
@@ -129,10 +127,6 @@ const rootPages = navPages
     <ul id="headings-nav" class="mb-2"></ul>
   </div>
 </nav>
-<!-- <div class="mt-4">
-  <ThemeToggle />
-</div> -->
-<!-- On-page Headings -->
 
 <div class="mt-6 text-sm">
   <ul id="headings-nav" class="mb-2"></ul>

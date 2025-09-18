@@ -3,9 +3,11 @@
 ## TODO
 
 ### Technisches
-- Seite weiter oder nächste Seite Komponente? 
+- Seitennavigation -> PageNav immer 3er mit Optionen, left, center third link
+- Internal Link zu Reference: (interner Link)
+- Lightbox für Bilder einbauen (für alle auch markdown)
+- Hamburger-Menü für Mobile
 - Infobox mit versch. SVGs
-- Darkmode/Theme mit sessionstorage
 - Video embed? 
 - Englisch/Deutsch? später.. 
 - Pfeiltasten-Navigation

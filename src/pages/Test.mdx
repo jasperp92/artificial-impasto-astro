@@ -3,6 +3,9 @@ title: Test
 layout: "@layouts/Layout.astro"
 parent: ""
 order: 7
+background: "/artificial-impasto/backgrounds/sphere.jpg"
+effect: 
+    - effect-scale
 ---
 import { Image } from 'astro:assets';
 import Compare from "../components/Compare.astro";
@@ -10,6 +13,8 @@ import Layout from '../layouts/Layout.astro';
 import beforeImg from "../assets/compare/schilf_1.jpg";
 import afterImg  from "../assets/compare/schilf_2.jpg";
 import Gallery from "../components/Gallery.astro";
+import PageNav from "../components/PageNav.astro";
+
 
 
 # Methode
@@ -30,6 +35,25 @@ Hier kommt ganz normaler Text hin
 <Compare before={beforeImg} after={afterImg} />
 
 
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-4">
+
+<PageNav 
+  type="before" 
+  frontmatter={frontmatter} 
+/>
+
+<PageNav 
+  type="link" 
+  href="/weiter gehts" 
+  text="Direkt zu Special" 
+>Hier kommt default Text rein</PageNav>
+
+<PageNav 
+  type="next" 
+  frontmatter={frontmatter} 
+>Hier kommt default Text rein Weiter gehts mit </PageNav>
+
+</div>
 
 
 

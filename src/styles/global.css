@@ -30,36 +30,51 @@
     }
     body {
       @apply bg-zinc-50 dark:bg-zinc-950 dark:text-white;
-      background-size: 120%;
-      background-position-x: -100px center;
     }
     h1 { @apply text-8xl; 
         font-family: "Terminal Grotesque Open", sans-serif;}
     .subtitle { @apply text-6xl mt-4; 
       font-family: "Terminal Grotesque", sans-serif;}
-    h2 { @apply text-4xl mt-12 mb-2; 
+    h2 { @apply text-5xl mt-12 mb-6; 
         font-family: "Terminal Grotesque", sans-serif;}
-    h3 { @apply text-2xl mt-8 mb-2 font-semibold; }
-    p  { @apply leading-relaxed; }
+    h3 { @apply text-2xl mt-8 mb-6 font-semibold; }
+    p  { @apply leading-relaxed }
     q  { @apply italic; }
     ol { @apply list-decimal list-inside; }
     main p a {
-      @apply underline;
+      @apply underline text-zinc-400;
     }
+  main ol {
+    @apply list-decimal list-outside pl-4;
+  }
+  main ul {
+    @apply list-disc list-outside pl-4;
+  }
     hr {
       @apply mt-8;
     }
     .quote {
-      @apply border-l-1 border-white pl-6 italic mt-6;
+      @apply border-l-1 border-white pl-6 italic;
     }
     .citation {
       @apply text-zinc-400 italic mt-1 text-right;
     }
+    .description {
+      @apply text-zinc-400 italic mt-1;
+    }
     .image-source {
-      @apply text-sm text-zinc-400 italic mt-1 text-right mb-2;
+      @apply text-sm text-zinc-400 italic mt-1 mb-2;
     }
     .grid-layout {
-      @apply grid grid-cols-1 lg:grid-cols-2 gap-4;
+      @apply grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6;
+    }
+    .grid-layout-3 {
+      @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6;
+    }
+    .layout-box {
+      @apply gap-3 border-1 w-full 
+         border-black dark:border-zinc-100 rounded p-4 rounded-lg
+         hover:bg-gray-900/25 dark:hover:bg-zinc-100/25;
     }
     .comment-left {
       @apply italic relative mt-6 ml-8 w-fit rounded border p-2
@@ -95,6 +110,18 @@
       font-family: "Terminal Grotesque Open", sans-serif;
   }
   }
+
+@layer utilities {
+  .effect-blur {
+    @apply filter blur-md;
+  }
+ /* #bg-layer {
+  image-rendering: pixelated;
+ } */
+  .effect-grayscale {
+    @apply filter grayscale;
+  }
+}
 
 /* Basis Tabelle */
 table {

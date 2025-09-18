@@ -1,0 +1,83 @@
+---
+const {
+  type = "next",       // "next", "before", "link"
+  href = null,         // optional: manuelles Ziel
+  text = "",           // optional: manueller Text
+} = Astro.props;
+
+let currentPath = Astro.url.pathname;
+if (!currentPath.endsWith("/")) currentPath += "/";
+
+// Alle Seiten importieren
+const modules = import.meta.glob("../pages/**/*.{astro,mdx}", { eager: true });
+
+const navPages = Object.entries(modules)
+  .map(([path, m]: any) => {
+    let url = m.url?.endsWith("/") ? m.url : m.url + "/";
+    let parts = url.split("/").filter(Boolean);
+
+    if (parts.length > 1 && parts.at(-1) === parts.at(-2)) {
+      parts = parts.slice(0, -1);
+      url = "/" + parts.join("/") + "/";
+    }
+
+    return {
+      url,
+      title: m.frontmatter?.title || parts.at(-1),
+      description: m.frontmatter?.description || "",
+      order: m.frontmatter?.order || 0,
+    };
+  })
+  .filter((p) => p.title)
+  .sort((a, b) => a.order - b.order);
+
+const currentIndex = navPages.findIndex((p) => p.url === currentPath);
+
+// Zielseite bestimmen (wenn kein href übergeben)
+let targetPage = null;
+if (!href) {
+  if (type === "before") targetPage = navPages[currentIndex - 1] ?? null;
+  if (type === "next") targetPage = navPages[currentIndex + 1] ?? null;
+}
+
+const linkHref = href || targetPage?.url;
+const displayText = text || targetPage?.title || "";
+const displayDesc = targetPage?.description || "";
+
+if (!linkHref) return null;
+
+const icons = {
+  before: `<svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16 5v2h-2V5h2zm-4 4V7h2v2h-2zm-2 2V9h2v2h-2zm0 2H8v-2h2v2zm2 2v-2h-2v2h2zm0 0h2v2h-2v-2zm4 4v-2h-2v2h2z" fill="currentColor"/></svg>`,
+  next: `<svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 5v2h2V5H8zm4 4V7h-2v2h2zm2 2V9h-2v2h2zm0 2h2v-2h-2v2zm-2 2v-2h2v2h-2zm0 0h-2v2h2v-2zm-4 4v-2h2v2H8z" fill="currentColor"/></svg>`,
+  link: `<svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 6h7v2H4v8h7v2H2V6h2zm16 0h-7v2h7v8h-7v2h9V6h-2zm-3 5H7v2h10v-2z" fill="currentColor"/></svg>`,
+};
+---
+
+<a
+  href={linkHref}
+  class={`group flex items-center layout-box
+    ${type === "next" ? "justify-self-end" : "justify-self-start"}`}
+>
+  {(type === "before" || type === "link") && (
+    <span
+      class="w-8 h-8 flex-shrink-0 text-gray-500 group-hover:text-gray-800 dark:text-zinc-400 dark:group-hover:text-white"
+      set:html={icons[type]}
+    />
+  )}
+
+  <div class="flex-1">
+    <div class="font-bold">{displayText}</div>
+    <div class="text-gray-400 dark:text-zinc-400">
+      {displayDesc}
+      <slot />
+    </div>
+  </div>
+
+  {type === "next" && (
+    <span
+      class="w-8 h-8 flex-shrink-0 text-gray-500 group-hover:text-gray-800 dark:text-zinc-400 dark:group-hover:text-white"
+      set:html={icons[type]}
+    />
+  )}
+</a>
+
