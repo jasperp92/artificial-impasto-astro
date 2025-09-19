@@ -16,6 +16,7 @@ import Navigation from "../components/Navigation.astro";
 import ThemeToggle from "../components/ThemeToggle.astro";
 import Background from "@components/Background.astro";
 import ModeSwitch from "@components/ModeSwitch.astro";
+import MobileMenu from "@components/MobileMenu.astro";
 import "../styles/global.css";
 
 console.log("Frontmatter:", frontmatter);
@@ -31,36 +32,23 @@ console.log("Frontmatter:", frontmatter);
         document.documentElement.classList.add("dark");
       }
     </script>
-    <link
-      rel="preload"
-      href="/artificial-impasto/fonts/terminal-grotesque.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link
-      rel="preload"
-      href="/artificial-impasto/fonts/terminal-grotesque_open.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
   </head>
   <body class="min-h-screen relative">
     <Background background={background} effects={effects} />
 
     <div class="flex min-h-screen relative z-10">
-      <!-- Sidebar -->
+      <!-- Desktop Sidebar -->
       <aside
         class="hidden md:block fixed top-0 left-0 h-screen w-60 border-r-0 p-4"
       >
         <Navigation />
       </aside>
 
-      <div class="fixed grid top-6 right-4 gap-4">
-        <ThemeToggle />
-        <ModeSwitch />
-      </div>
+      <!-- Mobile Menu Komponente -->
+      <MobileMenu>
+        <ThemeToggle slot="icons" />
+        <ModeSwitch slot="icons" />
+      </MobileMenu>
 
       <!-- Main Content -->
       <main class="flex-1 mt-4 max-w-260 p-6 mr-0 md:ml-60 md:mr-12">
