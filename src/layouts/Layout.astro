@@ -8,18 +8,17 @@ const effects = Array.isArray(effectsRaw)
   ? effectsRaw
   : String(effectsRaw || "")
       .split(",")
-      .map(s => s.trim())
+      .map((s) => s.trim())
       .filter(Boolean);
 
 import Footer from "../components/Footer.astro";
 import Navigation from "../components/Navigation.astro";
 import ThemeToggle from "../components/ThemeToggle.astro";
 import Background from "@components/Background.astro";
+import ModeSwitch from "@components/ModeSwitch.astro";
 import "../styles/global.css";
 
 console.log("Frontmatter:", frontmatter);
-
-
 ---
 
 <html lang="de">
@@ -58,8 +57,9 @@ console.log("Frontmatter:", frontmatter);
         <Navigation />
       </aside>
 
-      <div class="fixed top-6 right-4">
+      <div class="fixed grid top-6 right-4 gap-4">
         <ThemeToggle />
+        <ModeSwitch />
       </div>
 
       <!-- Main Content -->

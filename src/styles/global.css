@@ -10,7 +10,7 @@
 @font-face {
   font-family: "Terminal Grotesque";
   src: url("/artificial-impasto/fonts/terminal-grotesque.woff2") format("woff2"),
-       url("/artificial-impasto/fonts/terminal-grotesque.otf") format("opentype");
+    url("/artificial-impasto/fonts/terminal-grotesque.otf") format("opentype");
   font-weight: 200;
   font-style: normal;
   font-display: swap;
@@ -19,105 +19,166 @@
 @font-face {
   font-family: "Terminal Grotesque Open";
   src: url("/artificial-impasto/fonts/terminal-grotesque_open.woff2") format("woff2"),
-       url("/artificial-impasto/fonts/terminal-grotesque_open.otf") format("opentype");
+    url("/artificial-impasto/fonts/terminal-grotesque_open.otf") format("opentype");
   font-style: normal;
   font-display: swap;
 }
 
 @layer base {
-    html {
-      font-family: "Basic", sans-serif;
-    }
-    body {
-      @apply bg-zinc-50 dark:bg-zinc-950 dark:text-white;
-    }
-    h1 { @apply text-8xl; 
-        font-family: "Terminal Grotesque Open", sans-serif;}
-    .subtitle { @apply text-6xl mt-4; 
-      font-family: "Terminal Grotesque", sans-serif;}
-    h2 { @apply text-5xl mt-12 mb-6; 
-        font-family: "Terminal Grotesque", sans-serif;}
-    h3 { @apply text-2xl mt-8 mb-6 font-semibold; }
-    p  { @apply leading-relaxed }
-    q  { @apply italic; }
-    ol { @apply list-decimal list-inside; }
-    main p a {
-      @apply underline text-zinc-400;
-    }
+  html {
+    font-family: "Basic", sans-serif;
+  }
+
+  body {
+    @apply bg-zinc-50 dark:bg-zinc-950 dark:text-white;
+  }
+
+  h1 {
+    @apply text-8xl;
+    font-family: "Terminal Grotesque Open", sans-serif;
+  }
+
+  .subtitle {
+    @apply text-6xl mt-4;
+    font-family: "Terminal Grotesque", sans-serif;
+  }
+
+  h2 {
+    @apply text-5xl mt-12 mb-6;
+    font-family: "Terminal Grotesque", sans-serif;
+  }
+
+  h3 {
+    @apply text-2xl mt-8 mb-6 font-semibold;
+  }
+
+  p {
+    @apply leading-relaxed;
+  }
+
+  q {
+    @apply italic;
+  }
+
+  img {
+    @apply max-h-[90vh] h-auto object-contain;
+  }
+
+  ol {
+    @apply list-decimal list-inside;
+  }
+
+  main p a {
+    @apply underline text-zinc-400;
+  }
+
   main ol {
     @apply list-decimal list-outside pl-4;
   }
+
   main ul {
     @apply list-disc list-outside pl-4;
   }
-    hr {
-      @apply mt-8;
-    }
-    .quote {
-      @apply border-l-1 border-white pl-6 italic;
-    }
-    .citation {
-      @apply text-zinc-400 italic mt-1 text-right;
-    }
-    .description {
-      @apply text-zinc-400 italic mt-1;
-    }
-    .image-source {
-      @apply text-sm text-zinc-400 italic mt-1 mb-2;
-    }
-    .grid-layout {
-      @apply grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6;
-    }
-    .grid-layout-3 {
-      @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6;
-    }
-    .layout-box {
-      @apply gap-3 border-1 w-full 
-         border-black dark:border-zinc-100 rounded p-4 rounded-lg
-         hover:bg-gray-900/25 dark:hover:bg-zinc-100/25;
-    }
-    .comment-left {
-      @apply italic relative mt-6 ml-8 w-fit rounded border p-2
-         before:content-[''] before:absolute before:top-1/2 before:left-0 
-         before:w-8 before:h-px before:bg-current before:-translate-x-full
-    }
-    .comment-right {
-      @apply italic relative mt-6 mr-8 w-fit rounded border p-2 ml-auto
-         before:content-[''] before:absolute before:top-1/2 before:right-0 
-         before:w-8 before:h-px before:bg-current before:translate-x-full
-    }
-    .footnotes {
-      @apply mt-8 border-t border-gray-300 pt-4 text-sm text-gray-300;
-    }
-    .footnotes ol {
+
+  hr {
+    @apply mt-8;
+  }
+
+  .quote {
+    @apply border-l-1 border-white pl-6 italic;
+  }
+
+  .citation {
+    @apply text-zinc-400 italic mt-1 text-right;
+  }
+
+  .description {
+    @apply text-zinc-400 italic mt-1;
+  }
+
+  .image-source {
+    @apply text-sm text-zinc-400 italic mt-1 mb-2;
+  }
+
+  .grid-layout {
+    @apply grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6;
+  }
+
+  .grid-layout-3 {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6;
+  }
+
+  .layout-box {
+    @apply gap-3 border-1 w-full border-black dark:border-zinc-100 rounded p-4 rounded-lg hover:bg-gray-900/25 dark:hover:bg-zinc-100/25;
+  }
+
+  .comment-left {
+    @apply italic relative mt-6 ml-8 w-fit rounded border p-2 before:content-[''] before:absolute before:top-1/2 before:left-0 before:w-8 before:h-px before:bg-current before:-translate-x-full;
+  }
+
+  .comment-right {
+    @apply italic relative mt-6 mr-8 w-fit rounded border p-2 ml-auto before:content-[''] before:absolute before:top-1/2 before:right-0 before:w-8 before:h-px before:bg-current before:translate-x-full;
+  }
+
+  .footnotes {
+    @apply mt-8 border-t border-gray-300 pt-4 text-sm text-gray-300;
+
+    ol {
       @apply list-decimal ml-6 space-y-2;
-      list-style-position: inside; /* Zahl rückt in den Textblock */
-      padding-left: 0;             /* kein Extra-Einzug */
+      list-style-position: inside;
+      padding-left: 0;
     }
-    .footnotes a {
+
+    a {
       @apply text-blue-500 hover:underline;
     }
-    .footnotes h2 {
+
+    h2,
+    .data-footnote-backref {
       display: none;
     }
-    .footnotes .data-footnote-backref {
+  }
+
+  .font-tg {
+    font-family: "Terminal Grotesque", sans-serif;
+  }
+
+  .font-tgo {
+    font-family: "Terminal Grotesque Open", sans-serif;
+  }
+
+  /* Präsentationsmodus */
+  /* Präsentationsmodus */
+  /* Präsentationsmodus */
+  .mode-presentation {
+    p:not(:has(img)) {
       display: none;
     }
-    .font-tg {
-        font-family: "Terminal Grotesque", sans-serif;
+
+    main {
+      @apply text-xl;
     }
-    .font-tgo {
-      font-family: "Terminal Grotesque Open", sans-serif;
+    img {
+      @apply mx-auto;
+    }
+    .grid-layout {
+      @apply grid-cols-1 md:grid-cols-1 lg:grid-cols-1;
+    }
+
+    .quote,
+    .layout-box *,
+    .image-source,
+    .citation {
+      display: block;
+    }
   }
-  }
+}
 
 @layer utilities {
   .effect-blur {
     @apply filter blur-md;
   }
- /* #bg-layer {
-  image-rendering: pixelated;
- } */
+
   .effect-grayscale {
     @apply filter grayscale;
   }
@@ -128,29 +189,29 @@ table {
   @apply table-auto border-collapse w-full text-left text-sm;
 }
 
-/* Header */
 table thead th {
   @apply px-2 py-2 border-b border-gray-300 border-r border-gray-200 font-semibold;
-}
-table thead th:last-child {
-  @apply border-r-0;
+
+  &:last-child {
+    @apply border-r-0;
+  }
 }
 
-/* Zellen */
 table tbody td {
   @apply px-2 py-2 border-b border-gray-200 border-r border-gray-200;
-}
-table tbody td:last-child {
-  @apply border-r-0;
+
+  &:last-child {
+    @apply border-r-0;
+  }
 }
 
-/* letzte Zeile ohne Unterkante */
 table tbody tr:last-child td {
   @apply border-b-0;
 }
 
 /* --- Mobile Collapse --- */
 @media (max-width: 640px) {
+
   table,
   thead,
   tbody,
@@ -163,17 +224,20 @@ table tbody tr:last-child td {
   thead {
     @apply hidden;
   }
+
   tr {
     @apply mb-4 rounded-lg p-3 border border-gray-100;
   }
 
   td {
     @apply border-none px-2 py-2 text-sm text-white block text-left;
+
+    &::before {
+      content: attr(data-label) ":";
+      @apply font-semibold mr-2 text-gray-100;
+    }
   }
-  td::before {
-    content: attr(data-label) ":";
-    @apply font-semibold mr-2 text-gray-100;
-  }
+
   table tr:last-child {
     @apply border-1;
   }

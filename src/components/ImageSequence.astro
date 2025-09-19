@@ -20,7 +20,7 @@ const images = Object.keys(allImages)
 ---
 
 <div
-  class="relative w-full max-h-[80vh] overflow-hidden"
+  class="relative w-full max-h-[90vh] overflow-hidden"
   data-sequence
   data-mode={mode}
 >
@@ -28,7 +28,7 @@ const images = Object.keys(allImages)
   <Image
     src={allImages[images[0]]()}
     alt="layout reference"
-    class="w-full h-auto object-contain opacity-0 pointer-events-none"
+    class="w-full h-auto max-h-[90vh] object-contain opacity-0 pointer-events-none"
     aria-hidden="true"
   />
 
@@ -38,7 +38,7 @@ const images = Object.keys(allImages)
       <Image
         src={allImages[path]()}
         alt={`Frame ${index}`}
-        class="absolute inset-0 w-full h-auto object-contain opacity-0"
+        class="absolute inset-0 w-full h-auto max-h-[90vh] object-contain opacity-0"
         data-frame={index}
         loading="lazy"
       />
