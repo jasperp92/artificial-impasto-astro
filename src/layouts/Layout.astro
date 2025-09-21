@@ -2,6 +2,7 @@
 const { frontmatter } = Astro.props;
 const title = frontmatter?.title || "Artificial Impasto";
 const background = frontmatter?.background || null;
+const description = frontmatter?.description;
 // effect(s) tolerant einlesen (Array oder Komma-String)
 const effectsRaw = frontmatter?.effects ?? frontmatter?.effect ?? [];
 const effects = Array.isArray(effectsRaw)
@@ -39,7 +40,7 @@ console.log("Frontmatter:", frontmatter);
     <div class="flex min-h-screen relative z-10">
       <!-- Desktop Sidebar -->
       <aside
-        class="hidden md:block fixed top-0 left-0 h-screen w-60 border-r-0 p-4"
+        class="hidden md:block fixed top-0 left-0 h-screen w-60 border-r-0 p-4 pr-0"
       >
         <Navigation />
       </aside>
@@ -51,7 +52,9 @@ console.log("Frontmatter:", frontmatter);
       </MobileMenu>
 
       <!-- Main Content -->
-      <main class="flex-1 mt-4 max-w-260 p-6 mr-0 md:ml-60 md:mr-12">
+      <main class="flex-1 mt-8 max-w-260 p-4 mr-0 md:ml-60 md:mr-12">
+          <h1>{title}</h1>
+  <div class="subtitle">{description}</div>
         <slot />
       </main>
     </div>

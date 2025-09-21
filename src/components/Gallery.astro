@@ -6,7 +6,7 @@ interface Props {
 const { path } = Astro.props;
 
 // Alle Bilder laden
-const allImages = import.meta.glob("../assets/gallery/**/*.{jpg,jpeg,png}", { eager: true });
+const allImages = import.meta.glob("../assets/images/gallery/**/*.{jpg,jpeg,png}", { eager: true });
 
 // Nur die Bilder aus dem angegebenen Ordner
 const imageList = Object.entries(allImages)
@@ -28,7 +28,7 @@ const imageList = Object.entries(allImages)
   </div>
 
   <!-- Thumbnails -->
-  <div class="flex overflow-x-auto gap-1">
+  <div class="flex flex-wrap gap-1">
     {imageList.map((img, index) => (
       <button
         type="button"

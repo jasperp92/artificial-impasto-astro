@@ -2,23 +2,199 @@
 title: "Stil von Graphic Novels"
 parent: "Grundlagen"
 order: 2
-layout: "@layouts/ProjectLayout.astro"
+layout: "@layouts/Layout.astro"
 description: "im digitalen Zeitalter und als hybride Medien"
 ---
 
+import Compare from "@components/Compare.astro"
+import beforeImg from "@images/graphicnovel/martha_1.webp";
+import afterImg  from "@images/graphicnovel/martha_2.webp";
+
 
 <br />
 
-## Was sind Graphic Novels?
+<div class="grid-layout">
+<div>
+Ich orientiere mich an einer weit gefassten Definition des visuellen Narrativs, angelehnt an Scott McClouds Verständnis in Understanding Comics, und werde nicht streng zwischen Comics und Graphic Novels unterscheiden.
+<br />
 
+</div>
+<div>
+{/* ![Scott McCloud](@images/definition_scottmccloud.webp) */}
 <p class="quote text-2xl">juxtaposed pictorial and other images in deliberate sequence, intended to convey information and/or produce an aesthetic response in the viewer</p>
+<p class="citation">- Scott McCloud, Understanding Comics, S. 8 f.</p>
+</div>
+</div>
+
+
 <br />
-<p class="text-right italic">- Scott McCloud, Understanding Comics</p>
+
+<div class="grid-layout-3">
+<div>
+Scott McCloud schreibt in Comics machen, dass Stil nichts ist, was man aus einem Buch lernen oder wie eine Krawatte kaufen kann, sondern sich über Jahre hinweg auf eine viel komplexere Art und Weise entwickelt (McCloud, 2006, S. 212). Heute jedoch vermitteln die geleakten Midjourney-Stile und die Vielzahl an LoRAs auf [CivitAI](https://civitai.com/models?tag=style) den Eindruck, dass sich künstlerische Handschriften im Zeitalter der KI tatsächlich wie Waren „erwerben“ lassen.
+</div>
+<div>
+![Scott MCloud Scan1](@images/mccloud_style_1.webp)
+</div>
+<div>
+![Scott MCloud Scan2](@images/mccloud_style_2.webp)
+<p class="image-source text-right">Bildquelle: Scott McCloud, Comics machen, S. 212</p>
+</div>
+</div>
+
+## Graphic Novels & Comics im digitalen Zeitalter
+
+<div class="grid-layout">
+<div>
+Während Scott McCloud Understanding Comics (1993) noch mit Pinsel und Rapidographen gezeichnet hat, bedient er sich in seinen Fortsetzungen Reinventing Comics (2000) und Making Comics (2006) digitaler Zeichentechnologien und beschreibt die Unterschiede sowie ihre Vorteile auch direkt in den Büchern.
+Die Vorteile der digitalen Technologien liegen darin, präzise zu arbeiten, zu vergrößern und zu verkleinern, wiederkehrende Muster zu erzeugen, in Ebenen zu arbeiten sowie diese zu verschieben und zu kopieren. Das ermöglicht ein flexibleres, zeiteffizienteres und präziseres Arbeiten (McCloud, 2006, S. 196–199).
+</div>
+<div>
+Ich habe andere Gestalter:innen in einer Umfrage gefragt, ob sie digital oder analog arbeiten und welche Vorteile die digitale Arbeitsweise für sie hat.
+<br />
+<Reference 
+  title="Vor- und Nachteilen von analogen Medien" 
+  type="internal"
+  label="Hier gehts zur eigenen Umfrage"
+  link="/artificial-impasto/introduction/problem/#einsatz-von-analogen-und-digitalen-medien-in-der-umfrage"
+   />
+   </div>
+</div>
+
+
+### Webcomics
+
+<div class="grid-layout">
+<div>
+Als sich in den 1990er Jahren mit dem Internet und digitalen Zeichenmethoden neue Möglichkeiten ergaben, wurden auch die ersten Webcomics entwickelt und publiziert. Im Jahr 1995 erschien der erste digitale Comic von Charley Parker namens Argon Zark! (Abel & Klein, 2016, S. 35). 
+</div>
+<div>
+<Reference 
+  title="Comics und Graphic Novels: Eine Einführung" 
+  label="Link zum Buch"
+  authors="Julia Abel & Christian Klein" 
+  year="2016" 
+  link="http://dx.doi.org/10.1007/978-3-476-05443-2"
+   />
+</div>
+</div>
+
+<Reference 
+  title="Argon Zark" 
+  label="Link zum Webcomic"
+  authors="Charles A. Parker" 
+  year="1995" 
+  link="https://www.zark.com/pages/az3.html"
+  embed={true}
+   />
+
+<div class="grid-layout">
+<div>
+
+<p>Scott McCloud beschrieb bereits 2006 in Comics machen, dass das Internet ein riesiges Experimentierfeld für neue Techniken sei. Webcomics orientierten sich zwar oft noch am tradierten Comic-Heft-Stil mit schwarzen Konturen, jedoch kamen zunehmend Varianten ohne Konturen, neue farbige Linien, 3D-Bilder, digitale Pixelart-Ästhetik, unscharfe Hintergründe, atmosphärische Effekte sowie stärkere Abstraktion und Stilisierung durch Vektorgrafiken hinzu (McCloud, 2006, S. 200 f.).</p>
+
+</div>
+<div>
+Diese Entwicklung beschränkt sich jedoch nicht auf Webcomics. Auch gedruckte Comics durchlaufen seit den 1990er Jahren einen tiefgreifenden Wandel. Während Leser:innen bis dahin davon ausgehen konnten, dass Comicseiten mit Stift und Pinsel gezeichnet wurden, wirft die heutige Produktion zunehmend die Frage auf, ob es sich um handgezeichnete oder digital generierte Bilder handelt. (Brodén, 2024, S. 636)
+</div>
+</div>
+
+<div class="grid-layout">
+<div>
+<Reference 
+  title="Refiguring comic book imagery in a post-digital moment: conspicuousness, hybridity and ontological strangeness" 
+  type="paper"
+  authors="Daniel Brodén" 
+  year="2024" 
+  link="http://dx.doi.org/10.1080/21504857.2024.2309867"
+  class
+   ></Reference>
+</div>
+<div>
+
+</div>
+</div>
+
+### Wandel zu digitalen Medien
+
+<div class="grid-layout">
+<div>
+Brodén nennt als Beispiel einen visuellen Wendepunkt innerhalb der Batman-Reihe: Der Zeichner Frank Miller griff nach dem ersten Teil Batman The Dark Knight Returns (DK1, 1986), zusammen mit der Coloristin Lynn Varley, in der Fortsetzung The Dark Knight Strikes Again (DK2, 2002) auf digitale Werkzeuge zurück. Dies führte zu einem blockigeren Zeichenstil, und die Kolorierung enthielt mehr 3D-Verläufe als die zuvor flachere analoge Kolorierung (2024, S. 635 ff.).
+
+![Miller DK1](@images/miller_dk1.png)
+<p class="image-source">Bildquelle: [Batman The Dark Knight Returns, Miller, 1986, S. 28](https://archive.org/details/BatmanTheDarkKnightReturns03of041986/)</p>
+</div>
+<div>
+![Miller DK1](@images/miller_dk2.jpg)
+<p class="image-source">The Dark Knight Strikes Again (DK2), Miller, 2001<br />Bildquelle: https://majorspoilers.com/2022/02/13/retro-review-the-dark-knight-strikes-again-1-february-2002/</p>
+</div>
+</div>
+
+### Imitation analoger Medien
+
+<div class="grid-layout">
+<div>
+Programme wie Photoshop orientieren sich an analogen Medien und simulieren diese mit Filtern wie Mosaik, Schraffur, Glas, Neon oder Fotokopie sowie digitalen Pinseln, die Kohle oder andere Materialien nachahmen. Adobe Fresco geht weiter und bietet „interaktive Pinsel“, die physische Eigenschaften wie den Verlauf von Wasserfarbe oder Nass-in-Nass-Ölmalerei imitieren.<br /> Dennoch folgen diese Werkzeuge den eigenen Regeln der digitalen Welt, die mit der physischen nur wenig gemein hat (vgl. Brodén, 2024, S. 641). Operationen an numerischen Daten erlauben hochpräzise, parametrisierte Eingriffe, während Faktoren wie Fluss, Deckkraft oder Durchlässigkeit im Analogen unberechenbaren physischen Prozessen unterliegen.
+</div>
+<div class="max-w-80 mx-auto">
+![Brushes](@images/brushes.webp)
+</div>
+</div>
+<p class="quote text-2xl">This operating on precise numerical data differentiates even the most realistic painting simulation tool from its physical predecessor.</p>
+<p class="citation">- Brodén, 2024, S. 641</p>
+
+## Hybride Graphic Novels digitalen und analogen Ursprungs
+
+<div class="grid-layout">
+<div>
+Brodén nennt verschiedene Beispiele hybrider Arbeitsweisen: Mike Saenz zeichnete Shatter digital im Pixelart-Stil und kolorierte es anschließend von Hand, während Martha Washington Goes to War zunächst analog gezeichnet und dann digital koloriert wurde (Brodén, 2024, S. 639–640). Auch McCloud beschreibt, dass Künstler:innen analoge Zeichnungen einscannen und digital weiterbearbeiten. Sein eigenes Buch Comics machen entstand ebenfalls in einem hybriden Verfahren aus analogen Vorzeichnungen, digitalen Reinzeichnungen und Lettering (McCloud, 2006, S. 196–203).
+</div>
+<div>
+<Compare before={beforeImg} after={afterImg} />
+<p class="image-source">Martha Washington Goes to War
+links koloriert, rechts Lineart (Miller et al., 1994), Bildquelle: https://greggoldsteincomicartgallery.com/frank-miller-dave-gibbons-at-war/</p>
+</div>
+</div>
+
+## Hybride Medien und ontologische Uneindeutigkeit
+
+<div class="grid-layout">
+<div>
+Brodén versteht nach Manovich’s Terminologie „Hybrid media“ (Manovich, 2013) den computergenerierten Comic als ein hybrides Medium, in dem durch die Repräsentation analoger Verfahren neue Ausdrucksformen geschaffen werden. Streng genommen wird dabei die Unterscheidung zwischen physisch und digital sogar aufgelöst. Ein Grafiktablet fungiert etwa als Analog-zu-Digital-zu-Analog-Wandler: Die physischen Gesten werden in digitale Signale übersetzt, die eine Bilddatei manipulieren und letztendlich wieder über den Bildschirm zurück in analoge Lichtwellen umgewandelt werden (Brodén, 2024, S. 640).
+</div>
+<div>
+Auch der digitale Comic-Zeichenprozess lässt sich als ein hybrider Vorgang verstehen, bei dem Bilder von einem physischen Medium als Vorlage genommen, durch Handbewegung abgezeichnet oder direkt eingescannt und im digitalen Raum weiterverarbeitet oder manipuliert werden. Physische Informationen werden somit in digitale Repräsentationen übersetzt.<br />
+Scott McCloud beschreibt ebenfalls, dass es schwer zu sagen ist, wo die Grenze zwischen digitalen und analogen Methoden verläuft, da viele Webcomics traditionell gezeichnet und gedruckte Comics wiederrum digital produziert werden (McCloud, 2006, S. 203).
+</div>
+</div>
+
+<div class="mx-auto max-w-150 mb-8">
+![Hybrid Mccloud](@images/mccloud_hybrid_2.png)
+</div>
+
+<div class="grid-layout">
+<div>
+Ein Problem welches mit diesem "indexikalisch-kausalen" Bruch einhergeht wird auch als ein Problem der fehlenden Materialisierung und Verkörperlichung als ein Problem mit der Arbeit generativer KI beschrieben:
+<br />
+<Reference 
+  title="Hier geht's zur Problematik" 
+  type="internal"
+  link="../introduction/problem/"
+  class
+   ></Reference>
+</div>
+<div>
+Wie Schwer diese Auseinanderhaltung zwicshen analogen und digitalen Medien ist und verschwimmt habe ich in einer Umfrage getestet
+<br />
+<Reference 
+  title="Hier geht's zur Umfrage zur Authentizität imitierter Materialität" 
+  type="internal"
+  link="../discussion/turingtest"
+  class
+   ></Reference>
+</div>
+</div>
 
 <br />
-
-## Graphic Novels im digitalen Zeitalter
-
-
-
-## Graphic Novels als hybride Medien
+<p class="text-2xl keep-visible">Im Zeitalter generativer künstlicher Intelligenz werden ontologische Fragen nach Herkunft, Originalität und Authentizität von Bildern erneut auf die Probe gestellt. 
+Die Fähigkeit von KI, analoge oder künstlerische Stile zu imitieren, wirft nicht nur die Frage nach „echt“ und „unecht“ auf, sondern auch grundlegende Fragen nach Herkunft, Autor:innenschaft, Authentizität und Originalität im Kontext KI-generierter oder KI-assistierter Bilder.</p>

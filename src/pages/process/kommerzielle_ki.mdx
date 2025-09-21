@@ -1,11 +1,30 @@
 ---
 title: "Kommerzielle Bildgeneratoren"
 description: "Test mit kommerzieller Bildgeneratoren im Stiltransfer wie Midjourney und Photoshop"
-parent: "Prozess"
+parent: "Prozess & Ergebnis"
 order: 2
 layout: "@layouts/ProjectLayout.astro"
 ---
 
-## Midjourney
+import Gallery from "@components/Gallery.astro";
 
-## Photoshop
+Bevor ich ein eigenen Adapter getestet habe, wollte ich wissen, wie gut state-of-the-Art Technologie im Stiltransfer abschneidet, die mit meinem Stil nicht trainiert wurde oder ihn kennt und lediglich über Referenzbilder ihn annähern kann. 
+
+## Midjourney: Reference-Image
+
+Midjourney ist ein generativer Bildgenerator, der 2022 von Midjourney Inc. unter der Leitung von David Holz und weiteren entwickelt wurde. Midjourney kann über ein Webinterface oder über die Kommunikationssoftware Discord als Bot aufgerufen werden. Es können sowohl Text-zu-Bild-Prompts als auch Prompts mit Referenzbildern formuliert werden  (Holz et al., 2025).  Midjourney zählt zu den beliebtesten Bildgeneratoren und wird auch unter Künstler:innen, knapp hinter DALL-E, besonders häufig eingesetzt (Goldhammer et al., 2024, S. 23 und 31).
+<br />
+<Gallery path="midjourney" />
+
+
+<div class="comment-left">**Prompt**<br />https://s.mj.run/VaTvcTyhE3E oilpainting style --sref https://s.mj.run/gK-LuDCrG-I --iw 2 --sw 1000 --ar 3:2 --s 50 --raw</div>
+
+Midjourney kann meinen Stil einigermaßen gut übertragen, allerdings nur, wenn die Bildgewichtung des Inhalts nicht zu stark ist. Bildprompts (Image-to-Image) scheinen nämlich nicht nur inhaltliche Elemente, sondern auch stilistische Eigenschaften zu übertragen, wodurch die Stilreferenz abgeschwächt oder sogar überschrieben werden kann. Wird die Bildgewichtung gesenkt, wird der Stil zwar besser übertragen, allerdings verliert sich dabei die inhaltliche Orientierung. Es ist in meinen Tests daher bislang nur schwer oder kaum möglich, in Midjourney meinen analogen Malstil exakt auf eine gewünschte Komposition zu übertragen.
+
+## Photoshop: Stilübertragung mit Neural Filter
+
+Die neuronalen Filter können in Photoshop, einer Zeichensoftware von Adobe, nicht ansatzweise den Stil auf eine digitale Vorzeichnung übertragen. Sie erkennen nicht die Linienführung der Striche, und die Texturübernahme scheitert. Es fehlen Parameter, um zum Beispiel auch die Größe der Textur oder die Strichstärke zu übernehmen.
+
+![Photoshops Neural Filter](@images/photoshop.jpg)
+
+<p class="image-source">Stiltransfer mit Photoshops  „Neural Filters" erzeugen wolkenartige Texturen</p>

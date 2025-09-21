@@ -26,9 +26,6 @@ const children = Object.values(modules)
 ---
 
 <Layout frontmatter={frontmatter}>
-  <h1>{title}</h1>
-  <div class="subtitle">{description}</div>
-
   {
     children.length > 0 && (
       <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 mt-8 mb-4 break-words">

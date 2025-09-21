@@ -5,7 +5,8 @@ const { background, effects = [] } = Astro.props;
 {background && (
   <div
     id="bg-layer"
-    class="fixed inset-0 -z-10 bg-center bg-no-repeat will-change-transform"
+    class="fixed inset-0 -z-10 bg-center bg-no-repeat will-change-transform sm:bg-cover
+           dark:mix-blend-normal mix-blend-difference"
     style={`background-image:url('${background}'); background-size: cover;`}
     data-effects={JSON.stringify(effects)}
   ></div>
@@ -13,28 +14,18 @@ const { background, effects = [] } = Astro.props;
 
 <script is:inline>
   (function () {
-    const bg = document.getElementById('bg-layer');
+    const bg = document.getElementById("bg-layer");
     if (!bg) return;
 
-    // Effekte aus data-Attribut lesen
     let EFFECTS = [];
-    try { EFFECTS = JSON.parse(bg.dataset.effects || '[]'); } catch (e) { console.error('[BG] parse', e); }
-    // console.log('[BG] aktive Effekte:', EFFECTS);
-
-    // Horizontalen Scroll bei SCALE verhindern
-    if (EFFECTS.includes('effect-scale')) {
-      document.documentElement.style.overflowX = 'hidden';
+    try {
+      EFFECTS = JSON.parse(bg.dataset.effects || "[]");
+    } catch (e) {
+      console.error("[BG] parse", e);
     }
 
-    // Pixel-Look für SCALE & PIXELATE
-    if (EFFECTS.includes('effect-pixelate') || EFFECTS.includes('effect-scale')) {
-      bg.style.imageRendering = 'pixelated';
-    }
-
-    // Startwert für echtes Pixel-Gefühl bei PIXELATE (Kachelgröße in px)
-    if (EFFECTS.includes('effect-pixelate')) {
-      bg.style.backgroundSize = '20px';
-    }
+    // MediaQuery: ab 992px (lg)
+    const mq = window.matchMedia("(max-width: 992px)");
 
     let ticking = false;
     function applyScroll() {
@@ -44,31 +35,40 @@ const { background, effects = [] } = Astro.props;
       requestAnimationFrame(() => {
         const y = window.scrollY;
 
-        // MOVE: Parallax via background-position (X)
-        if (EFFECTS.includes('effect-move')) {
-          const offset = Math.round(-20 + y * 0.15);
-          bg.style.backgroundPosition = `${offset}px center`;
-        }
+        if (!mq.matches) {
+          // Effekte nur, wenn Screen < 992px
+          if (EFFECTS.includes("effect-move")) {
+            const offset = Math.round(-20 + y * 0.15);
+            bg.style.backgroundPosition = `${offset}px center`;
+          }
 
-        // PIXELATE: gröbere Kacheln über background-size (px)
-        if (EFFECTS.includes('effect-pixelate')) {
-          const size = Math.min(20 + y / 5, 300);
-          bg.style.backgroundSize = `${Math.round(size)}px`;
-        }
+          if (EFFECTS.includes("effect-pixelate")) {
+            bg.style.imageRendering = "pixelated";
+            const size = Math.min(20 + y / 5, 300);
+            bg.style.backgroundSize = `${Math.round(size)}px`;
+          }
 
-        // SCALE: Zoom ohne Overflow über background-size (%)
-        if (EFFECTS.includes('effect-scale')) {
-          const zoom = Math.min(150 + y * 0.1, 500); // 100%..260%
-          bg.style.backgroundSize = `${zoom}% auto`;
-          bg.style.backgroundPosition = 'center center';
+          if (EFFECTS.includes("effect-scale")) {
+            bg.style.imageRendering = "pixelated";
+            document.documentElement.style.overflowX = "hidden";
+            const zoom = Math.min(160 + y * 0.1, 500);
+            bg.style.backgroundSize = `${zoom}% auto`;
+            bg.style.backgroundPosition = "center center";
+          }
+        } else {
+          // Ab lg: einfach Cover
+          bg.style.imageRendering = "";
+          bg.style.backgroundSize = "cover";
+          bg.style.backgroundPosition = "center center";
+          document.documentElement.style.overflowX = "";
         }
 
         ticking = false;
       });
     }
 
-    window.addEventListener('scroll', applyScroll, { passive: true });
-    // initial anwenden
-    applyScroll();
+    window.addEventListener("scroll", applyScroll, { passive: true });
+    mq.addEventListener("change", applyScroll);
+    applyScroll(); // initial
   })();
 </script>
