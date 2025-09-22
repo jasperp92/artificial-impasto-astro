@@ -1,0 +1,33 @@
+---
+title: "Image-to-Image in ComfyUI"
+order: 2
+layout: "@layouts/ProjectLayout.astro"
+parent: "Grundlagen"
+description: "Grundlagen zu Image to Image in ComfyUI"
+---
+
+## ComfyUI - eine Nodebasierte KI-Anwendung
+
+<Reference 
+  title="comfy.org" 
+  authors="Yoland, Y., Huang, R., Dr.Lt.Data, comfyanonymous, & Byrne, C." 
+  type="software"
+  year="2025" 
+  link="https://www.comfy.org/" 
+  embed={true} />
+
+## Image-to-Image Basics
+
+Beim Image-to-Image-Prompt wird bei Stable Diffusion anstelle eines leeren latenten Bildes ein Startbild für den Diffusionsprozess verwendet. Über einen Stärkeparameter lässt sich einstellen, wie stark das ursprüngliche Bild im latenten Raum verrauscht und anschließend entrauscht werden soll, sodass neue Bildinhalte auf dieser Grundlage interpretiert werden können. Die Kombination aus Text und Bild ist dabei weiterhin möglich, um das Ergebnis gezielt zu beeinflussen (Huggingface, 2025).
+<br />
+![Comfy UI Workflow](@images/comfyui_workflow.png)
+
+### Load Checkpoint
+
+Hier wird in ComfyUI das vortrainierte Modell beziehungsweise das Basismodell geladen – in meinem Fall Stable Diffusion XL. Ein „Checkpoint“ enthält die gelernten Gewichtungen des neuronalen Netzwerks, die als Tensoren für das U-Net, den VAE und CLIP gespeichert sind. Der Checkpoint steuert maßgeblich das Verhalten des Modells beim Entrauschungsvorgang und während der Bildgenerierung (ComfyUI Text to Image Workflow, o. J.)
+
+{/* ### VAE Encode
+
+### CLIP Text Encode
+
+###  */}

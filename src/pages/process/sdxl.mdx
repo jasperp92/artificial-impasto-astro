@@ -1,22 +1,64 @@
 ---
 title: "Stiltransfer mit SDXL"
 description: "Stiltransfer mit verschiedenen Methoden in Stable Diffusion XL in ComfyUI"
-order: 2
+order: 3
 layout: "@layouts/ProjectLayout.astro"
 parent: "Prozess & Ergebnis"
 ---
 
+import Gallery from "@components/Gallery.astro";
 
 ## IP-Adapter
 
+<div class="grid-layout">
+<div>
+Der IP-Adapter ist ein (Image-Prompt) Adapter, das an bestehende Stable-Diffusion-Modelle angehängt werden kann und das Prompten auch mit Bildern ermöglicht. Auf diese Weise können strukturelle Merkmale des Referenzbildes in das Ergebnis einfließen (Ye et al., 2023, S. 1).
+Ein Vorteil des IP-Adapters ist, dass er sehr leichtgewichtig und flexibel ist. Anders als ein LoRA erfordert er kein zusätzliches Training, und stilistische Merkmale können direkt über ein Bild gesteuert werden.
+    </div>
+  <div>
+  <Reference 
+  title="IP-Adapter: Text Compatible Image Prompt Adapter for Text-to-Image Diffusion Models" 
+  authors="Hu Ye, Jun Zhang, Sibo Liu, Xiao Han, Wei Yang" 
+  type="paper"
+  year="2023" 
+  link="https://arxiv.org/abs/2308.06721" />
+  </div>
+</div>
+
+<Gallery path="ip-adapter" />
+
+Der IP-Adapter ist für eine stilistische Übertragung nur bedingt geeignet. Er versteht den Bildaufbau nicht, Leinwand und gemalte Flächen wirken fragmentiert. Die Strichführung wird nicht erfasst, stattdessen entstehen seltsame, sich wiederholende Muster. Texturen werden teilweise gut wiedergegeben, wirken aber oft überzeichnet. Da er nur mit einem einzigen Referenzbild arbeitet und keine Trainingsdaten nutzt, fehlt ihm das Verständnis für Komposition, Textur und Duktus  und damit die Fähigkeit, meinen Stil zuverlässig zu reproduzieren.
+
 ## B-LoRA
 
+<div class="grid-layout">
+<div>
+B-LoRA ist ein spezielles LoRA-Modell, das von Frenkel et al. (2025) für eine inhaltsunabhängige Stilübertragung entwickelt wurde.
+Die Methode basiert auf der Architektur von Stable Diffusion XL und ermöglicht es, Stil und Inhalt innerhalb eines Bildes gezielt voneinander zu trennen. Dadurch kann der Stil einer Vorlage auf neue Inhalte übertragen werden, ohne deren Struktur oder Bedeutung zu verändern.
+Im Gegensatz zu klassischen Fine-Tuning-Ansätzen vermeidet B-LoRA typische Probleme wie Überanpassung (Overfitting), bei dem sich Trainingsinhalte ungewollt in generierten Bildern wiederfinden oder der Stil nicht präzise genug übertragen wird.
+  Ein weiterer Vorteil von B-LoRA besteht darin, dass es bereits auf Grundlage eines einzigen Bildbeispiels trainiert werden kann und dabei eine klare Trennung von Inhalt und Stil ermöglicht (Frenkel et al., 2025, S. 1).
+    </div>
+  <div>
+
+**Daten zum Training**
+<table class="table-auto facts">
+<tr><td>Epochen: </td><td>1000</td></tr>
+<tr><td>Dauer: </td><td>ca. 1,5 Stunden auf einer GeForce RTX 5070 TI</td></tr>
+<tr><td>Datensatz: </td><td>1 Scan eines analogen Ölbildes</td></tr>
+</table>
+
+  <br />
 <Reference 
   title="B-LoRA: Efficient Fine-Tuning of Large Diffusion Models with Balanced Low-Rank Adaptation" 
   authors="Wang, Y., Zhang, L., Lin, J., & Liu, Z." 
   year="2024" 
   link="https://arxiv.org/abs/2405.13495" />
 
+  </div>
+</div>
+
+<Gallery path="b-lora" fixedHeight="50vh" />
+In meinem Fall konnte B-LoRA aus einem einzelnen Referenzbild nicht genügend Informationen entnehmen, um meinen Malstil und insbesondere den Duktus adäquat zu erfassen. Da mein Malstil zudem über mehrere Werke hinweg variiert, erscheint ein Datensatz mit nur einem Bild zu gering, um stilistische Merkmale zuverlässig zu abstrahieren. Die generierten Ergebnisse wirken aus meiner Sicht zu organisch für meinen Malstil. Auch bei größeren Trainingssätzen nahm die Qualität der Ergebnisse merklich ab, weshalb sich B-LoRA in meinem Fall nicht für umfassendere Datensätze eignete. 
 
 ## SDXL LoRA 
 mit 49 Bildern

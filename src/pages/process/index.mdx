@@ -8,4 +8,23 @@ description: "Dokumentation der Entwicklung eines KI-gestützten Stiltransfer-Wo
 
 <br />
 Ich werde neuronale Netze für den Stiltransfer (Neural Style Transfer) einsetzen. Die Funktionsweise des Verfahrens beschreibe ich in den Grundlagen unter [Generative KI](../basics/generative_ai/#neural-style-transfer).
- In meinem Fall nutze ich statt Textprompts Bilder, die die semantischen Vorgaben liefern, und versuche auf dieser Grundlage meinen analogen Ölmalstil zu übertragen.
+In meinem Fall nutze ich statt Textprompts Bilder, die die inhaltlichen Vorgaben wiedergeben, und versuche auf dieser Grundlage, meinen analogen Ölmalstil zu übertragen.
+Das Prozedere ist wie folgt: Es gibt zwei Referenzbilder, eines für die semantischen Inhalte (Inhaltsreferenz) und eines für die ästhetischen Merkmale wie Stil (Stilreferenz):
+
+
+<div class="text-4xl text-center grid gap-2 mt-4
+            grid-cols-1 md:grid-cols-[4fr_auto_3fr_auto] items-center">
+  <div class="">
+    <div class="text-lg mb-3">Inhaltsreferenz</div>
+    ![Stiltransfer 1](@images/styletransfer_1.webp)
+  </div>
+  <div class="text-center">+</div>
+  <div class="">
+  <div class="text-lg">Stilreferenz</div>
+    ![Stiltransfer 2](@images/styletransfer_2.webp)
+  </div>
+  <div class="text-center">= ?</div>
+</div>
+
+
+{/* Die strikte Trennung von Inhalt und ästhetischen Merkmalen, wie sie im neuronalen Stiltransfer praktiziert wird, weist Probleme auf, welche Porquet in seinem Paper beschreibt welche ich unter den Problemen beschreibe: */}

@@ -155,21 +155,27 @@
       display: none;
     }
 
-    main, td {
+    main,
+    td {
       @apply text-xl
     }
+
     .image-source {
       @apply text-base;
     }
+
     img {
       @apply mx-auto;
     }
+
     .grid-layout {
       @apply grid-cols-1 md:grid-cols-1 lg:grid-cols-1;
     }
+
     .grid-layout-3 {
       @apply grid-cols-1 md:grid-cols-1 lg:grid-cols-1;
     }
+
     .quote,
     .layout-box *,
     .image-source,
@@ -195,14 +201,6 @@ table {
   @apply table-auto border-collapse w-full text-left text-sm;
 }
 
-table thead th {
-  @apply px-2 py-2 border-b border-gray-300 border-r border-gray-200 font-semibold;
-
-  &:last-child {
-    @apply border-r-0;
-  }
-}
-
 table tbody td {
   @apply px-2 py-2 border-b border-gray-200 border-r border-gray-200;
 
@@ -214,6 +212,11 @@ table tbody td {
 table tbody tr:last-child td {
   @apply border-b-0;
 }
+
+  /* spezielle Regel für Tabelle mit Klasse .facts */
+  table.facts td {
+    @apply border-r-0;
+  }
 
 /* --- Mobile Collapse --- */
 @media (max-width: 640px) {
@@ -232,19 +235,19 @@ table tbody tr:last-child td {
   }
 
   tr {
-    @apply mb-4 rounded-lg p-3 border border-gray-100;
+    @apply p-2 border-b border-white;
   }
 
-  td {
-    @apply border-none px-2 py-2 text-sm text-white block text-left;
+  table tbody td  {
+    @apply border-none px-0 py-0 text-sm block text-left;
 
     &::before {
-      content: attr(data-label) ":";
-      @apply font-semibold mr-2 text-gray-100;
+      content: attr(data-label);
+      @apply font-semibold mr-2;
     }
   }
 
   table tr:last-child {
-    @apply border-1;
+    @apply border-none;
   }
 }
