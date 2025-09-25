@@ -2,8 +2,212 @@
 title: "Workflow & Parameter"
 order: 4
 layout: "@layouts/ProjectLayout.astro"
-description: "Erläuterung der wichtigsten Parameter zur Steuerung der KI-Bildgenerierung."
+description: "Erläuterung der wichtigsten Parameter zur Steuerung des Stiltransfers."
 parent: "Prozess & Ergebnis"
 ---
 
+import ImageSequence from "@components/ImageSequence.astro"
+import Gallery from "@components/Gallery.astro";
 
+![final workflow](@images/final_workflow.png)
+
+Weder der IP-Adapter noch ein einzelnes LoRA oder B-LoRA konnte die Strukturen des Ölimpastos und meinen Malstil zufriedenstellend wiedergeben. Erst durch die Kombination verschiedener Adapter ließen sich bessere Ergebnisse erzielen. Im Folgenden liste ich einige Parameter auf und erläutere deren Einfluss.
+
+## Latente Bildgröße (Latent Image Size)
+
+
+<div class="grid-layout-3">
+<div class="keep-hidden">
+![final workflow](@images/svg/resize.svg)
+</div>
+<div class="col-span-2">
+Mit der latenten Bildgröße kann ich maßgeblich die Größe des Duktus und den Detailgrad des digitalen Referenzbildes steuern. Da Stable Diffusion nativ auf einer Auflösung von 1024 Pixeln arbeitet, wird es auch mit Bildern in der Größe 1024 × 1024 trainiert (Podell et al., 2023). Dabei orientiert sich das Training am Duktus, beziehungsweise auch an der Pinselgröße und dem Detailgrad der Trainingsbilder. Skaliere ich meine Bilder auf 1024 Pixel für den Entrauschungsprozess herunter, wird der Duktus meistens zu groß angewandt und das Bild zu abstrakt und unscharf, was zu einem Detailverlust der digitalen Eingabebilder führt.
+</div>
+</div>
+
+<div class="grid-layout">
+<div class="keep-hidden">
+Obwohl Stable Diffusion XL ursprünglich für 1024 × 1024 Pixel trainiert wurde, lassen sich auch größere Eingabebilder verwenden, um die Größe des Duktus zu erhöhen. Der VAE von SDXL reduziert die Bildauflösung um den Faktor 8 in Höhe und Breite (Taig, 2025). Das bedeutet:
+</div>
+<div>
+- Ein Bild mit 1024 × 1024 Pixeln ergibt eine latente Repräsentation mit 128 × 128 × 4. 4 sind die Anzahl der Kanäle. Statt RGB hat Stable Diffusion XL 4 Kanäle: Luminanz, Cyan/Rot, Hellgrün/Mittel-Lila, Struktur (Vass, 2024).
+- Ein Bild mit 2048 × 2048 Pixeln ergibt entsprechend 256 × 256 × 4 im latenten Raum.
+</div>
+</div>
+
+<ImageSequence folder="latent_size" mode="steps" withSlider invert />
+
+
+## KSampler
+
+<div class="grid-layout-3">
+<div class="keep-hidden">
+![final workflow](@images/svg/ksampler.svg)
+</div>
+<div class="col-span-2">
+Der KSampler steuert, wie das U-Net das Bild entrauschen soll. Dabei können verschiedene Parameter festgelegt werden, die die Art der Bildgenerierung beeinflussen.
+Der Sampler legt fest, welche mathematische Methode für den Entrauschungsprozess verwendet wird, etwa Euler, DPM++, uvm. (ComfyUI Text to Image Workflow, o. J.)
+<br />
+Der beste Sampler für die Erhaltung von Texturen und Details ist in meinem Fall Dpm++ 2M SDE GPU in Kombination mit dem Scheduler Karras. In dem Blog von <a href="https://lemmy.world/post/6034170">lemmy.world</a> wird beschrieben, dass dieser Sampler sich außerdem gut eignet, weil er relativ schnell ist und schon bei geringeren Samples gute Ergebnisse erzielt.
+</div>
+</div>
+
+
+### Sample Steps
+
+Steps: Gibt die Anzahl der Entrauschungsschritte an. Eine höhere Zahl führt zu mehr Details, erfordert aber mehr Rechenzeit. (ComfyUI Text to Image Workflow, o. J.)
+Ab einer Anzahl von ca. 15 Schritten werden in meinem Fall die Ergebnisse nicht mehr deutlich besser.
+
+
+
+<ImageSequence folder="steps" mode="steps" />
+
+
+### Entrauschungsgrad (Denoise)
+Die Denoise Stärke bestimmt wie viel latentes Rauschen hinzugefügt wird. Ein Wert von 0 bedeutet, dass kein Rauschen hinzugefügt und das Eingabebild nicht verändert wird. Ein Wert von 1 erzeugt maximales Rauschen, wodurch nichts mehr vom Eingabebild erhalten bleibt und nur der Textprompt gewichtet. (Andrew, 2024) 
+
+Der Denoise-Wert sollte relativ gering sein, damit das Eingabebild nicht zu stark verrauscht wird und die Komposition gut erhalten bleibt. Möchte man der generativen KI mehr kompositorische Freiheit und einen expressiveren Duktus verleihen, kann der Wert leicht erhöht werden. Bei Gesichtern und markanten Details sollte der Wert allerdings verringert werden, damit diese nicht zu stark vom Original abweichen. 
+
+<br />
+<ImageSequence folder="denois" mode="step" />
+<p class="description">Der CFG Wert liegt in diesem Fall konstant bei 5.</p>
+
+### Promptorientierung (CFG)
+CFG (Classifier-Free Guidance): Steuert, wie stark das Modell dem Prompt folgen soll. Ein CFG-Wert von 0 bedeutet, dass der Prompt ignoriert wird. Je höher der Wert, desto stärker orientiert sich das Modell am Prompt (Andrew, 2024)
+
+<ImageSequence folder="cfg" mode="fade" />
+<p class="description">Der Denoise-Wert liegt in diesem Fall bei 0.35</p>
+
+{/* <Gallery path="denoise" type="grid" maxCols={6} responsive={false} gap={0} /> */}
+
+### Seed & Control after Generate
+Seed: Ist der Startwert für die Pseudozufallszahlen, von dem das latente Rauschen ausgeht. Wird „Control after generate“ auf „randomize“ gesetzt, wird nach jeder Generation ein neuer Zufallswert erzeugt, um bei gleichen Einstellungen unterschiedliche Bilder zu generieren.
+
+### Stapelgröße (Batchsize)
+<div class="grid-layout-3">
+<div class="keep-hidden">
+![final workflow](@images/svg/batch.svg)
+</div>
+<div class="col-span-2">
+Wird ein zufälliger Seed-Wert gesetzt, werden immer unterschiedliche Bilder erzeugt, selbst wenn die Parameter nicht geändert werden. Verändere ich die Stapelgröße, wird der Prozess für jedes Bild mehrfach durchlaufen, sodass ich unterschiedliche Bilder hintereinander generieren kann und anschließend die auswählen kann, die mir am besten gefallen.
+</div>
+</div>
+
+## Modellgewichtungen 
+
+### B-LoRA Stärke
+
+<div class="grid-layout-3">
+<div class="keep-hidden">
+![final workflow](@images/svg/b-lora.svg)
+</div>
+<div class="col-span-2">
+Das B-LoRA bringt grundsätzlich den malerischen Stil und die Texturen ein. Der Wert sollte nicht zu hoch eingestellt werden, sonst wird der Stil übertrieben und zu organisch dargestellt. 
+</div>
+</div>
+
+<ImageSequence folder="blora" mode="fade" />
+
+<div class="grid-layout">
+<div class="keep-hidden">
+Ich habe ein zweites B-LoRA auf Details trainiert, ausgehend von der Annahme, dass es durch Stable Diffusion und die Kompression des VAE zu einem Detailverlust kommt, was auch erklärt, warum Stable Diffusion Schwierigkeiten mit Texten und komplexen Strukturen hat (Taig, 2025). Später stellte ich jedoch fest, dass die Ursache eher im Wesen von Image-to-Image liegt, wie ich in der <a href="/artificial-impasto/discussion/aesthetics">Diskussion</a> beschreibe.
+</div>
+<div>
+<Reference 
+  title="VAE. The Latent Bottleneck: Why Image Generation Processes Lose Fine Details" 
+  type=""
+  label="Medium Artikel"
+  authors=" Efrat Taig" 
+  year="2025" 
+  link="https://medium.com/%40efrat_37973/vae-the-latent-bottleneck-why-image-generation-processes-lose-fine-details-a056dcd6015e" />
+
+
+</div>
+</div>
+
+
+### LoRA Stärke
+
+<div class="grid-layout-3">
+<div class="keep-hidden">
+![final workflow](@images/svg/lora.svg)
+</div>
+<div class="col-span-2">
+Sie beeinflusst weniger die Textur und das Impasto, sondern vielmehr die allgemeine Strichführung und den Duktus. Da im Modell auch viele semantische Informationen enthalten sind, sollte der Wert nicht zu hoch gewählt werden, um zu vermeiden, dass die KI neue Bildinhalte halluziniert.
+</div>
+</div>  
+
+<ImageSequence folder="sdxl-lora" mode="fade" />
+
+### IP-Adapter
+
+<div class="grid-layout-3">
+<div class="keep-hidden">
+![final workflow](@images/svg/ipadapter.svg)
+</div>
+<div class="col-span-2">
+Der Vorteil vom IP-Adapter ist, dass dieser nicht trainiert werden muss. Mit dem IP-Adapter lässt sich flexibel und schnell der Duktus und feine Bildmerkmale angleichen. Ein zackigeres Eingabebild führt etwa zu einem zackigeren Duktus, an dem sich das Modell beim Entrauschungsprozess orientiert. Die Stärke des IP-Adapters sollte in meinem Fall allerdings nur dezent eingesetzt werden. Ist der Einfluss zu stark, orientiert sich das Ergebnis zu sehr am Referenzbild.
+</div>
+</div>  
+
+## Rauschen für Hintergrund
+
+<div class="grid-layout-3">
+<div class="keep-hidden">
+![final workflow](@images/svg/noise.svg)
+</div>
+<div class="col-span-2">
+Ein weiteres Problem besteht darin, dass Flächen ohne erkennbare Strukturen oft nicht texturell angepasst werden. Da ich die Bilder nicht besonders stark verrausche (0,25–0,35), werden in Bereichen mit zu wenig Strukturinformation keine Pinseltexturen angewandt.
+</div>
+</div>
+
+Um dieses Problem zu umgehen, habe ich dem Bild vor der Einspeisung in den VAE leichtes Pixelrauschen hinzugefügt. Durch das Einfügen minimaler Bildinformationen auf Pixelebene entsteht selbst in ehemals weißen Flächen eine gewisse Struktur, von der ausgehend neue Pinseltexturen interpretiert werden können.
+Wichtig ist dabei, zwischen Bildrauschen auf Pixelebene und dem latenten Rauschen im Diffusionsprozess zu unterscheiden. Das künstlich hinzugefügte Bildrauschen dient lediglich dazu, dem Encoder Texturinformationen zu liefern, damit eine Fläche nicht als vollständig homogen enkodiert wird. Es ist jedoch nicht identisch mit dem Verrauschen des latenten Bildes, das im U-Net während der Bildgenerierung verwendet wird.
+<br />
+
+<ImageSequence folder="nois" mode="fade" />
+
+## Strukturkontrolle: Controlnet
+
+<div class="grid-layout">
+<div class="keep-hidden">
+ControlNet wurde speziell dafür entwickelt, strukturelle Kontrolle durch Computervision-Funktionen über das Ergebnis zu ermöglichen. Es erweitert das U-Net von Stable Diffusion um zusätzliche Bedingungen, die es erlauben, Informationen wie Posen, Kanten, Tiefenkarten oder Skizzen in den Bildgenerierungsprozess einzubinden. Diese strukturellen Hinweise werden in das U-Net eingespeist und sorgen dafür, dass das generierte Bild sich an die visuellen Vorgaben orientiert (Zhang et al., 2023, S. 1 ff.).
+</div>
+<div>
+<Reference 
+  title="Adding Conditional Control to Text-to-Image Diffusion Models" 
+  type="paper"
+  authors=" Lvmin Zhang (lllyasviel), Anyi Rao, Maneesh Agrawala" 
+  year="2025" 
+  link="https://arxiv.org/abs/2302.05543" />
+</div>
+</div>
+
+
+Ein zu niedriger Denoise-Wert erhält zwar die Struktur, lässt aber feine Texturen vermissen. Ein zu hoher Wert führt dagegen zu Halluzinationen, etwa zusätzlichen Gesichtern oder Objekten. Über CFG, LoRAs und IP-Adapter lässt sich das steuern, dennoch entstehen bei Gesichtern und Details oft Fehlinterpretationen. Der zusätzliche Einsatz von ControlNet, kann dies verhindern. 
+<br />
+
+<div class="grid-layout-3 text-center">
+<div>
+Ohne ControlNet
+![Controlnet 1](@images/comparison/controlnet/controlnet_1_2.png)
+</div>
+<div>
+SAM Preprocessor
+![Controlnet 2](@images/comparison/controlnet/controlnet_2.png)
+</div>
+<div>
+mit ControlNet
+![Controlnet 3](@images/comparison/controlnet/controlnet_3_2.png)
+</div>
+</div>
+
+
+
+{/* 
+Seed: Ist der Startwert für die Pseudozufallszahlen, von dem das latente Rauschen ausgeht. Wird „Control after generate“ auf „randomize“ gesetzt, wird nach jeder Generation ein neuer Zufallswert erzeugt, um bei gleichen Einstellungen unterschiedliche Bilder zu generieren.
+Sampler name: Legt fest, welche mathematische Methode für den Entrauschungsprozess verwendet wird, etwa Euler, DPM++, uvm. (ComfyUI Text to Image Workflow, o. J.)
+Steps: Gibt die Anzahl der Entrauschungsschritte an. Eine höhere Zahl führt zu mehr Details, erfordert aber mehr Rechenzeit. (ComfyUI Text to Image Workflow, o. J.)
+CFG (Classifier-Free Guidance): Steuert, wie stark das Modell dem Prompt folgen soll. Ein CFG-Wert von 0 bedeutet, dass der Prompt ignoriert wird. Je höher der Wert, desto stärker orientiert sich das Modell am Prompt (Andrew, 2024)
+Scheduler: Bestimmt, wie die Rauschreduzierung über die einzelnen Schritte verteilt wird, zum Beispiel linear, exponentiell oder nach dem Karras-Verfahren. (Andrew, 2024)
+Denoise: Die Denoise Stärke bestimmt wie viel latentes Rauschen hinzugefügt wird. Ein Wert von 0 bedeutet, dass kein Rauschen hinzugefügt und das Eingabebild nicht verändert wird. Ein Wert von 1 erzeugt maximales Rauschen, wodurch nichts mehr vom Eingabebild erhalten bleibt und nur der Textprompt gewichtet. (Andrew, 2024) */}

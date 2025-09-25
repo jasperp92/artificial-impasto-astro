@@ -1,0 +1,71 @@
+---
+interface Props {
+    images: string[];
+}
+
+const { images } = Astro.props;
+const imagesJSON = JSON.stringify(images);
+---
+
+<div
+    id="lightbox"
+    data-images={imagesJSON}
+    class="hidden fixed inset-0 bg-black/80 flex items-center justify-center z-50"
+>
+    <button
+        id="lightbox-close"
+        class="absolute top-4 right-4 text-white text-2xl">✕</button
+    >
+    <button id="lightbox-prev" class="absolute left-4 text-white text-3xl"
+        >‹</button
+    >
+    <img
+        id="lightbox-img"
+        src=""
+        alt=""
+        class="max-w-[90%] max-h-[90%] object-contain"
+    />
+    <button id="lightbox-next" class="absolute right-4 text-white text-3xl"
+        >›</button
+    >
+</div>
+
+<script is:inline>
+    window.addEventListener("DOMContentLoaded", () => {
+        const lightbox = document.getElementById("lightbox");
+        const lightboxImg = document.getElementById("lightbox-img");
+        const btnClose = document.getElementById("lightbox-close");
+        const btnPrev = document.getElementById("lightbox-prev");
+        const btnNext = document.getElementById("lightbox-next");
+
+        const images = JSON.parse(lightbox.dataset.images);
+        let current = 0;
+
+        function show(index) {
+            current = (index + images.length) % images.length;
+            lightboxImg.src = images[current];
+            lightbox.classList.remove("hidden");
+        }
+
+        // Klicks von Gallery-Buttons (mit data-lightbox) abfangen
+        document.querySelectorAll("[data-lightbox]").forEach((btn) => {
+            btn.addEventListener("click", () => {
+                const index = parseInt(btn.dataset.lightbox, 10);
+                show(index);
+            });
+        });
+
+        btnClose.addEventListener("click", () =>
+            lightbox.classList.add("hidden"),
+        );
+        btnPrev.addEventListener("click", () => show(current - 1));
+        btnNext.addEventListener("click", () => show(current + 1));
+
+        document.addEventListener("keydown", (e) => {
+            if (lightbox.classList.contains("hidden")) return;
+            if (e.key === "Escape") lightbox.classList.add("hidden");
+            if (e.key === "ArrowLeft") show(current - 1);
+            if (e.key === "ArrowRight") show(current + 1);
+        });
+    });
+</script>

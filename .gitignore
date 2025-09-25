@@ -22,3 +22,6 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# Images (alles unter assets/images ignorieren)
+src/assets/images/*

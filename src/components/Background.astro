@@ -5,9 +5,10 @@ const { background, effects = [] } = Astro.props;
 {background && (
   <div
     id="bg-layer"
-    class="fixed inset-0 -z-10 bg-center bg-no-repeat will-change-transform sm:bg-cover
+    class="fixed inset-0 -z-10 bg-center bg-no-repeat will-change-transform
+           bg-cover md:bg-size-[220%] lg:bg-size-[160%] xl:bg-size-[130%]
            dark:mix-blend-normal mix-blend-difference"
-    style={`background-image:url('${background}'); background-size: cover;`}
+    style={`background-image:url('${background}');`}
     data-effects={JSON.stringify(effects)}
   ></div>
 )}
@@ -38,7 +39,7 @@ const { background, effects = [] } = Astro.props;
         if (!mq.matches) {
           // Effekte nur, wenn Screen < 992px
           if (EFFECTS.includes("effect-move")) {
-            const offset = Math.round(-20 + y * 0.15);
+            const offset = Math.round(-200 + y * 0.15);
             bg.style.backgroundPosition = `${offset}px center`;
           }
 

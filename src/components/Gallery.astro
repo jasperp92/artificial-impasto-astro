@@ -1,79 +1,208 @@
 ---
+import { Image } from "astro:assets";
+import Lightbox from "./Lightbox.astro";
+
 interface Props {
-  path: string; // z. B. "urlaub" oder "museum"
+  path: string;
+  type?: "thumbs" | "grid" | "masonry";
+  maxCols?: number;
+  responsive?: boolean;
+  gap?: number; // ✅ neue Option für grid-gap
 }
 
-const { path } = Astro.props;
+const { path, type = "thumbs", maxCols = 4, responsive = true, gap = 2 } = Astro.props;
 
-const allImages = import.meta.glob("../assets/images/gallery/**/*.{jpg,jpeg,png}", { eager: true });
+const allImages = import.meta.glob(
+  "../assets/images/gallery/**/*.{jpg,jpeg,png,webp}",
+  { eager: true, import: "default" }
+);
 
+// alphabetisch sortieren
 const imageList = Object.entries(allImages)
   .filter(([file]) => file.includes(`/gallery/${path}/`))
-  .map(([_, mod]: any) => mod.default);
+  .sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true }))
+  .map(([_, mod]) => mod);
 
 const galleryId = `gallery-${path}`;
 
-// Maße des ersten Bildes als Referenz
-const refWidth = imageList[0].width;
-const refHeight = imageList[0].height;
+// Builder für Grid-Variante
+function buildGridClasses(max: number, responsive: boolean, gap: number) {
+  if (!responsive) {
+    return `grid gap-${gap} grid-cols-${max}`;
+  }
+  return [
+    "grid",
+    `gap-${gap}`,
+    `grid-cols-${Math.max(1, max - 4)}`,
+    `sm:grid-cols-${Math.max(1, max - 3)}`,
+    `md:grid-cols-${Math.max(1, max - 2)}`,
+    `lg:grid-cols-${Math.max(1, max - 1)}`,
+    `xl:grid-cols-${max}`,
+  ].join(" ");
+}
 
-// Verhältnis fürs CSS: Breite = 100%, Höhe im gleichen Seitenverhältnis
-const aspectRatio = refWidth / refHeight;
+// Builder für Masonry (columns-*)
+function buildMasonryClasses(max: number, responsive: boolean, gap: number) {
+  if (!responsive) {
+    return `columns-${max} gap-${gap}`;
+  }
+  return [
+    `columns-${Math.max(1, max - 4)}`,
+    `sm:columns-${Math.max(1, max - 3)}`,
+    `md:columns-${Math.max(1, max - 2)}`,
+    `lg:columns-${Math.max(1, max - 1)}`,
+    `xl:columns-${max}`,
+    `gap-${gap}`,
+  ].join(" ");
+}
+
+const gridClasses = buildGridClasses(maxCols, responsive, gap);
+const masonryClasses = buildMasonryClasses(maxCols, responsive, gap);
 ---
 
 <div id={galleryId} class="w-full mb-8">
-  <!-- Container mit fixem Seitenverhältnis basierend auf dem ersten Bild -->
-  <div
-    class="relative w-full mb-1 bg-black"
-    style={`aspect-ratio: ${refWidth} / ${refHeight};`}
-  >
-    <img
-      data-role="active"
-      src={imageList[0].src}
-      alt=""
-      class="absolute inset-0 m-auto max-h-full max-w-full object-contain transition"
-    />
-  </div>
-
-  <!-- Thumbnails -->
-  <div class="flex flex-wrap gap-1">
-    {imageList.map((img, index) => (
-      <button
-        type="button"
-        class="flex-shrink-0 cursor-pointer opacity-50 border-transparent"
-        data-index={index}
-      >
-        <img
-          src={img.src}
+  {type === "grid" && (
+    <div class={gridClasses}>
+      {imageList.map((img) => (
+        <Image
+          src={img}
           alt=""
-          class="block w-32 h-24 object-cover"
+          loading="lazy"
+          decoding="async"
+          widths={[400, 800, 1200]}
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          class="w-full h-auto object-cover"
         />
-      </button>
-    ))}
-  </div>
+      ))}
+    </div>
+  )}
+
+  {type === "masonry" && (
+    <div class={masonryClasses}>
+      {imageList.map((img) => (
+        <Image
+          src={img}
+          alt=""
+          loading="lazy"
+          decoding="async"
+          widths={[400, 800, 1200]}
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          class={`mb-${gap} w-full break-inside-avoid object-cover`}
+        />
+      ))}
+    </div>
+  )}
+
+  {type === "thumbs" && (
+    <>
+      <!-- Aktives Bild -->
+      <div
+        class="relative w-full mb-1"
+        style={`aspect-ratio: ${imageList[0].width} / ${imageList[0].height};`}
+      >
+        {imageList.map((img, i) => (
+          <Image
+            src={img}
+            alt=""
+            loading={i === 0 ? "eager" : "lazy"}
+            decoding="async"
+            widths={[640, 1024, 1600]}
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 70vw"
+            class={`absolute inset-0 m-auto max-h-full max-w-full object-contain ${
+              i === 0 ? "opacity-100" : "opacity-0"
+            }`}
+            data-index={i}
+          />
+        ))}
+      </div>
+
+      <!-- Thumbnails -->
+      <div class="flex flex-wrap gap-1">
+        {imageList.map((img, index) => (
+          <button
+            type="button"
+            class="flex-shrink-0 cursor-pointer opacity-50 border-transparent"
+            data-index={index}
+          >
+            <Image
+              src={img}
+              alt=""
+              loading="lazy"
+              decoding="async"
+              widths={[150, 300]}
+              sizes="150px"
+              class="block w-32 h-24 object-cover"
+            />
+          </button>
+        ))}
+      </div>
+    </>
+  )}
 </div>
 
-<script>
-  window.addEventListener("DOMContentLoaded", () => {
-    document.querySelectorAll("[id^='gallery-']").forEach((gallery) => {
-      const activeImage = gallery.querySelector("[data-role='active']");
-      const thumbnails = gallery.querySelectorAll("[data-index]");
+{type === "thumbs" && (
+  <script>
+    window.addEventListener("DOMContentLoaded", () => {
+      let activeGallery = null;
+      let currentIndex = 0;
 
-      thumbnails.forEach((thumb) => {
-        thumb.addEventListener("click", () => {
-          const img = thumb.querySelector("img");
-          if (img && activeImage) {
-            activeImage.src = img.src;
-          }
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              activeGallery = entry.target;
+              currentIndex = 0;
+            }
+          });
+        },
+        { threshold: 0.5 }
+      );
 
-          thumbnails.forEach((t) => t.classList.remove("opacity-100"));
-          thumb.classList.add("opacity-100");
+      document.querySelectorAll("[id^='gallery-']").forEach((gallery) => {
+        const bigImages = gallery.querySelectorAll("img[data-index]");
+        const buttons = gallery.querySelectorAll("button[data-index]");
+
+        function showImage(idx) {
+          currentIndex = idx;
+          bigImages.forEach((img) => {
+            img.classList.toggle("opacity-100", parseInt(img.dataset.index) === idx);
+            img.classList.toggle("opacity-0", parseInt(img.dataset.index) !== idx);
+          });
+          buttons.forEach((b) => b.classList.remove("opacity-100"));
+          if (buttons[idx]) buttons[idx].classList.add("opacity-100");
+        }
+
+        buttons.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const idx = parseInt(btn.dataset.index);
+            showImage(idx);
+            activeGallery = gallery;
+          });
         });
+
+        if (buttons.length > 0) {
+          showImage(0);
+        }
+
+        observer.observe(gallery);
       });
 
-      if (thumbnails.length > 0) {
-        thumbnails[0].classList.add("opacity-100");
-      }
+      document.addEventListener("keydown", (e) => {
+        if (!activeGallery) return;
+        const bigImages = activeGallery.querySelectorAll("img[data-index]");
+        const buttons = activeGallery.querySelectorAll("button[data-index]");
+
+        if (e.key === "ArrowRight") {
+          e.preventDefault();
+          const nextIndex = (currentIndex + 1) % bigImages.length;
+          buttons[nextIndex]?.click();
+        }
+        if (e.key === "ArrowLeft") {
+          e.preventDefault();
+          const prevIndex = (currentIndex - 1 + bigImages.length) % bigImages.length;
+          buttons[prevIndex]?.click();
+        }
+      });
     });
-  });
-</script>
+  </script>
+)}

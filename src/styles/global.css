@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Basic&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Onest:wght@100..900&display=swap'); */
 
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -7,10 +8,10 @@
 @tailwind components;
 @tailwind utilities;
 
+/* leider gibts kein Ü im webfont woff2 oder ttf */
 @font-face {
   font-family: "Terminal Grotesque";
-  src: url("/artificial-impasto/fonts/terminal-grotesque.woff2") format("woff2"),
-    url("/artificial-impasto/fonts/terminal-grotesque.otf") format("opentype");
+  src: url("/artificial-impasto/fonts/terminal-grotesque.otf") format("opentype");
   font-weight: 200;
   font-style: normal;
   font-display: swap;
@@ -18,8 +19,7 @@
 
 @font-face {
   font-family: "Terminal Grotesque Open";
-  src: url("/artificial-impasto/fonts/terminal-grotesque_open.woff2") format("woff2"),
-    url("/artificial-impasto/fonts/terminal-grotesque_open.otf") format("opentype");
+  src: url("/artificial-impasto/fonts/terminal-grotesque_open.otf") format("opentype");
   font-style: normal;
   font-display: swap;
 }
@@ -109,7 +109,7 @@
   }
 
   .layout-box {
-    @apply gap-3 border-1 w-full border-black dark:border-zinc-100 rounded p-4 rounded-lg hover:bg-gray-900/25 dark:hover:bg-zinc-100/25;
+    @apply gap-3 border-2 dark:border-1 w-full border-black dark:border-zinc-100 rounded p-4 rounded-lg hover:bg-gray-900/25 dark:hover:bg-zinc-100/25;
   }
 
   .comment-left {
@@ -118,6 +118,11 @@
 
   .comment-right {
     @apply italic relative mb-6 mr-8 w-fit rounded border p-2 ml-auto before:content-[''] before:absolute before:top-1/2 before:right-0 before:w-8 before:h-px before:bg-current before:translate-x-full;
+  }
+
+  /* diese Klasse in Tailwind 3.1? für masonry */
+  .break-inside-avoid {
+    break-inside: avoid;
   }
 
   .footnotes {
@@ -147,41 +152,28 @@
     font-family: "Terminal Grotesque Open", sans-serif;
   }
 
-  /* Präsentationsmodus */
-  /* Präsentationsmodus */
-  /* Präsentationsmodus */
+/* Präsentationsmodus */
   .mode-presentation {
-    p:not(:has(img)) {
-      display: none;
-    }
+    /* Sichtbarkeit */
+    p:not(:has(img)) { display: none; }
+    .reference,
+    .keep-hidden { display: none !important; }
 
+    .quote,
+    .image-source,
+    .layout-box *,
+    .keep-visible,
+    .citation { display: block; }
+
+    /* Layout / Typografie */
     main,
-    td {
-      @apply text-xl
-    }
+    td { @apply text-xl; }
 
-    .image-source {
-      @apply text-base;
-    }
-
-    img {
-      @apply mx-auto;
-    }
+    .image-source { @apply text-base; }
+    img { @apply mx-auto; }
 
     .grid-layout {
       @apply grid-cols-1 md:grid-cols-1 lg:grid-cols-1;
-    }
-
-    .grid-layout-3 {
-      @apply grid-cols-1 md:grid-cols-1 lg:grid-cols-1;
-    }
-
-    .quote,
-    .layout-box *,
-    .image-source,
-    .keep-visible,
-    .citation {
-      display: block;
     }
   }
 }

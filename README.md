@@ -2,7 +2,14 @@
 
 ## TODO
 
+
 ### Technisches
+- ImageSequence: 
+    - entweder step oder fade. Slider ist zusatzoption
+    - data-range option
+- Gallery:
+    - Trennen von Thumbnail Carousel und Gallery, damits übersichtlicher wird. 
+    - Lightbox für Grid und Masonry erstmal. 
 - Seitennavigation -> PageNav immer 3er mit Optionen, left, center third link
 - Internal Link zu Reference: (interner Link)
 - Lightbox für Bilder einbauen (für alle auch markdown)
