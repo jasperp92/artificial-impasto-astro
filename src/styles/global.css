@@ -49,7 +49,11 @@
   }
 
   h3 {
-    @apply text-2xl mt-8 mb-6 font-semibold;
+    @apply text-3xl mt-6 mb-6 font-semibold;
+  }
+
+  h4 {
+    @apply text-2xl mb-2;
   }
 
   p {
@@ -80,12 +84,18 @@
     @apply list-disc list-outside pl-4;
   }
 
-  hr {
-    @apply mt-8;
+  main img {
+    @apply cursor-zoom-in;
+  }
+
+  /* hier für Image sequence oder Gallery ausblenden */
+  [data-sequence] img,
+  .no-lightbox img {
+    @apply cursor-default;
   }
 
   .quote {
-    @apply border-l-1 dark:border-white pl-6 italic;
+    @apply border-l-1 dark:border-white pl-6 italic mb-2;
   }
 
   .citation {
@@ -112,12 +122,25 @@
     @apply gap-3 border-2 dark:border-1 w-full border-black dark:border-zinc-100 rounded p-4 rounded-lg hover:bg-gray-900/25 dark:hover:bg-zinc-100/25;
   }
 
+  /* bg-zinc-200 dark:bg-zinc-900 */
+  .info-box {
+    @apply gap-3 text-lg border-1 w-full rounded p-4 rounded-lg;
+
+    hr {
+      @apply -mx-4 my-2;
+    }
+  }
+
   .comment-left {
-    @apply italic relative mb-6 ml-8 w-fit rounded border p-2 before:content-[''] before:absolute before:top-1/2 before:left-0 before:w-8 before:h-px before:bg-current before:-translate-x-full;
+    @apply italic relative mb-6 ml-20 w-fit rounded rounded-lg border p-2 before:content-[''] before:absolute before:top-1/2 before:left-0 before:w-20 before:h-px before:bg-current before:-translate-x-full;
   }
 
   .comment-right {
-    @apply italic relative mb-6 mr-8 w-fit rounded border p-2 ml-auto before:content-[''] before:absolute before:top-1/2 before:right-0 before:w-8 before:h-px before:bg-current before:translate-x-full;
+    @apply italic relative mb-6 mr-20 w-fit rounded rounded-lg border p-2 ml-auto before:content-[''] before:absolute before:top-1/2 before:right-0 before:w-20 before:h-px before:bg-current before:translate-x-full;
+  }
+
+  .comment-center {
+    @apply italic relative mb-6 mx-auto max-w-[80%] rounded rounded-lg border p-2 ml-auto;
   }
 
   /* diese Klasse in Tailwind 3.1? für masonry */
@@ -152,27 +175,50 @@
     font-family: "Terminal Grotesque Open", sans-serif;
   }
 
-/* Präsentationsmodus */
+  /* Präsentationsmodus */
   .mode-presentation {
-    /* Sichtbarkeit */
-    p:not(:has(img)) { display: none; }
-    .reference,
-    .keep-hidden { display: none !important; }
 
-    .quote,
-    .image-source,
+    /* Sichtbarkeit */
+    p:not(:has(img)):not(.keep-visible) {
+      display: none;
+    }
+
+    /* Optional: volle Höhe pro Folie */
+    .slide {
+      @apply min-h-screen flex flex-col justify-center content-center my-0; 
+    }
+
+    .reference,
+    .keep-hidden {
+      display: none !important;
+    }
+
+    .quote:not(.keep-hidden),
+    .image-source:not(.keep-hidden),
     .layout-box *,
     .keep-visible,
-    .citation { display: block; }
+    .keep-visible p,
+    .citation:not(.keep-hidden) {
+      display: block !important;
+    }
 
     /* Layout / Typografie */
     main,
-    td { @apply text-xl; }
+    thead,
+    main li,
+    td {
+      @apply text-xl;
+    }
 
-    .image-source { @apply text-base; }
-    img { @apply mx-auto; }
+    .image-source {
+      @apply text-lg;
+    }
 
-    .grid-layout {
+    img {
+      @apply mx-auto;
+    }
+
+    .grid-layout:not(.keep-layout) {
       @apply grid-cols-1 md:grid-cols-1 lg:grid-cols-1;
     }
   }
@@ -205,10 +251,10 @@ table tbody tr:last-child td {
   @apply border-b-0;
 }
 
-  /* spezielle Regel für Tabelle mit Klasse .facts */
-  table.facts td {
-    @apply border-r-0;
-  }
+/* spezielle Regel für Tabelle mit Klasse .facts */
+table.facts td {
+  @apply border-r-0;
+}
 
 /* --- Mobile Collapse --- */
 @media (max-width: 640px) {
@@ -230,7 +276,7 @@ table tbody tr:last-child td {
     @apply p-2 border-b border-white;
   }
 
-  table tbody td  {
+  table tbody td {
     @apply border-none px-0 py-0 text-sm block text-left;
 
     &::before {

@@ -60,7 +60,7 @@ Ab einer Anzahl von ca. 15 Schritten werden in meinem Fall die Ergebnisse nicht 
 
 
 
-<ImageSequence folder="steps" mode="steps" />
+<ImageSequence folder="steps" mode="fade" />
 
 
 ### Entrauschungsgrad (Denoise)
@@ -69,7 +69,7 @@ Die Denoise Stärke bestimmt wie viel latentes Rauschen hinzugefügt wird. Ein W
 Der Denoise-Wert sollte relativ gering sein, damit das Eingabebild nicht zu stark verrauscht wird und die Komposition gut erhalten bleibt. Möchte man der generativen KI mehr kompositorische Freiheit und einen expressiveren Duktus verleihen, kann der Wert leicht erhöht werden. Bei Gesichtern und markanten Details sollte der Wert allerdings verringert werden, damit diese nicht zu stark vom Original abweichen. 
 
 <br />
-<ImageSequence folder="denois" mode="step" />
+<ImageSequence folder="denois" mode="fade" />
 <p class="description">Der CFG Wert liegt in diesem Fall konstant bei 5.</p>
 
 ### Promptorientierung (CFG)
@@ -169,9 +169,20 @@ Wichtig ist dabei, zwischen Bildrauschen auf Pixelebene und dem latenten Rausche
 
 ## Strukturkontrolle: Controlnet
 
-<div class="grid-layout">
+<div class="grid-layout-3">
 <div class="keep-hidden">
+![final workflow](@images/svg/controlnet.svg)
+
+
+</div>
+<div class="col-span-2">
 ControlNet wurde speziell dafür entwickelt, strukturelle Kontrolle durch Computervision-Funktionen über das Ergebnis zu ermöglichen. Es erweitert das U-Net von Stable Diffusion um zusätzliche Bedingungen, die es erlauben, Informationen wie Posen, Kanten, Tiefenkarten oder Skizzen in den Bildgenerierungsprozess einzubinden. Diese strukturellen Hinweise werden in das U-Net eingespeist und sorgen dafür, dass das generierte Bild sich an die visuellen Vorgaben orientiert (Zhang et al., 2023, S. 1 ff.).
+</div>
+</div>
+
+<div class="grid-layout">
+<div>
+Ein zu niedriger Denoise-Wert erhält zwar die Struktur, lässt aber feine Texturen vermissen. Ein zu hoher Wert führt dagegen zu Halluzinationen, etwa zusätzlichen Gesichtern oder Objekten. Über CFG, LoRAs und IP-Adapter lässt sich das steuern, dennoch entstehen bei Gesichtern und Details oft Fehlinterpretationen. Der zusätzliche Einsatz von ControlNet, kann dies verhindern. 
 </div>
 <div>
 <Reference 
@@ -182,10 +193,6 @@ ControlNet wurde speziell dafür entwickelt, strukturelle Kontrolle durch Comput
   link="https://arxiv.org/abs/2302.05543" />
 </div>
 </div>
-
-
-Ein zu niedriger Denoise-Wert erhält zwar die Struktur, lässt aber feine Texturen vermissen. Ein zu hoher Wert führt dagegen zu Halluzinationen, etwa zusätzlichen Gesichtern oder Objekten. Über CFG, LoRAs und IP-Adapter lässt sich das steuern, dennoch entstehen bei Gesichtern und Details oft Fehlinterpretationen. Der zusätzliche Einsatz von ControlNet, kann dies verhindern. 
-<br />
 
 <div class="grid-layout-3 text-center">
 <div>
@@ -202,7 +209,11 @@ mit ControlNet
 </div>
 </div>
 
+### Halluzinationen ohne ControlNet
 
+Ist der Denoise-Wert entsprechend hoch, fängt das Modell an Personen frei zu erfinden. Mit ControlNet kann dagegengesteuert werden. In meinem Fall habe ich zwei ControlNets aktiviert.
+
+<ImageSequence folder="controlnet" mode="fade" withSlider />
 
 {/* 
 Seed: Ist der Startwert für die Pseudozufallszahlen, von dem das latente Rauschen ausgeht. Wird „Control after generate“ auf „randomize“ gesetzt, wird nach jeder Generation ein neuer Zufallswert erzeugt, um bei gleichen Einstellungen unterschiedliche Bilder zu generieren.

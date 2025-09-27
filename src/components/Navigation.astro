@@ -46,81 +46,83 @@ const rootPages = navPages
 ---
 
 <nav class="space-y-2">
-  {rootPages.map((page) => (
-    <div class="">
-      <div class="mb-2">
-        <a href={page.url} class="font-bold hover:font-bold">
-          {page.title}
-        </a>
-      </div>
+  {
+    rootPages.map((page) => (
+      <div class="">
+        <div class="mb-2">
+          <a href={page.url} class="font-bold hover:font-bold">
+            {page.title}
+          </a>
+        </div>
 
-      {children[page.url] && (
-        <ul>
-          {children[page.url]
-            .sort((a, b) => a.order - b.order)
-            .map((child, idx, arr) => {
-              const isLast = idx === arr.length - 1;
-              const hasGrandchildren = children[child.url] ?? [];
-              const isActiveBranch =
-                currentPath.startsWith(child.url) ||
-                hasGrandchildren.some((grand) =>
-                  currentPath.startsWith(grand.url),
-                );
+        {children[page.url] && (
+          <ul>
+            {children[page.url]
+              .sort((a, b) => a.order - b.order)
+              .map((child, idx, arr) => {
+                const isLast = idx === arr.length - 1;
+                const hasGrandchildren = children[child.url] ?? [];
+                const isActiveBranch =
+                  currentPath.startsWith(child.url) ||
+                  hasGrandchildren.some((grand) =>
+                    currentPath.startsWith(grand.url),
+                  );
 
-              return (
-                <li
-                  class={`relative pl-2 -mb-2.5 pb-4 ${
-                    !isLast
-                      ? "border-l border-zinc-900 dark:border-zinc-100"
-                      : ""
-                  }`}
-                >
-                  <span class="absolute top-2.5 left-0 h-px w-2 bg-zinc-900 dark:bg-zinc-100" />
-
-                  <a
-                    href={child.url}
-                    class={`hover:font-bold ml-1 ${
-                      currentPath === child.url ? "underline" : ""
+                return (
+                  <li
+                    class={`relative pl-2 -mb-2.5 pb-4 ${
+                      !isLast
+                        ? "border-l border-zinc-900 dark:border-zinc-100"
+                        : ""
                     }`}
                   >
-                    {child.title}
-                  </a>
+                    <span class="absolute top-2.5 left-0 h-px w-2 bg-zinc-900 dark:bg-zinc-100" />
 
-                  {children[child.url] && isActiveBranch && (
-                    <ul class="pl-2">
-                      {children[child.url]
-                        .sort((a, b) => a.order - b.order)
-                        .map((grand, gidx, garr) => {
-                          const gLast = gidx === garr.length - 1;
-                          return (
-                            <li
-                              class={`relative pl-3 -mb-2.5 pb-3 ${
-                                !gLast
-                                  ? "border-l border-zinc-900 dark:border-zinc-100"
-                                  : ""
-                              }`}
-                            >
-                              <span class="absolute top-2.5 left-0 h-px w-2 bg-zinc-900 dark:bg-zinc-100" />
-                              <a
-                                href={grand.url}
-                                class={`hover:font-bold hover:tracking-normal tracking-wide text-sm ${
-                                  currentPath === grand.url ? "underline" : ""
+                    <a
+                      href={child.url}
+                      class={`hover:font-bold ml-1 ${
+                        currentPath === child.url ? "underline" : ""
+                      }`}
+                    >
+                      {child.title}
+                    </a>
+
+                    {children[child.url] && isActiveBranch && (
+                      <ul class="pl-2">
+                        {children[child.url]
+                          .sort((a, b) => a.order - b.order)
+                          .map((grand, gidx, garr) => {
+                            const gLast = gidx === garr.length - 1;
+                            return (
+                              <li
+                                class={`relative pl-3 -mb-2.5 pb-3 ${
+                                  !gLast
+                                    ? "border-l border-zinc-900 dark:border-zinc-100"
+                                    : ""
                                 }`}
                               >
-                                {grand.title}
-                              </a>
-                            </li>
-                          );
-                        })}
-                    </ul>
-                  )}
-                </li>
-              );
-            })}
-        </ul>
-      )}
-    </div>
-  ))}
+                                <span class="absolute top-2.5 left-0 h-px w-2 bg-zinc-900 dark:bg-zinc-100" />
+                                <a
+                                  href={grand.url}
+                                  class={`hover:font-bold hover:tracking-normal tracking-wide text-sm ${
+                                    currentPath === grand.url ? "underline" : ""
+                                  }`}
+                                >
+                                  {grand.title}
+                                </a>
+                              </li>
+                            );
+                          })}
+                      </ul>
+                    )}
+                  </li>
+                );
+              })}
+          </ul>
+        )}
+      </div>
+    ))
+  }
 
   <div class="mt-6 text-sm">
     <h3 class="font-bold mb-2"></h3>
@@ -132,23 +134,43 @@ const rootPages = navPages
   <ul id="headings-nav" class="mb-2"></ul>
 </div>
 
+
 <script>
   document.addEventListener("DOMContentLoaded", () => {
+    const isPresentation = document.querySelector(".mode-presentation") !== null;
+
     const container = document.querySelector("#headings-nav");
     if (!container) return;
 
     const h2s = document.querySelectorAll("main h2");
-    const links = [];
+    const allHeadings = document.querySelectorAll("main h2, main h3");
+    if (!allHeadings.length) return;
 
-    h2s.forEach((h2) => {
-      let id = h2.id;
-      if (!id) {
-        id = h2.textContent
-          .toLowerCase()
-          .replace(/\s+/g, "-")
-          .replace(/[^a-z0-9-]/g, "");
-        h2.id = id;
+    const links = [];
+    const h2Map = new Map(); // h2.id → link
+    const h3ToH2 = new Map(); // h3.id → übergeordnetes h2.id
+
+    let lastH2 = null;
+    allHeadings.forEach((h) => {
+      if (h.tagName.toLowerCase() === "h2") {
+        lastH2 = h.id || createId(h);
+      } else if (h.tagName.toLowerCase() === "h3" && lastH2) {
+        h3ToH2.set(h.id || createId(h), lastH2);
       }
+    });
+
+    function createId(el) {
+      let id = el.textContent
+        .toLowerCase()
+        .replace(/\s+/g, "-")
+        .replace(/[^a-z0-9-]/g, "");
+      el.id = id;
+      return id;
+    }
+
+    // Sidebar nur für H2
+    h2s.forEach((h2) => {
+      const id = h2.id || createId(h2);
 
       const li = document.createElement("li");
       li.innerHTML = `
@@ -163,38 +185,79 @@ const rootPages = navPages
 
       const el = li.querySelector("a");
       links.push({ id, el });
+      h2Map.set(id, el);
 
-      // Klick-Handler → aktiven Link setzen
-      el.addEventListener("click", () => {
-        links.forEach((l) => {
-          l.el.classList.remove("text-black", "dark:text-white", "font-bold");
-          l.el.classList.add("text-zinc-400");
-        });
-        el.classList.remove("text-zinc-400");
-        el.classList.add("text-black", "dark:text-white", "font-bold");
-      });
+      el.addEventListener("click", () => setActive(id));
     });
 
-    // Intersection Observer → aktives Heading markieren
+    function setActive(id) {
+      const targetId = h3ToH2.get(id) || id;
+
+      links.forEach((l) => {
+        l.el.classList.remove(
+          "text-black",
+          "dark:text-white",
+          "font-bold",
+          "tracking-tight"
+        );
+        l.el.classList.add("text-zinc-400");
+      });
+      const link = h2Map.get(targetId);
+      if (link) {
+        link.classList.remove("text-zinc-400");
+        link.classList.add(
+          "text-black",
+          "dark:text-white",
+          "font-bold",
+          "tracking-tight"
+        );
+      }
+
+      currentIndex = navTargets.findIndex((el) => el.id === id);
+    }
+
+    // Intersection Observer → markiert Parent-H2
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          const link = links.find((l) => l.id === entry.target.id);
-          if (!link) return;
-
-          if (entry.isIntersecting) {
-            links.forEach((l) => {
-              l.el.classList.remove("text-black", "dark:text-white", "font-bold");
-              l.el.classList.add("text-zinc-400");
-            });
-            link.el.classList.remove("text-zinc-400");
-            link.el.classList.add("text-black", "dark:text-white", "font-bold");
+          if (entry.isIntersecting && entry.target.id) {
+            setActive(entry.target.id);
           }
         });
       },
-      { rootMargin: "-40% 0px -40% 0px", threshold: 0 }
+      { rootMargin: "0px 0px -80% 0px", threshold: 0 }
     );
+    allHeadings.forEach((h) => observer.observe(h));
 
-    h2s.forEach((h2) => observer.observe(h2));
+    // === Kombinierte Navigation ===
+    const navTargets = isPresentation
+      ? Array.from(document.querySelectorAll("main h2, main h3, .mode-presentation .slide"))
+      : Array.from(document.querySelectorAll("main h2, main h3"));
+
+    console.log("Navigation Targets:", navTargets.map(el => el.tagName || el.className));
+
+    let currentIndex = 0;
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowDown" || e.key === "PageDown") {
+        e.preventDefault();
+        currentIndex = Math.min(currentIndex + 1, navTargets.length - 1);
+        const el = navTargets[currentIndex];
+        console.log("→ runter:", el.tagName || el.className, currentIndex);
+        el.scrollIntoView({ behavior: "auto", block: "start" });
+        if (el.id) setActive(el.id);
+      }
+      if (e.key === "ArrowUp" || e.key === "PageUp") {
+        e.preventDefault();
+        currentIndex = Math.max(currentIndex - 1, 0);
+        const el = navTargets[currentIndex];
+        console.log("→ hoch:", el.tagName || el.className, currentIndex);
+        el.scrollIntoView({ behavior: "auto", block: "start" });
+        if (el.id) setActive(el.id);
+      }
+    });
   });
 </script>
+
+
+

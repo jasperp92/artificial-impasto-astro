@@ -1,0 +1,24 @@
+{
+  "labels": [
+    "Um präzisere oder qualitativ bessere Ergebnisse zu erzielen",
+    "Um Kosten zu sparen",
+    "Um meine eigenen gestalterischen Fähigkeiten zu erweitern",
+    "Um neue Ideen oder Inspiration zu entwickeln",
+    "Um experimentelle, neuartige Ästhetiken zu erproben",
+    "Um Zeit zu sparen / schneller zu arbeiten",
+    "Aus Neugier / um die Technologie zu erforschen"
+  ],
+  "options": {
+    "showTotal": false
+  },
+  "datasets": [
+    {
+      "barPercentage": 0.8,
+      "categoryPercentage": 0.8,
+      "showPercentage": false,
+      "label": "Antworten",
+      "data": [2, 6, 7, 7, 7, 10, 12],
+      "backgroundColor": ["#555"]
+    }
+  ]
+}

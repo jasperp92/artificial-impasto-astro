@@ -1,0 +1,178 @@
+---
+title: "Authentizität"
+order: 4
+layout: "@layouts/ProjectLayout.astro"
+parent: "Diskussion"
+description: "...und Rezeption imitierter Materialität"
+---
+
+import Chart from "@components/Chart.svelte";
+
+## Kennzeichnungspflicht nach dem EU AI Act
+
+Nach dem EU AI Act, der Regeln für Entwicklung und Einsatz Künstlicher Intelligenz festlegt, gilt eine gefälschte Materialität gemäß Artikel 3(60) als Deepfake:
+<br />
+#### Artikel 3(60)
+<p class="quote text-2xl">KI-generierte oder manipulierte Bild-, Audio- oder Videoinhalte, die existierenden Personen, Objekten, Orten, Einrichtungen oder Ereignissen ähneln und einer Person fälschlicherweise als authentisch oder wahrheitsgemäß erscheinen würden.”</p>
+<p class="citation">EU AI Act, 2024, Artikel 3(60)</p>
+
+
+#### Artikel 50
+Auch Nutzer:innen, die Deepfakes erstellen, müssen diese offenlegen. Für künstlerische Werke, wie meine Graphic Novel, reicht laut Artikel 50 eine angemessene Weise, die den Genuss des Werks nicht beeinträchtigt:
+<br />
+<p class="quote text-2xl">Ist der Inhalt Teil eines offensichtlich künstlerischen, kreativen, satirischen, fiktionalen oder analogen Werks oder Programms, so beschränken sich die in diesem Absatz genannten Transparenzpflichten auf die Offenlegung des Vorhandenseins eines solchen künstlich erzeugten oder manipulierten Inhalts in einer angemessenen Weise, die die Darstellung oder den Genuss des Werks nicht beeinträchtigt.</p>
+<p class="citation">EU AI Act, 2024, Article 50</p>
+
+
+## Turingtest
+
+Ich verwende den Begriff Turing-Test in meinem Fall nicht, um zu klären, ob etwas KI-generiert ist oder nicht. Es geht auch nicht um einen Intelligenzvergleich zwischen Mensch und Maschine, sondern um die Frage, ob KI-generierte Materialität als analog oder digital wahrgenommen wird.
+
+
+### Bildauswahl im "Turingtest"
+
+<div class="grid-layout-3">
+<div>
+<h4>Digital: Image-to-Image</h4>
+Das Verfahren, das ich in meiner Graphic Novel angewandt habe. Digitale Zeichnungen werden mit KI überarbeitet. Sie sind nach der Definition in der Umfrage rein digitalen Ursprungs.
+</div>
+<div>
+![Turingtest](@images/survey/a1.jpg)
+</div>
+<div>
+![Turingtest](@images/survey/a4.png)
+</div>
+</div>
+
+<hr class="my-6" />
+
+<div class="grid-layout-3">
+<div>
+<h4>Digital: Text-to-Image</h4>
+Diese Bilder wurden mit meinem Modell per Text-to-Image generiert. Sie sind ebenfalls rein digitalen Ursprungs.
+</div>
+<div>
+![Turingtest](@images/survey/a8.png)
+</div>
+<div>
+![Turingtest](@images/survey/a2.png)
+</div>
+</div>
+
+<hr class="my-6" />
+
+<div class="grid-layout-3">
+<div>
+<h4>Hybrid: Ölbilder digital bearbeitet</h4>
+Diese Bilder sind analogen Ursprungs, wurden jedoch digital weichgezeichnet, um Textur und Reflexionen etwas abzumildern.
+</div>
+<div>
+![Turingtest](@images/survey/a6.jpg)
+</div>
+<div>
+![Turingtest](@images/survey/a3.jpg)
+</div>
+</div>
+
+<hr class="my-6" />
+
+<div class="grid-layout-3">
+<div>
+<h4>Hybrid: Ölbilder und digitale-KI Materialität kombiniert. </h4>
+In dieser Variante habe ich Änderungen in die Ölbilder digital eingezeichnet und mit dem KI-Modell angepasst.
+</div>
+<div>
+![Turingtest](@images/survey/a5.jpg)
+</div>
+<div>
+![Turingtest](@images/survey/a10.jpg)
+</div>
+</div>
+
+<hr class="my-6" />
+
+<div class="grid-layout-3">
+<div>
+<h4>Analog: Scans der Ölbilder</h4>
+Diese Bilder wurden nicht bearbeitet, sondern lediglich mit dem Scanner digitalisiert.
+</div>
+<div>
+![Turingtest](@images/survey/a7.jpg)
+</div>
+<div>
+![Turingtest](@images/survey/a9.jpg)
+</div>
+</div>
+
+## Auswertung
+
+<div class="grid-layout-3">
+<div>
+<Chart
+  client:load
+  type="pie"
+  data={{
+    labels: ["richtige Kategorie", "falsche Kategorie"],
+    datasets: [
+      {
+        data: [27.5, 72.5],
+        backgroundColor: ["#fff", "#09090B"], // schwarz & weiß
+      }
+    ]
+  }}
+  options={{
+    showTotal: false,
+    responsive: true,
+    plugins: {
+      legend: {
+        display: false,
+      },
+        datalabels: {
+        display: false
+      }
+    }
+  }}
+  className="max-w-150 mx-auto items-center"
+/>
+</div>
+<div class="col-span-2 content-center">
+<h4>27,5%</h4>
+Insgesamt haben nur 27,5 % die richtige Antwort per Definition gewählt. Das ist leicht über der Wahrscheinlichkeit von ¼ die Antwort zufällig zu erraten (wobei die Option „weiß ich nicht“ mit einbezogen ist).
+</div>
+</div>
+
+
+<div class="grid-layout-3">
+<div class="col-span-2 content-center keep-visible text-right">
+<h4>46%</h4>
+Wenn streng genommen die Kategorie „hybrid“, ebenfalls zu digital gezählt wird, liegt der Anteil der richtig geschätzten Antworten bei 46%
+</div>
+<div class="">
+<Chart
+  client:load
+  type="pie"
+  data={{
+    labels: ["falsche Kategorie", "richtige Kategorie"],
+    datasets: [
+      {
+        data: [54, 46],
+        backgroundColor: [ "#09090B","#fff"], // schwarz & weiß
+      }
+    ]
+  }}
+  options={{
+    showTotal: false,
+    responsive: true,
+    plugins: {
+      legend: {
+        display: false,
+      },
+        datalabels: {
+        display: false
+      }
+    }
+  }}
+  className="max-w-150 mx-auto items-center"
+/>
+</div>
+</div>

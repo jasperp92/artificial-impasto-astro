@@ -6,6 +6,94 @@ parent: "Prozess & Ergebnis"
 description: "Schnittstelle und Übersicht des finalen Workflows zur KI-Bildgenerierung."
 ---
 
+import input from "@images/svg/sdppp-input.svg";
+import output from "@images/svg/sdppp-output.svg";
+import Compare from "@components/Compare.astro";
+
+import sprechblase_1 from "@images/comparison/sprechblase_1.webp";
+import sprechblase_2 from "@images/comparison/sprechblase_2.webp";
+import sprechblase_21 from "@images/comparison/sprechblase_2_1.webp";
+import sprechblase_22 from "@images/comparison/sprechblase_2_2.webp";
+import loewe1 from "@images/comparison/loewe_1.png";
+import loewe2 from "@images/comparison/loewe_2.png";
+import polyeder1 from "@images/comparison/polyeder_1.png";
+import polyeder2 from "@images/comparison/polyeder_2.png";
+import strasse1 from "@images/comparison/breitestrasse_1.png";
+import strasse2 from "@images/comparison/breitestrasse_2.png";
+
+
+## Anbindung an Photoshop (SDPPP)
+
+<div class="grid-layout-3">
+  <div class="flex flex-row lg:flex-col gap-2 lg:col-span-1">
+      <img src={input.src} alt="sdppp input" class="w-full object-contain" />
+      <img src={output.src} alt="sdppp output" class="w-full object-contain" />
+  </div>
+
+  <div class="col-span-2">
+    <p>
+      Da ich in Photoshop meine digitalen Zeichnungen erstelle und sie direkt
+      für das Layout in einem InDesign-Dokument verlinke, ergibt es Sinn, dass
+      die KI-überarbeiteten Bilder ebenfalls in Photoshop auf einer separaten
+      Ebene liegen. Da ich das Bild zunächst für die KI in ein übliches
+      Pixelformat (PNG, JPG, WebP etc.) exportieren, in ComfyUI laden, dort die
+      Parameter feinjustieren und es anschließend wieder in Photoshop importieren
+      muss, erweist sich dieser Prozess als umständlich, besonders dann, wenn
+      später noch Änderungen am digitalen Bild vorgenommen werden. Der Workflow
+      soll schließlich die Vorteile des digitalen Arbeitens mit direktem
+      Verlinken und Bearbeiten ermöglichen.
+    </p>
+  </div>
+</div>
+
+<div class="grid-layout-3">
+<div class="col-span-2">
+Das Plugin SD-PPP (zombieyang, 2025) bietet eine Photoshop-ComfyUI-Pipeline, die die Kommunikation zwischen ComfyUI und Photoshop ermöglicht und außerdem erlaubt, eigene Benutzeroberflächen in Photoshop anhand gewünschter Parameter zu gestalten.
+Parameter, die beispielsweise die Stärke des Duktus betreffen, können als Optionen im Photoshop-Interface dargestellt werden. Mithilfe dieses Plugins können individualisierte generative KI-Funktionen direkt in Photoshop implementiert werden.
+</div>
+<div>
+
+<Reference 
+  title="SD-PPP – Photoshop AI Plugin" 
+  authors="zombieyang" 
+  type="github"
+  year="2025" 
+  link="https://github.com/zombieyang/sd-ppp" />
+</div>
+</div>
+
+![sdppp](@images/screenshot_sdppp.png)
+
+## Comicpanel Generation
+
+<Video type="youtube" src="https://youtu.be/rpflMX5i2mA" />
+## Inpainting (Outpainting)
+
+### Sprechblasen
+
+Durch das Arbeiten mit Selektionen und Maskieren können KI-generierte Bilder auch nachträglich bearbeitet werden:
+<br />
+
+<Compare before={sprechblase_21} after={sprechblase_22} />
+
+### analoge Ölbilder digital bearbeiten. 
+
+Das gleiche Prinzip funktioniert auch mit dem angleichen der Ölbilder, allerdings sind die Differenzen dort zwischen KI-generiert und Ölbild, bemerkbarer, was ich im nächsten Abschnitt unter <a href="/artificial-impasto/discussion/aesthetics">Ästhetik</a> beschreibe.
+<br />
+
+<Compare before={sprechblase_1} after={sprechblase_2} />
+
+## Verschiedene Medien stilistisch vereinheitlichen
 
 
 
+Das KI-Modell welches mit meinen Ölmalstil trainiert wurde, lässt sich nicht nur auf digitale Vorzeichnungen anwenden, die schwarz weiß sind, sondern auch auf jedes beliebiges Bild. Als Grundlagen können farbige Fotos, 3D-Rendering und viele andere verschiedene Bildgrundlagen dienen. Es kann also auch zur Vereinheitlichung eines bestimmten Stils bei Verwendung unterschiedlicher Medien genutzt werden.
+
+<br />
+
+<div class="flex flex-col gap-2">
+<Compare before={polyeder1} after={polyeder2} />
+<Compare before={strasse1} after={strasse2} />
+<Compare before={loewe1} after={loewe2} />
+<p class="italic text-sm">Bildquelle Löwe: [Laurent, Wikipedia](https://de.wikipedia.org/wiki/L%C3%B6we#/media/Datei:011_The_lion_king_Tryggve_in_the_Serengeti_National_Park_Photo_by_Giles_Laurent.jpg)</p>
+</div>

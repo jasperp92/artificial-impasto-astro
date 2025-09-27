@@ -18,9 +18,9 @@ import ThemeToggle from "../components/ThemeToggle.astro";
 import Background from "@components/Background.astro";
 import ModeSwitch from "@components/ModeSwitch.astro";
 import MobileMenu from "@components/MobileMenu.astro";
+import PageNav from "@components/PageNav.astro";
+import Lightbox from "@components/Lightbox.astro";
 import "../styles/global.css";
-
-console.log("Frontmatter:", frontmatter);
 ---
 
 <html lang="de">
@@ -37,14 +37,15 @@ console.log("Frontmatter:", frontmatter);
   <body class="min-h-screen relative">
     <Background background={background} effects={effects} />
 
-    <div class="flex min-h-screen relative z-10">
-      <!-- Desktop Sidebar -->
-      <aside
-        class="hidden md:block fixed top-0 left-0 h-screen w-60 border-r-0 p-4 pr-0"
-      >
-        <Navigation />
-      </aside>
+    <!-- Fixed Sidebar -->
+    <aside
+      class="hidden md:block fixed top-0 left-0 h-screen w-60 border-r-0 p-4 pr-0 z-20"
+    >
+      <Navigation />
+    </aside>
 
+    <!-- Content-Bereich, rückt sich um Menü-Breite frei -->
+    <div class="min-h-screen relative z-10 md:ml-60 md:mr-12 flex flex-col">
       <!-- Mobile Menu Komponente -->
       <MobileMenu>
         <ThemeToggle slot="icons" />
@@ -52,12 +53,21 @@ console.log("Frontmatter:", frontmatter);
       </MobileMenu>
 
       <!-- Main Content -->
-      <main class="flex-1 mt-8 max-w-260 p-4 mr-0 md:ml-60 md:mr-12">
-          <h1>{title}</h1>
-  <div class="subtitle">{description}</div>
-        <slot />
+      <main class="flex flex-col flex-1 mt-8 max-w-5xl p-4 mx-auto w-full">
+        <h1>{title}</h1>
+        <div class="subtitle">{description}</div>
+
+        <!-- Content-Bereich dehnt sich -->
+        <div class="flex-1">
+          <slot />
+        </div>
+
+        <!-- Navi sitzt am unteren Rand -->
+        <PageNav />
       </main>
+      <Lightbox />
     </div>
+
     <Footer />
   </body>
 </html>

@@ -1,0 +1,17 @@
+{
+  "labels": ["bike", "car", "scooter", "truck", "auto", "bus"],
+  "datasets": [
+    {
+      "label": "worst",
+      "data": [17, 16, 4, 11, 8, 9]
+    },
+    {
+      "label": "okay",
+      "data": [14, 2, 10, 6, 12, 16]
+    },
+    {
+      "label": "bad",
+      "data": [2, 21, 13, 3, 24, 7]
+    }
+  ]
+}

@@ -12,7 +12,11 @@ import afterImg  from "../assets/compare/schilf_2.jpg";
 import Gallery from "@components/Gallery.astro";
 import PageNav from "../components/PageNav.astro";
 import ImageSequence from '@components/ImageSequence.astro';
+import Lightbox from '@components/Lightbox.astro';
+import Chart from "@components/Chart.svelte";
 
+import data1 from "@data/data_1.json";
+import data2 from "@data/data_2.json";
 
 
 # Methode
@@ -34,28 +38,79 @@ Hier kommt ganz normaler Text hin
 
 <ImageSequence folder="diffusion" mode="fade"/>
 
-<div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-4">
-
-<PageNav 
-  type="before" 
-  frontmatter={frontmatter} 
-/>
-
-<PageNav 
-  type="link" 
-  href="/weiter gehts" 
-  text="Direkt zu Special" 
->Hier kommt default Text rein</PageNav>
-
-<PageNav 
-  type="next" 
-  frontmatter={frontmatter} 
->Hier kommt default Text rein Weiter gehts mit </PageNav>
-
-</div>
 
 
 
 <div class="comment-right">Das Gefühl des Arbeitsprozesses ist bewusster, Bewussteres setzen von Pinsel und Stift, ich würde behaupten es gibt eine Art Aura die das Analoge hat und die beim digitalen oft verloren geht</div>
 
 <div class="comment-left">Material übernimmt Teil der Arbeit :)</div>
+
+![image](@images/comfyui_workflow.png)
+
+<Lightbox />
+
+
+
+<Reference 
+  title="comfy.org" 
+  authors="Yoland, Y., Huang, R., Dr.Lt.Data, comfyanonymous, & Byrne, C." 
+  type="software"
+  year="2025" 
+  link="https://www.comfy.org/" 
+  embed={true} />
+
+
+import useofgenai from "@data/barchart_useofgenai.json";
+import stacked from "@data/stacked-barchart.json";
+
+### Falls du generative KI in deiner Gestaltung nutzt, warum?
+
+<Chart 
+client:load
+  className="mx-auto"
+  type="bar"
+  data={useofgenai}
+  options={{
+    responsive: true,
+    showTotal: false,
+    indexAxis: "y"
+  }}
+/>
+
+<Chart 
+client:load
+  className="mx-auto"
+  type="bar"
+  data={useofgenai}
+  options={{
+    responsive: true,
+    showTotal: false,
+    indexAxis: "x"
+  }}
+/>
+
+<Chart
+  client:load
+  type="pie"
+  data={data1}
+  options={{ responsive: true }}
+  className="max-w-150 mx-auto"
+/>
+
+<Chart 
+client:load
+  type="bar"
+  data={stacked}
+  options={{
+    responsive: true,
+    indexAxis: "y",
+    scales: {
+      x: {
+        stacked: true,
+      },
+      y: {
+        stacked: true
+      }
+      }
+  }}
+/>

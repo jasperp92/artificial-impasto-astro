@@ -3,7 +3,7 @@ title: "Ästhetik"
 order: 1
 layout: "@layouts/ProjectLayout.astro"
 parent: "Diskussion"
-description: ""
+description: "Bewertung des Stiltransfers. Beantwortung der Forschungsfrage aus technologischer Machbarkeit."
 ---
 
 import ImageZoom from "../../components/ImageZoom.astro";
@@ -30,9 +30,9 @@ Praktisch kann dies vorteilhaft sein, da Reflexionen gescannter Ölbilder die Ru
 <blockquote class="quote">Der Schritt der Digitalisierung entfällt. Oft finde ich es schwer, ein analoges Kunstwerk „gut“ zu fotografieren/ scannen”</blockquote >
 <div class="citation">- anyonymer Teilnehmer:in der Umfrage</div>
 
-<div class="grid-layout">
+<div class="grid grid-cols-2">
 <ImageZoom src={schuh1} alt="Bild vom Schuh" zoom={2} lensSize={250} />
-<div class="max-w-full lg:max-w-[90%] mt-4">
+<div class="max-w-[85%] mt-6">
 <ImageZoom src={schuh2} alt="Bild vom Schuh" zoom={2} lensSize={250} />
 </div>
 </div>
@@ -64,15 +64,22 @@ Texturen haben neben einer ästhetischen auch eine inhaltliche Funktion, etwa we
 Ich habe mich gefragt wie sich die digital-imitierte Materialität formalästhetisch bewertet werden und wie diese wiederum im Verhältnis zu den digitalen Zeichnungen unterscheiden.
 
 Ich habe meinen ästhetischen Test so aufgebaut, dass ich die originalen Ölzeichnungen mit den KI-imitierten sowie die KI-imitierten mit den digitalen Zeichnungen jeweils verglichen habe. Die Teilnehmer:innen der Befragung sollten angeben, welches Bild sie besser finden oder ob sie gleichwertig sind, und ihre Entscheidung begründen.
-
-**Insgesamt werden die KI-überarbeiteten Werke sowohl im Vergleich zu den digitalen Vorlagen als auch zu den analogen Ölbildern besser bewertet.**
+<br />
+<p class="text-xl font-bold keep-visible">Insgesamt werden die KI-überarbeiteten Werke sowohl im Vergleich zu den digitalen Vorlagen als auch zu den analogen Ölbildern besser bewertet.</p>
 
 
 <ChartSwitcher client:load />
 
+<br />
+
+{/* <div class="keep-hidden">
 
 ### Psychosoziale Faktoren
 
 Leider konnte ich in meiner Studie keine psychosozialen Faktoren abbilden, da ich die Bilder nicht als KI oder „Original“ gelabelt habe. Es gibt jedoch eine Reihe von Effekten und Beeinflussungen, die unsere Bewertung von Kunst prägen, insbesondere auch unsere Einstellungen gegenüber KI, oder Effekte wie beispielsweise die Effort-Heuristik, wonach wir Werke unterschiedlich bewerten, abhängig von unserer Annahme über die Anstrengung im Schaffensprozess.
-
+<br />
 <p class="quote text-2xl">It won’t matter what such systems will be capable of generating, but what symbolic significance will be ascribed to their productions."<div class="citation">- Manovich & Arielli</div></p>
+
+</div> */}
+
+
