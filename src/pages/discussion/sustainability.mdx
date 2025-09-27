@@ -5,10 +5,29 @@ layout: "@layouts/ProjectLayout.astro"
 parent: "Diskussion"
 ---
 
+Ich habe den Stromverbrauch und die CO₂e-Emissionen grob überschlagen und ins Verhältnis gesetzt. In meinem Fall habe ich eine Nvidia Geforce RTX 5070 Ti Grafikkarte verwendet, die eine maximale Leistungsaufnahme von 300 W hat (Vötter, 2025). Für CPU und Lüfter habe ich zusätzlich 100 W eingerechnet. Die Werte können natürlich je nach Bedingungen stark abweichen, sollen aber nur eine ungefähre Einschätzung und Relation zum Stromverbrauch und CO₂-Ausstoß geben. Ihr könnt aber auch eure eigene Berechnung anstellen:
+<br />
 
 
- Dabei kamen etwas geringere Werte raus als, z.B. in diesem Paper angenommen:
+import Power from "../../snippets/powerconsumption.svelte"
 
+<Power client:load />
+
+
+<br />
+In der Umfrage sprachen sich etwa 40 % der Befragten dafür aus, dass KI eingesetzt werden darf, sofern der Einsatz möglichst ressourcenschonend erfolgt (siehe Abbildung 137 auf Seite 161).
+Der Energieverbrauch für die KI-generierten Bilder fällt geringer aus als erwartet. Der Verbrauch für das Training ist deutlich höher, erfolgt jedoch nur einmal, wenn das Modell wiederholt verwendet wird. Ingesamt sollte bei intensiver Nutzung der Grafikkarte durch KI-Training und Bildgenerierung bedacht werden, dass diese Prozesse erheblich Strom verbrauchen und möglichst auf nachhaltige Energiequellen zurückgegriffen werden.
+
+
+<br />
+ In meinem Fall kamen etwas geringere Werte heraus als von Luccioni et al. angenommen:
+<br />
+<div class="quote text-2xl my-4">
+For context, the most carbon-intensive image generation model (stable-diffusion-xl-base-1.0) generates 1,594 grams of CO2e for 1,000 inferences, which is roughly the equivalent to 4.1 miles driven by an average gasline-powered passenger vehicle
+</div>
+<p class="citation">- Luccioni et al. (2024)</p>
+ 
+<br />
 <Reference
   title='Power Hungry Processing: Watts Driving the Cost of AI Deployment?' 
 type="paper"

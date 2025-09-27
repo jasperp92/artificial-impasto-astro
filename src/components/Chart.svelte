@@ -110,44 +110,67 @@
                     legend: {
                         display:
                             options?.plugins?.legend?.display ??
-                            !(type === "bar" &&
-                              !(options?.scales?.x?.stacked || options?.scales?.y?.stacked)),
+                            !(
+                                type === "bar" &&
+                                !(
+                                    options?.scales?.x?.stacked ||
+                                    options?.scales?.y?.stacked
+                                )
+                            ),
                     },
                     datalabels: {
                         display: options?.plugins?.datalabels?.display ?? true,
-                        color: options?.plugins?.datalabels?.color ?? getColor(),
+                        color:
+                            options?.plugins?.datalabels?.color ?? getColor(),
                         anchor: "center",
                         align: "center",
                         font: { weight: "bold" },
-                        formatter: (value: number, ctx: any) => {
-                            if (value === 0) return null;
+                        formatter:
+                            options?.plugins?.datalabels?.formatter ??
+                            ((value: number, ctx: any) => {
+                                if (value === 0) return null;
 
-                            const ds = ctx.dataset;
-                            if (ds.showPercentage === false) {
-                                return value;
-                            }
+                                const ds = ctx.dataset;
+                                if (ds.showPercentage === false) {
+                                    return value;
+                                }
 
-                            const dataset = ctx.chart.data.datasets[0]
-                                .data as number[];
-                            const total = dataset.reduce((sum, v) => sum + v, 0);
-                            if (total === 0) return null;
+                                const dataset = ctx.chart.data.datasets[0]
+                                    .data as number[];
+                                const total = dataset.reduce(
+                                    (sum, v) => sum + v,
+                                    0,
+                                );
+                                if (total === 0) return null;
 
-                            const percentage = (value / total) * 100;
-                            return `${Math.round(percentage)}%`;
-                        },
+                                const percentage = (value / total) * 100;
+                                return `${Math.round(percentage)}%`;
+                            }),
                     },
                 },
                 ...(needsScales(type) && {
                     scales: {
                         x: {
                             ...options?.scales?.x,
-                            grid: { display: false, ...(options?.scales?.x?.grid ?? {}) },
-                            ticks: { color: getColor(), ...(options?.scales?.x?.ticks ?? {}) },
+                            grid: {
+                                display: false,
+                                ...(options?.scales?.x?.grid ?? {}),
+                            },
+                            ticks: {
+                                color: getColor(),
+                                ...(options?.scales?.x?.ticks ?? {}),
+                            },
                         },
                         y: {
                             ...options?.scales?.y,
-                            grid: { display: false, ...(options?.scales?.y?.grid ?? {}) },
-                            ticks: { color: getColor(), ...(options?.scales?.y?.ticks ?? {}) },
+                            grid: {
+                                display: false,
+                                ...(options?.scales?.y?.grid ?? {}),
+                            },
+                            ticks: {
+                                color: getColor(),
+                                ...(options?.scales?.y?.ticks ?? {}),
+                            },
                         },
                     },
                 }),
