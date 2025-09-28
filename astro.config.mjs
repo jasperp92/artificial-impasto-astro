@@ -35,8 +35,10 @@ export default defineConfig({
       alias: {
         "@layouts": "/src/layouts",
         "@components": "/src/components",
+        "@snippets": "/src/components",
         "@styles": "/src/styles",
         "@images": "/src/assets/images",
+        "@videos": "/src/assets/videos",
         "@data": "/src/data",
       },
     },

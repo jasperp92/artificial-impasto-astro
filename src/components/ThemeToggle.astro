@@ -27,16 +27,12 @@
       }
     }
 
-    // Gespeichertes Theme lesen
+    // Immer Dark als Start – nur überschreiben, wenn im LocalStorage gespeichert
     const stored = localStorage.getItem("theme");
-
     if (stored) {
       html.classList.toggle("dark", stored === "dark");
     } else {
-      // Fallback: System-Einstellung beim allerersten Besuch
-      if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-        html.classList.add("dark");
-      }
+      html.classList.add("dark"); // Default
     }
 
     updateIcons();

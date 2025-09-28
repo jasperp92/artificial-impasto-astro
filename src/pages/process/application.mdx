@@ -94,6 +94,16 @@ Das KI-Modell welches mit meinen Ölmalstil trainiert wurde, lässt sich nicht n
 <div class="flex flex-col gap-2">
 <Compare before={polyeder1} after={polyeder2} />
 <Compare before={strasse1} after={strasse2} />
-<Compare before={loewe1} after={loewe2} />
+{/* <Compare before={loewe1} after={loewe2} /> */}
 <p class="italic text-sm">Bildquelle Löwe: [Laurent, Wikipedia](https://de.wikipedia.org/wiki/L%C3%B6we#/media/Datei:011_The_lion_king_Tryggve_in_the_Serengeti_National_Park_Photo_by_Giles_Laurent.jpg)</p>
 </div>
+
+
+## Videos, Reels, amimierte Comics?
+
+import busdrive from "@videos/busdrive.mp4";
+import traindrive from "@videos/traindrive_h265.mp4";
+
+<Video type="mp4" src={busdrive} autoplay loop />
+
+<Video type="mp4" src={traindrive} autoplay loop/>

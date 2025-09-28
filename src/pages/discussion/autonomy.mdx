@@ -1,0 +1,73 @@
+---
+title: "Autorschaft & Autonomie"
+order: 3
+layout: "@layouts/ProjectLayout.astro"
+parent: "Diskussion"
+---
+
+import ImageSequence from "@components/ImageSequence.astro"
+import Compare from "@components/Compare.astro"
+import Gallery from "@components/Gallery.astro";
+import skizze1 from "@images/comparison/skizze_1.jpg"
+import skizze2 from "@images/comparison/skizze_2.jpg"
+
+## Semantik und Kontrolle
+
+Für mich haben die digital KI-überarbeiteten Zeichnungen paradoxerweise mehr von meiner Handschrift als die rein digitalen. Das hängt damit zusammen, dass ich selbst vor allem im Medium Öl arbeite und in Photoshop selten dieselben Pinsel verwende. Am Anfang habe ich sogar Flächen mit dem Lasso-Tool schablonenartig ausgemalt und musste später digitale Zeichnungen stilistisch an neue Arbeiten angleichen. 
+<br />
+
+<Compare before={skizze1} after={skizze2} value={0} />
+<br />
+<div class="grid-layout">
+<div>
+In Öl male ich mit einer Mischung aus Borsten- und Synthetikpinseln und variiere je nach Inhalt zwischen glattem und pastosem Farbauftrag. Auch wenn die KI-Ergebnisse semantische Schwächen im Verständnis des Bildaufbaus zeigen, können sie sich dennoch neben den Ölbildern einfügen und eine visuelle Einheit mit den Originalen bilden, ohne dass für mich eine größere ästhetische Differenz entsteht. Teilweise erscheint diese sogar geringer als innerhalb der rein digitalen Zeichnungen.
+</div>
+<div>
+Genauso wie mir im analogen Malen der Ölbilder Perfektion nicht wirklich wichtig ist und Teil des Schaffensprozesses bleibt, verhält es sich auch mit zufälligen und unperfekten KI-Ergebnissen. Oder um es in den Worten des berühmten Fernsehmalers Bob Ross zu sagen: Es sind keine Fehler, sondern „happy little accidents“.
+Manchmal muss ich einfach erneut prompten, oder prompte jedes Bild gleich mehrfach, damit ich anschließend welche selektieren kann, wo mir der Duktus gut gefällt. 
+</div>
+</div>
+<br />
+<p class="text-2xl keep-visible">Es gleicht einem Renderingprozess, bei dem sich das fertige Bild erst nach einigen Minuten offenbart und dadurch einen Moment der Überraschung erzeugt. </p>
+<br />
+Diese Unmöglichkeit von gänzlicher Kontrolle, die ich selbst im Malen vorfinde, erlaubt es mir, dass ich eine technologische Vollkommenheit von Imitation, gar nicht verfolge oder sogar auch ablehne, damit menschliche Unterscheidungsmerkmale trotzdem noch erhalten bleiben.
+Durch den hohen Grad der Kontrolle, dem eigenen Finetuning auf meinen Stil, fühlen sich die Werke nach meiner Kreation an, sofern ich die semantischen Inhalte so gut es geht durch digitale Zeichnungen vorgebe und steuern kann. Prompte ich mit Text oder stelle die Parameter so ein, dass die KI neue Inhalte halluziniert, fühlen sich die Ergebnisse nicht nach meinen Kreationen an und ähneln ungefähr dem „Reinkritzeln in meine Zeichnungen“ durch eine fremde Person.
+Proquet et al. (2025, S. 7) teilen meine Auffassung, dass der Stil nicht gänzlich ein Produkt von Texturen, wie bei einem Filter, ist, sondern auch die inhaltlichen Vorgaben – wie ich Charaktere und Orte zeichne – einen großen Einfluss auf meinen Stil und das Empfinden meiner Autorschaft haben. Deshalb erfüllt auch das textbasierte Prompten von Inhalten, wie beispielsweise der Supermarktszene, nicht meine Erwartungen, weil ich die Personen und die Autos nicht in solch einer Art und Weise darstellen würde.
+
+### Text-to-Image mit dem trainierten KI-Modell
+
+
+<Gallery path="t2i" />
+
+
+<p class="text-2xl max-w-200 mx-auto keep-visible">Bei mir liegt die semantische Schwelle genau dort, wo schon zu viele Striche hinzu- oder weggedacht wurden. </p>
+<br />
+Es ist jedoch nicht auszuschließen, dass andere mit generativer KI wesentlich zufälliger arbeiten und der KI einen anderen Grad an Autonomie zuschreiben, wie Beispiele wie Francesco D’Isas Graphic Novel Sunyata (Puliafito, 2024) zeigen, in der den Unvorhersehbarkeit selbst als erzählerisches und reflektives Mittel einsetzt.
+In meinem Fall könnte man also auch von einem ästhetischen Filter oder einem „Renderer“ sprechen, der speziell darauf trainiert ist, ästhetische und texturelle Merkmale sowie die Strichführung eines analogen Pinsels auf meine digitalen Vorzeichnungen oder andere Bilder zu adaptieren, wobei dieser im Sinne meiner semantischen Vorgaben arbeitet.
+
+### Image-to-Image auf die Vorzeichnungen mit hohem Denoise
+<Gallery path="supermarkt" />
+
+
+### Halluzinationen des KI-Modells
+
+
+{/* 
+## Befähigung und Möglichkeit
+
+[…] these tools allowed them to extend their artist hand much further, rather than removing them from the process, it actually allowed them to do a lot more. So a small team can dream a lot bigger.  */}
+
+## Selbstwirksamkeit und Spaß
+
+
+import studio1 from "@images/comparison/studio_1.jpg";
+import studio2 from "@images/comparison/studio_2.jpg";
+
+
+<div class="flex w-full justify-between text-xl">
+  <h4>Digital</h4>
+  <h4>vs.</h4>
+  <h4>Analog</h4>
+</div>
+<Compare before={studio1} after={studio2} />
+

@@ -1,5 +1,5 @@
 ---
-title: "Stromverbrauch und CO₂-Fußabdruck"
+title: "Stromverbrauch und CO2-Fußabdruck"
 order: 5
 layout: "@layouts/ProjectLayout.astro"
 parent: "Diskussion"
@@ -20,7 +20,21 @@ Der Energieverbrauch für die KI-generierten Bilder fällt geringer aus als erwa
 
 
 <br />
- In meinem Fall kamen etwas geringere Werte heraus als von Luccioni et al. angenommen:
+<div class="grid-layout">
+<div>
+In meiner Annahme von ca. 20 Sekunden und einer Systemlast von 400 Watt ergaben sich etwas geringere Werte als bei Luccioni et al.: 1.594 g pro 1000 Inferences. Achtung, hier ist nicht 1,594 g (Kommaschreibweise), sondern 1.594 g (Tausendertrennung) gemeint. Würde ich die Systemlast auf ca. 650 Watt erhöhen oder die Generierungszeit auf 32 Sekunden ansetzen, kämen ähnliche Werte heraus.
+
+Meine Werte sind allerdings nur grobe Orientierungen und keine Cloud-Computing-Anwendung. In der Regel sollten große Server energieeffizienter arbeiten, weshalb mich meine Berechnung noch etwas irritiert.
+   </div>
+<div>
+<Reference
+  title='Power Hungry Processing: Watts Driving the Cost of AI Deployment?' 
+type="paper"
+  authors="Alexandra Sasha Luccioni, Yacine Jernite, Emma Strubell" 
+  year="2023"
+  link="https://arxiv.org/html/2311.16863v3?utm_source=chatgpt.com" />
+  </div>
+  </div>
 <br />
 <div class="quote text-2xl my-4">
 For context, the most carbon-intensive image generation model (stable-diffusion-xl-base-1.0) generates 1,594 grams of CO2e for 1,000 inferences, which is roughly the equivalent to 4.1 miles driven by an average gasline-powered passenger vehicle
@@ -28,9 +42,3 @@ For context, the most carbon-intensive image generation model (stable-diffusion-
 <p class="citation">- Luccioni et al. (2024)</p>
  
 <br />
-<Reference
-  title='Power Hungry Processing: Watts Driving the Cost of AI Deployment?' 
-type="paper"
-  authors="Alexandra Sasha Luccioni, Yacine Jernite, Emma Strubell" 
-  year="2023"
-  link="https://arxiv.org/html/2311.16863v3?utm_source=chatgpt.com" />

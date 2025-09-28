@@ -20,15 +20,17 @@ import ModeSwitch from "@components/ModeSwitch.astro";
 import MobileMenu from "@components/MobileMenu.astro";
 import PageNav from "@components/PageNav.astro";
 import Lightbox from "@components/Lightbox.astro";
+import "../styles/pixelarticons/pixelart-icons-font.css";
 import "../styles/global.css";
 ---
 
+<!-- HMTL Klasse nicht auf dark setzen sonst flackerts -->
 <html lang="de">
   <head>
     <meta charset="utf-8" />
     <title>{Astro.props.title || "Artificial Impasto"}</title>
     <script is:inline>
-      const theme = localStorage.getItem("theme") || "light";
+      const theme = localStorage.getItem("theme") || "dark";
       if (theme === "dark") {
         document.documentElement.classList.add("dark");
       }

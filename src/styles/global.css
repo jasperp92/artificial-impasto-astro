@@ -72,7 +72,7 @@
     @apply list-decimal list-inside;
   }
 
-  main p a {
+  main p a:not(.layout-box):not(.iconlink) {
     @apply underline text-zinc-400;
   }
 
@@ -94,8 +94,17 @@
     @apply cursor-default;
   }
 
+  /* Video Controls */
+  .custom-controls::-webkit-media-controls {
+    opacity: 0;
+  }
+
+  .custom-controls:hover::-webkit-media-controls {
+    opacity: 1;
+  }
+
   .quote {
-    @apply border-l-1 dark:border-white pl-6 italic mb-2;
+    @apply text-2xl border-l-1 dark:border-white pl-6 italic mb-2 leading-relaxed;
   }
 
   .citation {
@@ -175,6 +184,11 @@
     font-family: "Terminal Grotesque Open", sans-serif;
   }
 
+  .presentation-only {
+    display: none;
+  }
+
+
   /* Präsentationsmodus */
   .mode-presentation {
 
@@ -185,7 +199,11 @@
 
     /* Optional: volle Höhe pro Folie */
     .slide {
-      @apply min-h-screen flex flex-col justify-center content-center my-0; 
+      @apply min-h-screen flex flex-col justify-center content-center my-0;
+    }
+
+    .presentation-only {
+      display: block;
     }
 
     .reference,
@@ -208,6 +226,10 @@
     main li,
     td {
       @apply text-xl;
+    }
+
+    .quote {
+      @apply text-4xl lg:text-5xl;
     }
 
     .image-source {

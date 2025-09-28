@@ -99,7 +99,7 @@
 <div class="grid-layout-3">
     <label>    
         Bilder gesamt:   
-        <input type="number" bind:value={images} class="border p-1 w-full" />
+        <input type="number" bind:value={images} step="100" class="border p-1 w-full" />
     </label>
         </div>
     <!-- <h4>Farbe:</h4> -->
@@ -145,7 +145,7 @@
     </label>
     <label>
         GPU Watt:
-        <input type="number" bind:value={gpuWatt} class="border p-1 w-full" />
+        <input type="number" bind:value={gpuWatt} step="10" class="border p-1 w-full" />
     </label>
 
     <label>
@@ -159,7 +159,7 @@
     </div>
 
 <!-- Chart -->
-<div class="max-w-3xl mx-auto">
+<div class="max-w-full mx-auto">
     <Chart type="bar" {data} {options} />
 </div>
 

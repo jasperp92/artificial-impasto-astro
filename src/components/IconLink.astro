@@ -1,0 +1,14 @@
+---
+const {
+  href,
+  children,
+  icon = null, // z. B. "download", "battery-charging"
+} = Astro.props;
+---
+
+<a href={href} class="iconlink flex items-start text-zinc-400 inline-flex gap-2">
+  {icon && (
+    <i class={`mt-1 pixelart-icons-font-${icon} text-base scale-150 leading-none`}></i>
+  )}
+  <span class="underline"><slot /></span>
+</a>

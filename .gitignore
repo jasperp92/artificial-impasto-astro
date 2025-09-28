@@ -25,3 +25,6 @@ pnpm-debug.log*
 
 # Images (alles unter assets/images ignorieren)
 src/assets/images/*
+
+# Videos ignorieren
+src/assets/videos/*

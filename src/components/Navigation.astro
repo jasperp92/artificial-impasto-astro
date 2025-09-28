@@ -134,10 +134,10 @@ const rootPages = navPages
   <ul id="headings-nav" class="mb-2"></ul>
 </div>
 
-
 <script>
   document.addEventListener("DOMContentLoaded", () => {
-    const isPresentation = document.querySelector(".mode-presentation") !== null;
+    const isPresentation =
+      document.querySelector(".mode-presentation") !== null;
 
     const container = document.querySelector("#headings-nav");
     if (!container) return;
@@ -198,7 +198,7 @@ const rootPages = navPages
           "text-black",
           "dark:text-white",
           "font-bold",
-          "tracking-tight"
+          "tracking-tight",
         );
         l.el.classList.add("text-zinc-400");
       });
@@ -209,7 +209,7 @@ const rootPages = navPages
           "text-black",
           "dark:text-white",
           "font-bold",
-          "tracking-tight"
+          "tracking-tight",
         );
       }
 
@@ -217,24 +217,33 @@ const rootPages = navPages
     }
 
     // Intersection Observer → markiert Parent-H2
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && entry.target.id) {
-            setActive(entry.target.id);
-          }
-        });
-      },
-      { rootMargin: "0px 0px -80% 0px", threshold: 0 }
-    );
-    allHeadings.forEach((h) => observer.observe(h));
+    if (!isPresentation) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting && entry.target.id) {
+              setActive(entry.target.id);
+            }
+          });
+        },
+        { rootMargin: "0px 0px -80% 0px", threshold: 0 },
+      );
+      allHeadings.forEach((h) => observer.observe(h));
+    }
 
     // === Kombinierte Navigation ===
     const navTargets = isPresentation
-      ? Array.from(document.querySelectorAll("main h2, main h3, .mode-presentation .slide"))
+      ? Array.from(
+          document.querySelectorAll(
+            "main h2:not(:where(.slide *)), main h3:not(:where(.slide *)), .mode-presentation .slide",
+          ),
+        )
       : Array.from(document.querySelectorAll("main h2, main h3"));
 
-    console.log("Navigation Targets:", navTargets.map(el => el.tagName || el.className));
+    console.log(
+      "Navigation Targets:",
+      navTargets.map((el) => el.tagName || el.className),
+    );
 
     let currentIndex = 0;
 
@@ -258,6 +267,3 @@ const rootPages = navPages
     });
   });
 </script>
-
-
-
