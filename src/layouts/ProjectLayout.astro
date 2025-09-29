@@ -20,37 +20,36 @@ const children = Object.values(modules)
     thumbnail: m.frontmatter?.thumbnail,
     parent: m.frontmatter?.parent,
     order: m.frontmatter?.order || 0,
+    hidepage: m.frontmatter?.hidepage || false,
   }))
-  .filter((p) => p.parent === parent)
+  .filter((p) => p.parent === parent && !p.hidepage) // nur wenn hidepage nicht true
   .sort((a, b) => a.order - b.order);
 ---
 
 <Layout frontmatter={frontmatter}>
-  {
-    children.length > 0 && (
-      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 mt-8 mb-4 break-words">
-        {children.map((child) => (
-          <a
-            href={child.url}
-            class="block layout-box"
-          >
-            {child.thumbnail && (
-              <img
-                src={child.thumbnail}
-                alt={child.title}
-                class="w-full h-40 object-cover"
-              />
-            )}
-            <h4 class="font-tg text-4xl mt-2">{child.title}</h4>
-            {child.description && (
-              <p class="">{child.description}</p>
-            )}
-          </a>
-        ))}
-      </div>
-    )
-  }
+  <!-- Header-Extra: Slot oder Frontmatter -->
+  <slot name="headerExtra" />
+  {frontmatter.headerExtra && (
+    <div class="mb-4" set:html={frontmatter.headerExtra} />
+  )}
+
+  {children.length > 0 && (
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 mt-8 mb-4 break-words">
+      {children.map((child) => (
+        <a href={child.url} class="block layout-box">
+          {child.thumbnail && (
+            <img
+              src={child.thumbnail}
+              alt={child.title}
+              class="w-full h-40 object-cover"
+            />
+          )}
+          <h4 class="font-tg text-4xl mt-2">{child.title}</h4>
+          {child.description && <p>{child.description}</p>}
+        </a>
+      ))}
+    </div>
+  )}
 
   <slot />
 </Layout>
-

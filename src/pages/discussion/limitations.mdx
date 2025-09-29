@@ -1,37 +1,136 @@
 ---
-title: "Limitationen"
+title: "Limitationen und Ausblick"
 order: 6
 layout: "@layouts/ProjectLayout.astro"
 parent: "Diskussion"
 description: "Limitationen des KI-Modells und der künstlerischen Anwendung generativer KI."
 ---
 
+import Effort from "@images/svg/effort.svg";
+import synthesis from "@videos/brushstroke_synthesis.mp4";
+import Gallery from "@components/Gallery.astro"
 
+<div class='slide'>
 
 ## Image-to-Image und Stiltransfer an sich
 
+{/* prettier-ignore */}
+
+<h4>Bilder mit unterschiedlichem Denoise und CFG-Wert</h4>
+
+<div class="relative w-full">
+  <div class="absolute top-0 left-0 z-10 font-bold text-white p-2">CFG-Wert: 0<br /> Denoise: 0</div>
+    <div class="absolute text-right top-0 right-0 z-10 font-bold text-white p-2">CFG-Wert: 0<br /> Denoise: 0,5</div>
+      <div class="absolute bottom-0 left-0 z-10 font-bold text-white p-2 mb-8">CFG-Wert: 16<br /> Denoise: 0</div>
+    <div class="absolute text-right bottom-0 right-0 z-10 font-bold text-white p-2 mb-8">CFG-Wert: 15<br /> Denoise: 0,5</div>
+<Gallery path="denoise" type="grid" maxCols={6} responsive={false} gap={0} />
+</div>
+</div>
+
 <div class="slide">
-- Inhalt geht auf Kosten des Stils
+- Inhalt geht auf Kosten des Stils 
+- Halluzinationen von Gesichtern und semantischen Bildinhalten 
 - KI-Modelle wie Stable Diffusion haben keine Verlustfunktion für Inhalt und Stil 
 - Stil und Inhalt ist schwer voneinander zu trennen (Content-Style-Disentaglement)
-- Halluzinationen von Gesichtern
 </div>
 
-## Komplexität und Spezifität
+<div class="slide">
+  ## Komplexität und Spezifität
 
-import Effort from "@images/svg/effort.svg";
-
-<Effort class="max-w-180 mx-auto my-8" fill="currentColor" />
-{/* <Effort class="fill-white" src={effort} alt="Effort Icon" /> */}
-
+<Effort class='max-w-180 mx-auto my-8' fill='currentColor' />
+{/*<Effort class="fill-white" src="{effort}" alt="Effort Icon" /> */}
 {/* ![Anstrengung vs Spezifität](@images/svg/effort.svg) */}
 
-## Generalisierbarkeit vs. Spezialiesierbarkeit
-
-## Anfälligkeit von KI-Systemen
-
-
-## Problematik mit urheberrechtlich geschützen Daten für die Generalisierungsfähigkeit
-<div class="slide">
-<div class="text-5xl text-center">Heiligt der Zweck die Mittel?</div>
+  <div class="image-source text-right">
+    Grafik angelehnt an [Kirsten Zirngibl](https://www.youtube.com/watch?v=TNx5YrUhTRA)
+  </div>
 </div>
+
+<div class="slide">
+
+### Anfälligkeit von komplexer Automatisierung
+
+![final workflow](@images/final_workflow.png)
+
+</div>
+
+<div class="slide keep-visible">
+  ## Generalisierbarkeit vs. Spezialisierbarkeit 
+  
+  <p>Using AI in creative work comes with an inherent dilemma.</p>
+
+  <br />
+  <div class="grid-layout keep-visible keep-layout quote">
+    <div class="">
+      On one hand, open-source AI tools offer much more freedom and customization. They allow for a deeper exploration
+      of the technology’s potential, but personalizing these tools is often incredibly complex [...]
+      <br />
+    </div>
+    <div class="">
+      On the other hand, commercial AI tools are far easier to use, requiring neither advanced hardware nor extensive
+      programming skills. However, these tools come with a price and limitations imposed by the companies that develop
+      them.
+    </div>
+  </div>
+  <p class="citation">Francesco D'Isa, Philosoph und Künstler</p>
+</div>
+
+<div class="slide">
+## Urheberrechtlich geschützte Daten für die Generalisierungsfähigkeit
+
+{/* <div class='text-5xl text-center'>Heiligt der Zweck die Mittel?</div> */}
+
+### Mitsua Diffusion one
+
+![MitsuaDiffusionOne](https://huggingface.co/Mitsua/mitsua-diffusion-one/resolve/main/mitsua-diffusion-one.jpg)
+
+</div>
+
+<div class="slide">
+
+## Andere Verfahren und Verfügbarkeit
+
+{/* https://github.com/nazianafis/Neural-Style-Transfer https://arxiv.org/pdf/2103.17185 */}
+
+  <div class="quote-xl my-8">In most of these works, the stylization process is confined to the pixel domain. However, we argue that this
+    representation is unnatural because paintings usually consist of brushstrokes rather than pixels.</div>
+  <p class="citation">- Kotovenko et al., 2023</p>
+  <Reference
+    title="Rethinking Style Transfer: From Pixels to Parameterized Brushstrokes"
+    type="paper"
+    authors="Dmytro Kotovenko, Matthias Wright, Arthur Heimbrecht, Björn Ommer"
+    year="2023"
+    link="https://arxiv.org/abs/2305.11067"
+  />
+  <div class="grid-layout keep-layout">
+  <div class="">![sailboat](@images/comparison/still_life.jpg)</div>
+    <div class="">
+    ![sailboat](@images/comparison/before_still_life.jpg)
+    </div>
+  </div>
+</div>
+
+<div class="slide">
+  ### WYSIWYG - Realtime Pinsel Simulation
+  
+  <p>Filter sind immer nur eine Art von Behelfswerkzeug. Die beste künstlerische Interaktion ist für mich nach wie vor das Generieren in Echtzeit. Anstelle von Parametern, Slidern und Nodes würde ich immer Hand und Pinsel
+  bevorzugen. Bislang gibt es noch keine ausgeklügelten Echtzeit-KI-Pinsel oder physikalisch korrekten Simulationen von
+  Öl oder anderen Materialitäten. In diese Richtung gehen jedoch bereits einige Ansätze:</p>
+
+<br />
+  <p class="quote-xl">In our work, we propose to replace the expensive fluid simulation with a neural network.</p>
+  <p class="citation">- Wu et al., 2018</p>
+
+  <Reference
+    title="Brush stroke synthesis with a generative adversarial network driven by physically based simulation"
+    type="paper"
+    authors="Rundong Wu, Zhili Chen, Zhaowen Wang, Jimei Yang, and Steve Marschner"
+    year="2018"
+    link="https://www.cs.cornell.edu/~rundongwu/docs/deepbrush.pdf"
+    className="keep-visible"
+  />
+
+  <Video type="mp4" src={synthesis} />
+  
+</div>
+

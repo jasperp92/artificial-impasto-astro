@@ -1,12 +1,12 @@
 {
   "labels": [
-    "Um präzisere oder qualitativ bessere Ergebnisse zu erzielen",
-    "Um Kosten zu sparen",
-    "Um meine eigenen gestalterischen Fähigkeiten zu erweitern",
-    "Um neue Ideen oder Inspiration zu entwickeln",
-    "Um experimentelle, neuartige Ästhetiken zu erproben",
-    "Um Zeit zu sparen / schneller zu arbeiten",
-    "Aus Neugier / um die Technologie zu erforschen"
+    "präzisere oder qualitativ bessere Ergebnisse",
+    "Kosten zu sparen",
+    "eigene gestalterische Fähigkeiten erweitern",
+    "neue Ideen oder Inspiration",
+    "experimentelle, neuartige Ästhetiken",
+    "Zeit sparen / schneller arbeiten",
+    "Aus Neugier / Erforschen der Technologie"
   ],
   "options": {
     "showTotal": false

@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Basic&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Basic&display=swap");
 /* @import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Onest:wght@100..900&display=swap'); */
 
 @custom-variant dark (&:where(.dark, .dark *));
@@ -39,7 +39,7 @@
   }
 
   .subtitle {
-    @apply text-6xl mb-12;
+    @apply text-6xl mb-6;
     font-family: "Terminal Grotesque", sans-serif;
   }
 
@@ -65,14 +65,16 @@
   }
 
   img {
-    @apply max-h-[90vh] h-auto object-contain;
+    @apply max-h-[80vh] h-auto object-contain;
   }
 
   ol {
     @apply list-decimal list-inside;
   }
 
-  main p a:not(.layout-box):not(.iconlink) {
+  main p a:not(.layout-box):not(.iconlink),
+  main .image-source a,
+  main .citation a {
     @apply underline text-zinc-400;
   }
 
@@ -82,6 +84,10 @@
 
   main ul {
     @apply list-disc list-outside pl-4;
+
+    li {
+      @apply leading-relaxed;
+    }
   }
 
   main img {
@@ -103,8 +109,16 @@
     opacity: 1;
   }
 
+  .own-quote {
+    @apply text-2xl leading-relaxed my-8;
+  }
+
   .quote {
-    @apply text-2xl border-l-1 dark:border-white pl-6 italic mb-2 leading-relaxed;
+    @apply border-l-1 dark:border-white pl-6 italic mb-2 leading-relaxed;
+  }
+
+  .quote-xl {
+    @apply text-2xl lg:text-3xl border-l-1 dark:border-white pl-6 italic my-8 leading-relaxed;
   }
 
   .citation {
@@ -124,7 +138,7 @@
   }
 
   .grid-layout-3 {
-    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6;
+    @apply grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6;
   }
 
   .layout-box {
@@ -188,10 +202,8 @@
     display: none;
   }
 
-
   /* Präsentationsmodus */
   .mode-presentation {
-
     /* Sichtbarkeit */
     p:not(:has(img)):not(.keep-visible) {
       display: none;
@@ -202,18 +214,21 @@
       @apply min-h-screen flex flex-col justify-center content-center my-0;
     }
 
-    .presentation-only {
-      display: block;
+    .presentation-only,
+    .presentation-only * {
+      display: block !important;
     }
 
+    ol,
     .reference,
+    .info-box,
     .keep-hidden {
       display: none !important;
     }
 
     .quote:not(.keep-hidden),
+    .quote-xl:not(.keep-hidden),
     .image-source:not(.keep-hidden),
-    .layout-box *,
     .keep-visible,
     .keep-visible p,
     .citation:not(.keep-hidden) {
@@ -228,8 +243,16 @@
       @apply text-xl;
     }
 
+  .own-quote {
+    @apply text-3xl;
+  }
+
     .quote {
-      @apply text-4xl lg:text-5xl;
+      @apply text-2xl;
+    }
+
+    .quote-xl {
+      @apply text-3xl lg:text-4xl my-8;
     }
 
     .image-source {
@@ -280,7 +303,6 @@ table.facts td {
 
 /* --- Mobile Collapse --- */
 @media (max-width: 640px) {
-
   table,
   thead,
   tbody,

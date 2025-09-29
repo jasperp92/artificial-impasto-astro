@@ -6,16 +6,20 @@ parent: "Einführung"
 description: "Ein paar persönliche Einsichten und meine Motivation."
 ---
 
-### Einsatz von KI als Inspirationstool 
-
 import Compare from "@components/Compare.astro";
-import VennDiagram from "@snippets/VennDiagram.svelte"
+import VennDiagram from "@snippets/VennDiagram.astro"
+import Chart from "@components/Chart.svelte";
 
 import beforeImg from "@images/comparison/burning_1.webp";
 import afterImg  from "@images/comparison/burning_2.webp";
 
-<Compare before={beforeImg} after={afterImg} />
+import usage from "@data/usage_genai.json";
 
+<div class="slide">
+### KI-Einsatz als Inspirationstool 
+
+<Compare before={beforeImg} after={afterImg} />
+</div>
 
 <div class="slide">
 <div class="quote text-2xl my-8 ">[...] die Systematik, ich schreibe einen Prompt und kriege ein Ergebnis,
@@ -26,4 +30,35 @@ Und wir können mit einem Zufallsergebnis kaum arbeiten.</div>
 
 </div>
 
-https://www.fh-potsdam.de/studium-weiterbildung/studiengaenge/design-ma
+<div class="slide">
+
+<h4>Nutzt du generative künstlicher Intelligenz zur Bildgenerierung in deiner Gestaltung?</h4>
+<Chart 
+client:visible
+  type="bar"
+  data={usage}
+  options={{
+    responsive: true,
+    showTotal: false,
+    showPercentage: false,
+    indexAxis: "y",
+    plugins: {
+    datalabels: {
+      display: false  // ✅ keine Prozentanzeige
+    },
+    }
+  }}
+/>
+</div>
+
+<div class="slide keep-visible presentation-only">
+<p class="text-3xl">Warum einen eigenen Stiltransfer, wenn man doch selbst Künstler ist und malen/zeichnen kann?</p>
+</div>
+
+
+
+<VennDiagram client:load size={300} offset={120} />
+
+<div class="citation">Grafik angelehnt an [Fachhochschule Potsdam](https://www.fh-potsdam.de/studium-weiterbildung/studiengaenge/design-ma)</div>
+
+

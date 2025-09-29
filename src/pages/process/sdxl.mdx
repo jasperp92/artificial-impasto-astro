@@ -8,115 +8,116 @@ parent: "Prozess & Ergebnis"
 
 import Gallery from "@components/Gallery.astro";
 
-## IP-Adapter
-
-<div class="grid-layout">
-<div>
-Der IP-Adapter ist ein (Image-Prompt) Adapter, das an bestehende Stable-Diffusion-Modelle angehängt werden kann und das Prompten auch mit Bildern ermöglicht. Auf diese Weise können strukturelle Merkmale des Referenzbildes in das Ergebnis einfließen (Ye et al., 2023, S. 1).
-Ein Vorteil des IP-Adapters ist, dass er sehr leichtgewichtig und flexibel ist. Anders als ein LoRA erfordert er kein zusätzliches Training, und stilistische Merkmale können direkt über ein Bild gesteuert werden.
+<div class='slide'>
+  ## IP-Adapter
+  <div class='grid-layout'>
+    <p>Der IP-Adapter ist ein (Image-Prompt) Adapter, das an bestehende Stable-Diffusion-Modelle angehängt werden kann und das Prompten auch mit Bildern ermöglicht. Auf diese Weise können strukturelle Merkmale des Referenzbildes in das Ergebnis einfließen (Ye et al., 2023, S. 1). Ein Vorteil des IP-Adapters ist, dass er sehr leichtgewichtig und flexibel ist. Anders als ein LoRA erfordert er kein zusätzliches Training, und stilistische Merkmale können direkt über ein Bild gesteuert werden.</p>
+    <div>
+      <Reference title='IP-Adapter: Text Compatible Image Prompt Adapter for Text-to-Image Diffusion Models' authors='Hu Ye, Jun Zhang, Sibo Liu, Xiao Han, Wei Yang' type='paper' year='2023' link='https://arxiv.org/abs/2308.06721' />
     </div>
-  <div>
-  <Reference 
-  title="IP-Adapter: Text Compatible Image Prompt Adapter for Text-to-Image Diffusion Models" 
-  authors="Hu Ye, Jun Zhang, Sibo Liu, Xiao Han, Wei Yang" 
-  type="paper"
-  year="2023" 
-  link="https://arxiv.org/abs/2308.06721" />
   </div>
+  <Gallery path='ip-adapter' />
 </div>
 
-<Gallery path="ip-adapter" />
+Der IP-Adapter ist für eine stilistische Übertragung nur bedingt geeignet. Er versteht den Bildaufbau nicht, Leinwand und gemalte Flächen wirken fragmentiert. Die Strichführung wird nicht erfasst, stattdessen entstehen seltsame, sich wiederholende Muster. Texturen werden teilweise gut wiedergegeben, wirken aber oft überzeichnet. Da er nur mit einem einzigen Referenzbild arbeitet und keine Trainingsdaten nutzt, fehlt ihm das Verständnis für Komposition, Textur und Duktus und damit die Fähigkeit, meinen Stil zuverlässig zu reproduzieren.
 
-Der IP-Adapter ist für eine stilistische Übertragung nur bedingt geeignet. Er versteht den Bildaufbau nicht, Leinwand und gemalte Flächen wirken fragmentiert. Die Strichführung wird nicht erfasst, stattdessen entstehen seltsame, sich wiederholende Muster. Texturen werden teilweise gut wiedergegeben, wirken aber oft überzeichnet. Da er nur mit einem einzigen Referenzbild arbeitet und keine Trainingsdaten nutzt, fehlt ihm das Verständnis für Komposition, Textur und Duktus  und damit die Fähigkeit, meinen Stil zuverlässig zu reproduzieren.
-
-## B-LoRA
-
-<div class="grid-layout">
-<div>
-B-LoRA ist ein spezielles LoRA-Modell, das von Frenkel et al. (2025) für eine inhaltsunabhängige Stilübertragung entwickelt wurde.
-Die Methode basiert auf der Architektur von Stable Diffusion XL und ermöglicht es, Stil und Inhalt innerhalb eines Bildes gezielt voneinander zu trennen. Dadurch kann der Stil einer Vorlage auf neue Inhalte übertragen werden, ohne deren Struktur oder Bedeutung zu verändern.
-Im Gegensatz zu klassischen Fine-Tuning-Ansätzen vermeidet B-LoRA typische Probleme wie Überanpassung (Overfitting), bei dem sich Trainingsinhalte ungewollt in generierten Bildern wiederfinden oder der Stil nicht präzise genug übertragen wird.
-  Ein weiterer Vorteil von B-LoRA besteht darin, dass es bereits auf Grundlage eines einzigen Bildbeispiels trainiert werden kann und dabei eine klare Trennung von Inhalt und Stil ermöglicht (Frenkel et al., 2025, S. 1).
+<div class='slide'>
+  ## B-LoRA
+  <div class='grid-layout'>
+    <p>B-LoRA ist ein spezielles LoRA-Modell, das von Frenkel et al. (2025) für eine inhaltsunabhängige Stilübertragung entwickelt wurde. Die Methode basiert auf der Architektur von Stable Diffusion XL und ermöglicht es, Stil und Inhalt innerhalb eines Bildes gezielt voneinander zu trennen. Dadurch kann der Stil einer Vorlage auf neue Inhalte übertragen werden, ohne deren Struktur oder Bedeutung zu verändern. Im Gegensatz zu klassischen Fine-Tuning-Ansätzen vermeidet B-LoRA typische Probleme wie Überanpassung (Overfitting), bei dem sich Trainingsinhalte ungewollt in generierten Bildern wiederfinden oder der Stil nicht präzise genug übertragen wird. Ein weiterer Vorteil von B-LoRA besteht darin, dass es bereits auf Grundlage eines einzigen Bildbeispiels trainiert werden kann und dabei eine klare Trennung von Inhalt und Stil ermöglicht (Frenkel et al., 2025, S. 1).</p>
+    <div>
+      **Daten zum Training**
+      <table class='table-auto facts'>
+        <tr>
+          <td>Epochen: </td>
+          <td>1000</td>
+        </tr>
+        <tr>
+          <td>Dauer: </td>
+          <td>ca. 1,5 Stunden auf einer GeForce RTX 5070 TI</td>
+        </tr>
+        <tr>
+          <td>Datensatz: </td>
+          <td>1 Scan eines analogen Ölbildes</td>
+        </tr>
+      </table>
+      <br />
+      {/* prettier-ignore */}
+      <Reference 
+      title="B-LoRA: Efficient Fine-Tuning of Large Diffusion Models with Balanced Low-Rank Adaptation" 
+      authors="Wang, Y., Zhang, L., Lin, J., & Liu, Z." 
+      year="2024" 
+      link="https://arxiv.org/abs/2405.13495" />
     </div>
-  <div>
-
-**Daten zum Training**
-<table class="table-auto facts">
-<tr><td>Epochen: </td><td>1000</td></tr>
-<tr><td>Dauer: </td><td>ca. 1,5 Stunden auf einer GeForce RTX 5070 TI</td></tr>
-<tr><td>Datensatz: </td><td>1 Scan eines analogen Ölbildes</td></tr>
-</table>
-
-  <br />
-<Reference 
-  title="B-LoRA: Efficient Fine-Tuning of Large Diffusion Models with Balanced Low-Rank Adaptation" 
-  authors="Wang, Y., Zhang, L., Lin, J., & Liu, Z." 
-  year="2024" 
-  link="https://arxiv.org/abs/2405.13495" />
-
   </div>
+  <Gallery path='b-lora' />
 </div>
 
-<Gallery path="b-lora" />
-In meinem Fall konnte B-LoRA aus einem einzelnen Referenzbild nicht genügend Informationen entnehmen, um meinen Malstil und insbesondere den Duktus adäquat zu erfassen. Da mein Malstil zudem über mehrere Werke hinweg variiert, erscheint ein Datensatz mit nur einem Bild zu gering, um stilistische Merkmale zuverlässig zu abstrahieren. Die generierten Ergebnisse wirken aus meiner Sicht zu organisch für meinen Malstil. Auch bei größeren Trainingssätzen nahm die Qualität der Ergebnisse merklich ab, weshalb sich B-LoRA in meinem Fall nicht für umfassendere Datensätze eignete. 
+In meinem Fall konnte B-LoRA aus einem einzelnen Referenzbild nicht genügend Informationen entnehmen, um meinen Malstil und insbesondere den Duktus adäquat zu erfassen. Da mein Malstil zudem über mehrere Werke hinweg variiert, erscheint ein Datensatz mit nur einem Bild zu gering, um stilistische Merkmale zuverlässig zu abstrahieren. Die generierten Ergebnisse wirken aus meiner Sicht zu organisch für meinen Malstil. Auch bei größeren Trainingssätzen nahm die Qualität der Ergebnisse merklich ab, weshalb sich B-LoRA in meinem Fall nicht für umfassendere Datensätze eignete.
 
-## SDXL LoRA 
-
-<div class="grid-layout">
-<div>
-Mit OneTrainer (Nerogar, 2025), einer grafischen Benutzeroberfläche zur Erstellung von LoRAs und fine-tuned Modellen, habe ich ein gewöhnliches SDXL-LoRA auf Basis aller 49 bisherigen Ölgemälde aus meiner Graphic Novel trainiert. Das Training dauerte mit 16 Stunden deutlich länger als das B-LoRA-Training. Die Anzahl der Trainingsepochen und Schritte waren identisch.<br />
-Für die Vorbereitung der Scans habe ich ein Pythonscript angewendet, um die Bilder zurechtzuschneiden und die Weißräume zu entfernen, da ich sie möglichst vom Training ausschließen wollte. 
+<div class='slide'>
+  ## SDXL LoRA
+  <div class='grid-layout'>
+    <div>
+      Mit OneTrainer (Nerogar, 2025), einer grafischen Benutzeroberfläche zur Erstellung von LoRAs und fine-tuned Modellen, habe ich ein gewöhnliches SDXL-LoRA auf Basis aller 49 bisherigen Ölgemälde aus meiner Graphic Novel trainiert. Das Training dauerte mit 16 Stunden deutlich länger als das B-LoRA-Training. Die Anzahl der Trainingsepochen und Schritte waren identisch.
+      <br />
+      Für die Vorbereitung der Scans habe ich ein Pythonscript angewendet, um die Bilder zurechtzuschneiden und die Weißräume zu entfernen, da ich sie möglichst vom Training ausschließen wollte.
     </div>
-  <div>
-
-  **Daten zum Training**
-<table class="table-auto facts">
-<tr><td>Epochen: </td><td>1000</td></tr>
-<tr><td>Dauer: </td><td>ca. 16 Stunden auf einer GeForce RTX 5070 TI</td></tr>
-<tr><td>Datensatz: </td><td>49 gescannte Ölbilder</td></tr>
-</table>
-
-<Reference 
-  title="OneTrainer" 
-  type="github"
-  authors=" Nerogar" 
-  year="2025" 
-  link="https://github.com/Nerogar/OneTrainer" />
+    <div>
+      **Daten zum Training**
+      <table class='table-auto facts'>
+        <tr>
+          <td>Epochen: </td>
+          <td>1000</td>
+        </tr>
+        <tr>
+          <td>Dauer: </td>
+          <td>ca. 16 Stunden auf einer GeForce RTX 5070 TI</td>
+        </tr>
+        <tr>
+          <td>Datensatz: </td>
+          <td>49 gescannte Ölbilder</td>
+        </tr>
+      </table>
+      {/* prettier-ignore */}
+      <Reference 
+      title="OneTrainer" 
+      type="github"
+      authors=" Nerogar" 
+      year="2025" 
+      link="https://github.com/Nerogar/OneTrainer" />
+    </div>
   </div>
-</div>
-
 ### Trainingsdaten – 49 Scans aus der Graphic Novel
 <Gallery path="onetrainer" type="masonry" maxCols={7} />
-
 <div class="inline-flex items-center mb-8">
-<svg fill="none" class="mr-4 h-auto w-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"> <path d="M13 1h-2v2H9v2H7v2H5v2H3v2H1v2h2v2h2v2h2v2h2v2h2v2h2v-2h2v-2h2v-2h2v-2h2v-2h2v-2h-2V9h-2V7h-2V5h-2V3h-2V1zm0 2v2h2v2h2v2h2v2h2v2h-2v2h-2v2h-2v2h-2v2h-2v-2H9v-2H7v-2H5v-2H3v-2h2V9h2V7h2V5h2V3h2zm0 4h-2v6h2V7zm0 8h-2v2h2v-2z" fill="currentColor"/> </svg>
+<svg fill="none" class="mr-4 h-auto w-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"> <path d="M13 1h-2v2H9v2H7v2H5v2H3v2H1v2h2v2h2v2h2v2h2v2h2v2h2v-2h2v-2h2v-2h2v-2h2v-2h2v-2h-2V9h-2V7h-2V5h-2V3h-2V1zm0 2v2h2v2h2v2h2v2h2v2h-2v2h-2v2h-2v2h-2v2h-2v-2H9v-2H7v-2H5v-2H3v-2h2V9h2V7h2V5h2V3h2zm0 4h-2v6h2V7zm0 8h-2v2h2v-2z" fill="currentColor"/></svg>
 <div>
-Mir ist bewusst, und jedem sollte bewusst sein, dass mit diesen Bildern – beim B-Lora sogar mit nur **einem einzigen** – eine KI auf meinen Malstil trainiert werden kann.
-<br />
-<p class="italic text-2xl keep-visible">Just because you can, doesn't mean you should.</p>
+<p>Mir ist bewusst, und jedem sollte bewusst sein, dass mit diesen Bildern – beim B-Lora sogar mit nur **einem einzigen** – eine KI auf meinen Malstil trainiert werden kann.</p>
+<p class="italic own-quote keep-visible">Just because you can, doesn't mean you should.</p>
+</div>
 </div>
 </div>
 
-<br />
-
+<div class="slide">
 Im Gegensatz zum B-Lora konnte ein herkömmliches LoRA-Modell deutlich bessere Resultate hinsichtlich der Strichführung und des Duktus erzielen. Möglicherweise liegt hier bereits das von Proquet et al. (2025) beschriebene Problem der Entkopplung von Inhalt und Ästhetik vor: Die Art des Duktus oder der Bildaufbau könnten für ein B-LoRA zu stark mit semantischer Bedeutung verknüpft sein, um als rein stilistische Merkmale interpretiert zu werden.
+<Gallery path='sdxl-lora' />
+</div>
 
-<Gallery path="sdxl-lora" />
+<br />
+{/* <div class="max-w-150 mx-auto">![i will find you](https://lh3.googleusercontent.com/_KBG4A8iQOFxrS5sv72spaRDpfXJ7eQI4-zLO3RkcGP5tzqwpkBoDNVDnbpE5Le-oO0wD0NTTPdFzERPcVwplK3tGbmbhXeIhSFsxEsAKCjHHqUt3mpaPiP5RK8E_IVta-GpNGgDkoD3xUDspjC7q7w)</div> */}
 
-<br / >
-{/* <div class="max-w-150 mx-auto">
-![i will find you](https://lh3.googleusercontent.com/_KBG4A8iQOFxrS5sv72spaRDpfXJ7eQI4-zLO3RkcGP5tzqwpkBoDNVDnbpE5Le-oO0wD0NTTPdFzERPcVwplK3tGbmbhXeIhSFsxEsAKCjHHqUt3mpaPiP5RK8E_IVta-GpNGgDkoD3xUDspjC7q7w)
-</div> */}
-
+<div class="slide">
 ## Stiltransfer Methoden im Vergleich 
 
-Dies ist eine Übersicht und ein Vergleich der Modelle und Methoden, die ich für den Stiltransfer getestet habe. Die Daten sollen keine allgemeingültige Bewertung der Leistungsfähigkeit der Modelle darstellen, sondern beziehen sich ausschließlich auf meinen spezifischen Anwendungsfall. In anderen Kontexten und nach anderen Metriken könnten die Modelle zu ganz unterschiedlichen Ergebnissen führen. 
+<p>Dies ist eine Übersicht und ein Vergleich der Modelle und Methoden, die ich für den Stiltransfer getestet habe. Die Daten sollen keine allgemeingültige Bewertung der Leistungsfähigkeit der Modelle darstellen, sondern beziehen sich ausschließlich auf meinen spezifischen Anwendungsfall. In anderen Kontexten und nach anderen Metriken könnten die Modelle zu ganz unterschiedlichen Ergebnissen führen.</p>
 
-| Methode | Input Bilder | Trainingsdauer | Modell / Promptsteuerung | Stärke | Schwäche |  
-| ---------------------------------- | ------------ | ----------------------------------- | --------------------------------------------------------------------------- | ---------------------------------------------------------------------- | ------------------------------------------------------------------------ |  
-| Photoshop (Adobe)Neural Filter | 1 | kein Training | Image-to-Image | schnell und einfach zu bedienen | Stil wird nicht übertragen |  
-| Midjourney | 1 | kein Training | Multimodal | schnell und einfach zu bedienen | Inhalt auf Kosten des Stils,zu starke Abweichung von der Referenz |  
-| SDXL IP-Adapter | 1 | kein Training | Image-to-Image / beeinflusst U-Net über „Cross-Attention Layer“ | Feine Details/Texturen, schnell und flexibel | Allgemeines Duktus-, Stil- und Texturverständnis begrenzt |  
-| SDXL B-LoRA | 1 | 1,5 Stunden,1 Bild, 1000 Epochen| Modell: beeinflusst zwei Blöcke, die für Stil und Inhalt entscheidend sind | Gute Texturübernahme,nur ein Bild fürs Training + schnelles Training | Duktus und Stilverständnis begrenzt |  
-| SDXL LoRA (OneTrainer) | 49 | 16 Stunden,49 Bilder, 1000 Epochen | Modell: beeinflusst eingefrorenes Modell über zwei „Low-Rank“-Matrizen | Gute Duktusübernahme und allgemeines Stilverständnis | Textur-Transfer nicht optimal,größerer Trainingsdatensatz + längeres Training|
+| Methode                        | Input Bilder | Trainingsdauer                     | Modell / Promptsteuerung                                                   | Stärke                                                               | Schwäche                                                                      |
+| ------------------------------ | ------------ | ---------------------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| Photoshop (Adobe)Neural Filter | 1            | kein Training                      | Image-to-Image                                                             | schnell und einfach zu bedienen                                      | Stil wird nicht übertragen                                                    |
+| Midjourney                     | 1            | kein Training                      | Multimodal                                                                 | schnell und einfach zu bedienen                                      | Inhalt auf Kosten des Stils,zu starke Abweichung von der Referenz             |
+| SDXL IP-Adapter                | 1            | kein Training                      | Image-to-Image / beeinflusst U-Net über „Cross-Attention Layer“            | Feine Details/Texturen, schnell und flexibel                         | Allgemeines Duktus-, Stil- und Texturverständnis begrenzt                     |
+| SDXL B-LoRA                    | 1            | 1,5 Stunden,1 Bild, 1000 Epochen   | Modell: beeinflusst zwei Blöcke, die für Stil und Inhalt entscheidend sind | Gute Texturübernahme,nur ein Bild fürs Training + schnelles Training | Duktus und Stilverständnis begrenzt                                           |
+| SDXL LoRA (OneTrainer)         | 49           | 16 Stunden,49 Bilder, 1000 Epochen | Modell: beeinflusst eingefrorenes Modell über zwei „Low-Rank“-Matrizen     | Gute Duktusübernahme und allgemeines Stilverständnis                 | Textur-Transfer nicht optimal,größerer Trainingsdatensatz + längeres Training |
 
+</div>

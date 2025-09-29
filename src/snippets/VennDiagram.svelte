@@ -1,71 +1,75 @@
 <script>
-  import { onMount } from "svelte";
-  import { tweened } from "svelte/motion";
-  import { cubicOut } from "svelte/easing";
+  let progress = $state(0);
+  let baseWidth = 1000; // Basis-Breite des Diagramms
+  let scale = $state(1);
 
-  // Animationsfortschritt 0–1
-  let progress = tweened(0, { duration: 300, easing: cubicOut });
+  $effect(() => {
+    function updateScale() {
+      const viewportWidth = window.innerWidth;
+      // Skaliere proportional, max = 1 (nicht größer als Basis)
+      scale = Math.min(viewportWidth / baseWidth, 1);
+    }
 
-  onMount(() => {
-    const section = document.getElementById("venn-section");
-
-    const onScroll = () => {
-      const rect = section.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-
-      // Fortschritt berechnen (sichtbarer Bereich der Section → 0 bis 1)
-      const visible = Math.min(
-        Math.max((windowHeight - rect.top) / (rect.height + windowHeight), 0),
-        1
-      );
-      progress.set(visible);
-    };
-
-    window.addEventListener("scroll", onScroll);
-    onScroll(); // initial berechnen
-
-    return () => window.removeEventListener("scroll", onScroll);
+    updateScale();
+    window.addEventListener("resize", updateScale);
+    return () => window.removeEventListener("resize", updateScale);
   });
 </script>
 
-<section id="venn-section" class="relative h-[200vh] bg-white">
-  <div class="sticky top-0 h-screen flex items-center justify-center">
-    <div class="relative w-[400px] h-[400px]">
-      <!-- Kreise -->
+<section id="venn-section" class="relative h-screen bg-transparent flex items-center justify-center">
+  <!-- Wrapper skaliert das gesamte Diagramm -->
+  <div
+    class="origin-center"
+    style="transform: scale({scale}); width: {baseWidth}px; height: 600px;"
+  >
+    <div class="relative w-full h-full">
+      <!-- Oben -->
       <div
-        class="circle bg-red-400/70"
-        style="transform: translate({100 * (1 - $progress)}px, {100 * (1 - $progress)}px);"
+        class="absolute rounded-full flex items-center justify-center text-center text-white font-bold text-lg bg-white/30"
+        style="
+          width: 600px;
+          height: 600px;
+          top: 0;
+          left: 50%;
+          transform: translateX(-50%) translateY(-50%);
+        "
       >
-        Human Computer Interaction
+        Künstlerische<br />Forschung
       </div>
 
+      <!-- Unten links -->
       <div
-        class="circle bg-green-400/70"
-        style="transform: translate({-100 * (1 - $progress)}px, {100 * (1 - $progress)}px);"
+        class="absolute rounded-full flex items-center justify-center text-center text-white font-bold text-lg bg-white/30"
+        style="
+          width: 600px;
+          height: 600px;
+          bottom: 0;
+          left: 25%;
+          transform: translateX(-50%) translateY(25%);
+        "
       >
-        Künstlerische Forschung
+        Human-Computer-<br />Interaction (HCI)
       </div>
 
+      <!-- Unten rechts -->
       <div
-        class="circle bg-blue-400/70"
-        style="transform: translate(-50%, {-100 * (1 - $progress)}px);"
+        class="absolute rounded-full flex items-center justify-center text-center text-white font-bold text-lg bg-white/30"
+        style="
+          width: 600px;
+          height: 600px;
+          bottom: 0;
+          right: 25%;
+          transform: translateX(50%) translateY(25%);
+        "
       >
-        Gesellschafts- & Medienwissenschaften
+        Medienwissenschaft
       </div>
 
       <!-- Mitte -->
-      <div
-        class="absolute inset-0 flex items-center justify-center font-bold text-xl md:text-3xl text-black text-center px-4"
-        style="opacity: {$progress}; transform: scale({0.5 + 0.5 * $progress});"
-      >
-        Künstliche Intelligenz
+      <div class="absolute inset-0 flex flex-col items-center justify-center text-center text-white">
+        <div class="font-extrabold text-5xl leading-none">KI</div>
+        <div class="font-bold text-base mt-1">künstliche Intelligenz</div>
       </div>
     </div>
   </div>
 </section>
-
-<style>
-.circle {
-  @apply absolute w-[200px] h-[200px] rounded-full flex items-center justify-center text-center p-4 text-white text-sm;
-}
-</style>

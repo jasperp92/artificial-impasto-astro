@@ -1,19 +1,28 @@
 ---
-title: Articial Impasto
+title: Artificial Impasto
 layout: "@layouts/ProjectLayout.astro"
-description: "Neuraler Stiltransfer am Beispiel einer Graphic Novel."
-background: "/artificial-impasto/backgrounds/lake.jpg"
-effects: 
-    - effect-move
+description: "Neuronaler Stiltransfer des eigenen Malstils"
+headerExtra: |
+  <div class="text-lg leading-relaxed">
+    Jasper Precht<br />
+    Masterarbeit im Studiengang Design<br />
+    Fachhochschule Potsdam<br />
+  </div>
 ---
 
-{/* 
-Man kann kann einfach durch die verschiedenen Kapitel auch mit den Zahlen navigieren:
+import Gallery from "@components/Gallery.astro";
+
+{/* Man kann kann einfach durch die verschiedenen Kapitel auch mit den Zahlen navigieren:
 
 1. Einführung
 2. Theorie */}
 
+<div slot="headerExtra" class="bg-yellow-200 p-4">
+  📢 Hier mein eigener Block über dem Menü
+</div>
 
+
+<div class="keep-hidden">
 
 ## Abstract
 
@@ -22,9 +31,26 @@ Digitale Medien bieten gegenüber analogen in der Illustration eine höhere Flex
 
 ## Forschungsfrage
 
-<q class="text-2xl">Lässt sich mithilfe generativer künstlicher Intelligenz ein analoger Stil auf digitale Zeichnungen übertragen, um eine hybride Graphic Novel in einem einheitlichen Stil zu entwickeln?</q>
+<q class="text-2xl my-8">Lässt sich mithilfe generativer künstlicher Intelligenz ein analoger Stil auf digitale Zeichnungen übertragen, um eine hybride Graphic Novel in einem einheitlichen Stil zu entwickeln, die sowohl aus analogen als auch aus digitalen Zeichnungen besteht.</q>
 
 
 ## PDF der Masterthesis
 
-Download der Masterthesis
+</div>
+<br />
+
+
+<div class="presentation-only">
+  <p>Webseite: [https://jasperprecht.de/artificial-impasto](https://jasperprecht.de/artificial-impasto)</p>
+</div>
+
+
+<Reference 
+  title="Masterthesis: Artificial Impasto – Neuronaler Stiltransfer des eigenen Malstils" 
+  authors="Jasper Precht" 
+  type="download"
+  label="Download der Masterthesis"
+  year="2025" 
+  link="/artificial-impasto/pdf/Masterarbeit_JasperPrecht_web_compressed.pdf" 
+  class="keep-visible mt-8"
+/>

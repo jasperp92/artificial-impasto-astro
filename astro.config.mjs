@@ -35,7 +35,7 @@ export default defineConfig({
       alias: {
         "@layouts": "/src/layouts",
         "@components": "/src/components",
-        "@snippets": "/src/components",
+        "@snippets": "/src/snippets",
         "@styles": "/src/styles",
         "@images": "/src/assets/images",
         "@videos": "/src/assets/videos",

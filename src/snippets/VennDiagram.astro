@@ -1,0 +1,81 @@
+---
+const circleSize = "30vw";
+const startRadius = 80;
+const endRadius = 10;
+---
+
+<section 
+  id="venn-section" 
+  class="relative mt-30 flex items-center justify-center"
+  data-start={startRadius}
+  data-end={endRadius}
+>
+  <div class="sticky top-0 w-full h-[70vh] max-w-[500px] aspect-square">
+    <div class="absolute inset-0 flex items-center justify-center">
+      <div id="circle-1"
+        class="absolute flex items-center justify-center text-center rounded-full bg-white/30 p-4"
+        style={`width:${circleSize}; height:${circleSize};`}
+      >
+        <div class="text-base lg:text-2xl">Medienwissenschaft</div>
+      </div>
+      <div id="circle-2"
+        class="absolute flex items-center justify-center text-center rounded-full bg-white/30 p-4"
+        style={`width:${circleSize}; height:${circleSize};`}
+      >
+        <div class="text-base lg:text-2xl">HCI<br />Human-Computer-Interaction</div>
+      </div>
+      <div id="circle-3"
+        class="absolute flex items-center justify-center text-center rounded-full bg-white/30 p-4"
+        style={`width:${circleSize}; height:${circleSize};`}
+      >
+        <div class="text-base lg:text-2xl">Künstlerische<br />Forschung</div>
+      </div>
+    </div>
+
+    <!-- Zentrum -->
+    <div id="center-text" class="absolute inset-0 flex flex-col items-center justify-center text-center text-white opacity-0 transition-opacity duration-200">
+      <div class="text-4xl lg:text-6xl">KI</div>
+      <div class="text-lg">künstliche Intelligenz</div>
+    </div>
+  </div>
+</section>
+
+<script>
+  function updateScene(progress = 0) {
+    const section = document.getElementById("venn-section");
+    const start = parseFloat(section.dataset.start);
+    const end = parseFloat(section.dataset.end);
+    const radius = start + (end - start) * progress;
+    const fadeStart = 0.3;
+    const fadeEnd = 0.5;
+
+    const circles = [
+      { el: document.getElementById("circle-1"), angle: 30 },
+      { el: document.getElementById("circle-2"), angle: 150 },
+      { el: document.getElementById("circle-3"), angle: 270 }
+    ];
+
+    circles.forEach(({ el, angle }) => {
+      el.style.transform = `rotate(${angle}deg) translate(${radius}%) rotate(-${angle}deg)`;
+    });
+
+    // KI-Text soll schon bei 70% progress voll sichtbar sein
+    // Opacity mit Delay (erst ab fadeStart → fertig bei fadeEnd)
+    const center = document.getElementById("center-text");
+    let fadeProgress = (progress - fadeStart) / (fadeEnd - fadeStart);
+    fadeProgress = Math.max(0, Math.min(fadeProgress, 1));
+    center.style.opacity = fadeProgress;
+  }
+
+  // Initialzustand
+  updateScene(0);
+
+  document.addEventListener("scroll", () => {
+    const section = document.getElementById("venn-section");
+    const rect = section.getBoundingClientRect();
+    const vh = window.innerHeight;
+    let progress = Math.min(Math.max((vh - rect.top) / (rect.height + vh), 0), 1);
+
+    updateScene(progress);
+  });
+</script>

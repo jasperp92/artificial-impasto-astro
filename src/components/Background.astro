@@ -52,7 +52,7 @@ const { background, effects = [] } = Astro.props;
           if (EFFECTS.includes("effect-scale")) {
             bg.style.imageRendering = "pixelated";
             document.documentElement.style.overflowX = "hidden";
-            const zoom = Math.min(160 + y * 0.1, 500);
+            const zoom = Math.min(160 + y * 0.1, 2000);
             bg.style.backgroundSize = `${zoom}% auto`;
             bg.style.backgroundPosition = "center center";
           }

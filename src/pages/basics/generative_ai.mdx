@@ -7,110 +7,101 @@ description: "Grundlagen zur generativen KI, Diffusionsmodelle, Stiltransfer und
 layout: "@layouts/Layout.astro"
 ---
 
-import { Image } from 'astro:assets';
-import generativeAI from '../../assets/images/generative-ai.webp';
-import ImageSequence from '../../components/ImageSequence.astro';
-
-
-{/* # Generative künstliche Intelligenz
-
-<div class="subtitle">Grundlagen zu Diffusionsmodellen, Stiltransfer und Finetuning</div> */}
+import { Image } from "astro:assets";
+import generativeAI from "../../assets/images/generative-ai.webp";
+import ImageSequence from "../../components/ImageSequence.astro";
 
 <br />
 
-Unter Künstlicher Intelligenz (KI) versteht man in der Regel einen Sammelbegriff für
-verschiedene Machine-Learning-Algorithmen. Dabei handelt es sich um Methoden
-aus der Informatik, die vorrangig für Entscheidungen, Vorhersagen und Mustererkennung eingesetzt werden. Zu den bekanntesten Vertretern gehören sogenannte
-neuronale Netze, die der Struktur des menschlichen Gehirns nachempfunden sind.
-Ein künstliches neuronales Netz (KNN) besteht aus Knotenpunkten (analog zu Neuronen) und mehreren Ebenen, den sogenannten Layern. Generative KI, die komplexe
-Inhalte wie Bilder, Videos oder Texte erzeugt, gehört zum Bereich des Deep Learning,
-einer Methode, die auf mehrschichtigen neuronalen Netzwerken basiert (Stryker &
-Kavlakoglu, 2024).
-
-<br />
-
-<Image src={generativeAI} alt="Generative AI" class="" />
-<p class="image-source">Bildquelle: <a href="https://www.ibm.com/think/topics/artificial-intelligence">https://www.ibm.com/think/topics/artificial-intelligence</a></p>
-
-<br />
-## Diffusionsmodelle
-
-<div class="grid-layout">
-<div class="">
-  <p>Diffusionsmodelle wie Stable Diffusion sind KI-Verfahren, die von physikalischen Diffusionsprozessen inspiriert sind: Aus einem verrauschten Bild wird schrittweise wieder Struktur rekonstruiert. Zentrales Element ist ein U-Net, das Bildmerkmale von einfachen Kanten bis hin zu komplexen Objekten erkennt und das Rauschen zurückführt.<br />
-  In meinem Fall verwende ich das Diffusionsmodell <a href="https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0">Stable Diffusion XL 1.0</a> verwenden.</p>
-  
+<div class='slide'>
+  <p>Unter Künstlicher Intelligenz (KI) versteht man in der Regel einen Sammelbegriff für verschiedene Machine-Learning-Algorithmen. Dabei handelt es sich um Methoden aus der Informatik, die vorrangig für Entscheidungen, Vorhersagen und Mustererkennung eingesetzt werden. Zu den bekanntesten Vertretern gehören sogenannte neuronale Netze, die der Struktur des menschlichen Gehirns nachempfunden sind. Ein künstliches neuronales Netz (KNN) besteht aus Knotenpunkten (analog zu Neuronen) und mehreren Ebenen, den sogenannten Layern. Generative KI, die komplexe Inhalte wie Bilder, Videos oder Texte erzeugt, gehört zum Bereich des Deep Learning, einer Methode, die auf mehrschichtigen neuronalen Netzwerken basiert (Stryker & Kavlakoglu, 2024).</p>
   <br />
-  <Reference 
+  <Image src={generativeAI} alt='Generative AI' class='' />
+  <p class='image-source'>
+    Bildquelle: <a href='https://www.ibm.com/think/topics/artificial-intelligence'>https://www.ibm.com/think/topics/artificial-intelligence</a>
+  </p>
+</div>
+
+<br />
+
+<div class='slide'>
+  ## Diffusionsmodelle
+  <div class='grid-layout'>
+    <div class=''>
+      <p>
+        Diffusionsmodelle wie Stable Diffusion sind KI-Verfahren, die von physikalischen Diffusionsprozessen inspiriert sind: Aus einem verrauschten Bild wird schrittweise wieder Struktur rekonstruiert. Zentrales Element ist ein U-Net, das Bildmerkmale von einfachen Kanten bis hin zu komplexen Objekten erkennt und das Rauschen zurückführt.
+        <br />
+        In meinem Fall verwende ich das Diffusionsmodell <a href='https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0'>Stable Diffusion XL 1.0</a> verwenden.
+      </p>
+      <br />
+      {/* prettier-ignore */}
+      <Reference 
   title="IBM: Was sind Diffusion Models?" 
   type="website"
   authors="Bergman, D. & Stryker, C." 
   year="2024" 
   link="https://www.ibm.com/de-de/think/topics/diffusion-models" />
-  </div>
-<div class="">
-<ImageSequence folder="diffusion" mode="fade"/>
-<p class="italic text-sm">Bildquelle: [Laurent, Wikipedia](https://de.wikipedia.org/wiki/L%C3%B6we#/media/Datei:011_The_lion_king_Tryggve_in_the_Serengeti_National_Park_Photo_by_Giles_Laurent.jpg)<br />Visualisierung eines Diffusionsprozesses von Rauschen zu einem neuen Bild im Ölmalstil</p>
+    </div>
+    <div class=''>
+      <ImageSequence folder='diffusion' mode='fade' />
+      <p class='italic text-sm'>
+        Bildquelle: [Laurent, Wikipedia](https://de.wikipedia.org/wiki/L%C3%B6we#/media/Datei:011_The_lion_king_Tryggve_in_the_Serengeti_National_Park_Photo_by_Giles_Laurent.jpg)
+        <br />
+        Visualisierung eines Diffusionsprozesses von Rauschen zu einem neuen Bild im Ölmalstil
+      </p>
+    </div>
   </div>
 </div>
 <br />
 
-### Latenter Raum
-
-<div class="flex w-full">
-  <span class="w-1/2 text-left">Eingabebild</span>
-  <span class="w-1/2 text-right">Ausgabebild</span>
+<div class='slide'>
+  ### Latenter Raum
+  <div class='flex w-full'>
+    <span class='w-1/2 text-left'>Eingabebild</span>
+    <span class='w-1/2 text-right'>Ausgabebild</span>
+  </div>
+  ![Latenter Raum](../../assets/images/latent_space.png)
+  <div class='grid text-xl mt-4 grid-cols-[40%_20%_40%]'>
+    <div class='text-center border-t-2'>Encoder</div>
+    <div class='text-center border-t-2 mx-4'>Latenter Raum</div>
+    <div class='text-center border-t-2'>Decoder</div>
+  </div>
 </div>
 
-![Latenter Raum](../../assets/images/latent_space.png)
-
-<div class="grid text-xl mt-4 grid-cols-[40%_20%_40%]">
-  <div class="text-center border-t-2">Encoder</div>
-     <div class="text-center border-t-2 mx-4">Latenter Raum</div>
-        <div class="text-center border-t-2">Decoder</div>
-  </div>
-
 <br />
-Damit der Rechenaufwand nicht zu hoch wird, arbeitet das Modell nicht direkt auf Pixelbasis,
-sondern in einem sogenannten latenten Raum. Dieser Raum ist eine komprimierte,
-mathematische Darstellung der Bildmerkmale und wird mithilfe eines Variational Autoencoders
-(VAE) erzeugt. Der VAE komprimiert das Bild in eine latente Repräsentation und
-dekodiert es später wieder zurück in ein sichtbares Pixelbild.
+<p>Damit der Rechenaufwand nicht zu hoch wird, arbeitet das Modell nicht direkt auf Pixelbasis, sondern in einem sogenannten latenten Raum. Dieser Raum ist eine komprimierte, mathematische Darstellung der Bildmerkmale und wird mithilfe eines Variational Autoencoders (VAE) erzeugt. Der VAE komprimiert das Bild in eine latente Repräsentation und dekodiert es später wieder zurück in ein sichtbares Pixelbild.</p>
 
 ## Neural Style Transfer
 
-<div class="grid-layout">
-  <div class="">
-
-Der Stiltransfer ist eine Forschungsdisziplin neuronaler Netze, die den Stil eines Bildes auf den Inhalt eines anderen überträgt (Gatys et al., 2015). Er basiert auf der Trennung von Inhalt und Stil, die in verschiedenen Feature-Schichten des Netzwerks unterschieden werden: Niedrigere Schichten erfassen Farben, Kanten und Texturen, höhere Schichten semantische Inhalte und komplexe Strukturen. In der Forschung wird dies so interpretiert, dass Stil vor allem in den unteren, Inhalt in den oberen Schichten repräsentiert ist. Die saubere Entkopplung von Inhalt und Stil bleibt jedoch ein zentrales Problem des Stiltransfers (Porquet et al., 2025).
-</div>
-
-<Reference 
+<div class='grid-layout'>
+  <div class=''>
+    <p>Der Stiltransfer ist eine Forschungsdisziplin neuronaler Netze, die den Stil eines Bildes auf den Inhalt eines anderen überträgt (Gatys et al., 2015). Er basiert auf der Trennung von Inhalt und Stil, die in verschiedenen Feature-Schichten des Netzwerks unterschieden werden: Niedrigere Schichten erfassen Farben, Kanten und Texturen, höhere Schichten semantische Inhalte und komplexe Strukturen. In der Forschung wird dies so interpretiert, dass Stil vor allem in den unteren, Inhalt in den oberen Schichten repräsentiert ist. Die saubere Entkopplung von Inhalt und Stil bleibt jedoch ein zentrales Problem des Stiltransfers (Porquet et al., 2025).</p>
+  </div>
+  {/* prettier-ignore */}
+  <Reference 
   title="A Neural Algorithm of Artistic Style" 
   type="paper"
   authors="Gatys, L. A., Ecker, A. S., & Bethge, M." 
   year="2015" 
   link="https://arxiv.org/abs/1508.06576" />
-
-
 </div>
 
-<div class="grid grid-cols-1 sm:grid-cols-[1fr_auto_1fr_auto_1fr] items-center gap-2 mt-4">
-<div>
-![Stiltransfer 1](@images/styletransfer/lion.jpg)
-<div class="image-source text-left">Bildquelle: [Laurent, Wikipedia](https://de.wikipedia.org/wiki/L%C3%B6we#/media/Datei:011_The_lion_king_Tryggve_in_the_Serengeti_National_Park_Photo_by_Giles_Laurent.jpg)</div>
+<div class='grid grid-cols-1 sm:grid-cols-[1fr_auto_1fr_auto_1fr] items-center gap-2 mt-4'>
+  <div>
+    ![Stiltransfer 1](@images/styletransfer/lion.jpg)
+    <div class='image-source text-left'>Bildquelle: [Laurent, Wikipedia](https://de.wikipedia.org/wiki/L%C3%B6we#/media/Datei:011_The_lion_king_Tryggve_in_the_Serengeti_National_Park_Photo_by_Giles_Laurent.jpg)</div>
+  </div>
+  <div class='text-center text-2xl'>+</div>
+  <div>
+    ![Stiltransfer 2](@images/styletransfer/starry_night.jpg)
+    <div class='image-source text-left'>Bildquelle: [Vincent van Gogh, Sternennacht, Wikipedia](https://de.wikipedia.org/wiki/Sternennacht#/media/Datei:Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg)</div>
+  </div>
+  <div class='text-center text-2xl'>=</div>
+  <div>
+    ![Stiltransfer 3](@images/styletransfer/styletransfer.png)
+    <div class='image-source text-left'>Neuronaler Stiltransfer mit IP-Adapter</div>
+  </div>
 </div>
-    <div class="text-center text-2xl">+</div>
-  <div>
-![Stiltransfer 2](@images/styletransfer/starry_night.jpg)
-<div class="image-source text-left">Bildquelle: [Vincent van Gogh, Sternennacht, Wikipedia](https://de.wikipedia.org/wiki/Sternennacht#/media/Datei:Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg)</div>
-  </div>
-    <div class="text-center text-2xl">=</div>
-  <div>
-![Stiltransfer 3](@images/styletransfer/styletransfer.png)
-<div class="image-source text-left">Neuronaler Stiltransfer mit IP-Adapter</div>
-  </div>
-  </div>
 
 ## Finetuned Models
 
@@ -118,27 +109,28 @@ Der Stiltransfer ist eine Forschungsdisziplin neuronaler Netze, die den Stil ein
 
 <div class="grid-layout">
   <div class="">
-Eine effiziente Form des Finetunings sind LoRAs (Low Rank Adaptation), mit denen
+<p>Eine effiziente Form des Finetunings sind LoRAs (Low Rank Adaptation), mit denen
 große KI-Modelle schnell auf spezifische Aufgaben angepasst und erweitert werden
 können. LoRAs funktionieren ähnlich wie Adapter oder Erweiterungen. Dabei werden
 die Gewichte und Parameter des vortrainierten Modells, beispielsweise von Stable
 Diffusion XL, eingefroren und um eine „leichtgewichtige“ Zusatzstruktur in Form einer
 Low-Rank-Matrix ergänzt. Die darin gespeicherten Gewichtungen enthalten kontextspezifische
-Informationen, die erforderlich sind, um einen spezialisierten Anwendungsfall
+Informationen, die erforderlich sind, um einen spezialisierten Anwendungsfall</p>
 abzubilden.
 
 <a class="underline" href="https://huggingface.co/docs/diffusers/training/lora">Huggingface LoRA</a>
 </div>
 
+{/* prettier-ignore */}
 <Reference 
   title="LoRA: Low-Rank Adaptation of Large Language Models" 
   authors="Hu, E. J., Shen, Y., Wallis, P., Allen-Zhu, Z., Li, Y., Wang, S., ... & Chen, W." 
   year="2021" 
   link="https://arxiv.org/abs/2106.09685" />
 
-
 </div>
 
+{/* prettier-ignore */}
 <Reference 
   title="CivitAI" 
   type="website"

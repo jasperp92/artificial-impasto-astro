@@ -1,6 +1,6 @@
 ---
-title: "Nachteile analoger Medien"
-order: 3
+title: "Problematik"
+order: 2
 layout: "@layouts/ProjectLayout.astro"
 parent: "Einführung"
 description: "Digitale Vorteile gegenüber analogen Medien am Beispiel zur Entwicklung einer Graphic Novel"
@@ -14,15 +14,11 @@ import data_analog_2 from "@data/data_analog_2.json";
 Als Künstler arbeite ich mit verschiedenen Stilen, je nach Medium. Ölmalerei lebt von Textur, Duktus und physikalischen Prozessen, die digital nur schwer zu imitieren sind. Digital eröffnen sich dagegen andere Möglichkeiten: Ebenen, Transparenzen oder Funktionen wie Kopieren und Radieren machen den Prozess flexibler und schneller.
 <br />
 
-<div class="italic text-2xl">Aufgrund folgender Nachteile, habe ich mich von meinem geliebten Medium Öl und auch einem Teil meines eigenen Stils verabschiedet und mich für die digitale Variante entschieden<br />
-<p class="text-center">... </p>
-<p class="text-right">oder doch nicht?</p></div>
-
-
+<div class="slide">
 
 ## Nachteile analoger Medien bei der Entwicklung einer Graphic Novel
 
-<div class="slide">
+
 
 ### Dauer
 
@@ -70,6 +66,7 @@ Ein weiteres Problem war die Konsistenz. Während des Zeichnens der ersten beide
 </div>
 </div>
 
+<div class="slide">
 ### Flexibilität im Layout
 
 Digitale Medien erlauben schnelle Korrekturen und Anpassungen – von kleinen Details bis hin zu kompletten Bildausschnitten. In analogen Techniken wie Ölmalerei sind solche Änderungen mit erheblichem Mehraufwand verbunden: langes Trocknen, erneutes Übermalen und Einscannen. Digital hingegen können Änderungen jederzeit vorgenommen und z.B. das Layout schnell angepasst oder erweitert werden.
@@ -77,6 +74,8 @@ Digitale Medien erlauben schnelle Korrekturen und Anpassungen – von kleinen De
 <br />
 
 ![generatives Erweitern](@images/generatives_erweitern.jpg)
+
+</div>
 
 <div class="slide">
 ### Die Digitalisierung analoger Medien selbst
@@ -134,13 +133,15 @@ Analoge Medien haben laut den Befragten den Vorteil, dass, selbst wenn sie repro
 <div class="grid-layout">
 <div>
 
+<div class="slide">
 ### Arbeitest du mit analogen und/oder digitalen Zeichenmitteln?
 <Chart
-  client:load
+  client:visible
   type="pie"
   data={data_analog}
-  className=""
+  className="max-w-150 mx-auto"
 />
+</div>
 </div>
 <div>
 <div class="slide">
@@ -148,10 +149,9 @@ Analoge Medien haben laut den Befragten den Vorteil, dass, selbst wenn sie repro
 
 
 <Chart
-  client:load
+  client:visible
   type="bar"
   data={data_analog_2}
-  className=""
     options={{ 
       responsive: true, 
       indexAxis: "y", 
@@ -159,4 +159,15 @@ Analoge Medien haben laut den Befragten den Vorteil, dass, selbst wenn sie repro
 />
 </div>
 </div>
+</div>
+
+<div class="slide">
+## Forschungsfrage
+
+{/* <div class="italic text-2xl">Aufgrund folgender Nachteile, habe ich mich von meinem geliebten Medium Öl und auch einem Teil meines eigenen Stils verabschiedet und mich für die digitale Variante entschieden<br />
+<p class="text-center">... </p>
+<p class="text-right">oder doch nicht?</p></div> */}
+
+<div class="own-quote">Lässt sich mithilfe generativer künstlicher Intelligenz ein analoger Stil auf digitale Zeichnungen übertragen, um eine hybride Graphic Novel in einem einheitlichen Stil zu entwickeln?</div>
+
 </div>

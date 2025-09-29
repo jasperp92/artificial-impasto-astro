@@ -1,0 +1,8 @@
+{
+  "plugins": ["prettier-plugin-astro"],
+  "htmlWhitespaceSensitivity": "ignore",
+  "jsxSingleQuote": true,
+  "printWidth": 9999,
+  "proseWrap": "preserve",
+  "jsxWhitespaceSensitivity": "ignore"
+}

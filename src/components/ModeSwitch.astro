@@ -5,39 +5,210 @@
  */
 ---
 
-<button id="mode-toggle" class="h-8 w-8 text-current cursor-pointer">
-  <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="h-8 w-8">
-    <path id="mode-path" />
+<button id='mode-toggle' class='h-8 w-8 text-current cursor-pointer'>
+  <svg xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 24 24' class='h-8 w-8'>
+    <path id='mode-path'></path>
   </svg>
 </button>
 
 <script is:inline>
-  const btn = document.getElementById("mode-toggle");
-  const root = document.documentElement;
-  const path = document.getElementById("mode-path");
+  document.addEventListener("DOMContentLoaded", () => {
+    const btn = document.getElementById("mode-toggle");
+    const root = document.documentElement;
+    const path = document.getElementById("mode-path");
 
-  const ICONS = {
-    presentation: "M4 4H2v16h20V4H4zm0 2h16v12H4V6zm2 2h12v2H6V8zm0 4h10v2H6v-2z", // Screen
-    reading: "M3 3h8v2H3v12h8V5h2v12h8V5h-8V3h10v16H13v2h-2v-2H1V3h2zm16 7h-4v2h4v-2zm-4-3h4v2h-4V7zm2 6h-2v2h2v-2z"   // Book/Text
-  };
+    const ICONS = {
+      presentation: "M4 4H2v16h20V4H4zm0 2h16v12H4V6zm2 2h12v2H6V8zm0 4h10v2H6v-2z", // Screen
+      reading: "M3 3h8v2H3v12h8V5h2v12h8V5h-8V3h10v16H13v2h-2v-2H1V3h2zm16 7h-4v2h4v-2zm-4-3h4v2h-4V7zm2 6h-2v2h2v-2z", // Book/Text
+    };
 
-  // Initial: nächsten Modus anzeigen
-  const saved = localStorage.getItem("mode") || "reading";
-  root.classList.add(`mode-${saved}`);
-  path.setAttribute("d", saved === "reading" ? ICONS.presentation : ICONS.reading);
+    // ===============================
+    // Init Mode
+    // ===============================
+    const savedMode = localStorage.getItem("mode") || "reading";
+    root.classList.add(`mode-${savedMode}`);
+    path.setAttribute("d", savedMode === "reading" ? ICONS.presentation : ICONS.reading);
 
-  // Toggle: Modus wechseln und Icon auf *nächsten* Modus setzen
-  btn.addEventListener("click", () => {
-    if (root.classList.contains("mode-reading")) {
-      root.classList.remove("mode-reading");
-      root.classList.add("mode-presentation");
-      localStorage.setItem("mode", "presentation");
-      path.setAttribute("d", ICONS.reading); // nächster: zurück zu Reading
-    } else {
-      root.classList.remove("mode-presentation");
-      root.classList.add("mode-reading");
-      localStorage.setItem("mode", "reading");
-      path.setAttribute("d", ICONS.presentation); // nächster: Presentation
+    // ===============================
+    // Navigation Setup
+    // ===============================
+    let navTargets = [];
+    let currentIndex = 0;
+
+    function updateNavTargets() {
+      const isPresentation = root.classList.contains("mode-presentation");
+
+      if (isPresentation) {
+        // H1 + alle Slides
+        navTargets = Array.from(document.querySelectorAll("main h1, main .slide"));
+        currentIndex = 0; // immer ganz oben starten
+        if (navTargets[0]) {
+          navTargets[0].scrollIntoView({ behavior: "auto", block: "start" });
+        }
+      } else {
+        // Reading: H1 + H2 + H3
+        navTargets = Array.from(document.querySelectorAll("main h1, main h2, main h3"));
+        const savedIndex = parseInt(localStorage.getItem("currentIndex-reading"), 10);
+        if (!isNaN(savedIndex) && savedIndex >= 0 && savedIndex < navTargets.length) {
+          currentIndex = savedIndex;
+          navTargets[currentIndex].scrollIntoView({ behavior: "auto", block: "start" });
+        } else {
+          currentIndex = 0;
+          if (navTargets[0]) {
+            navTargets[0].scrollIntoView({ behavior: "auto", block: "start" });
+          }
+        }
+      }
+
+      console.log(
+        "Nav Targets:",
+        navTargets.map((el) => el.className || el.tagName),
+      );
     }
+
+    function goTo(index) {
+      if (index < 0 || index >= navTargets.length) return;
+      currentIndex = index;
+      const el = navTargets[currentIndex];
+
+      const isPresentation = root.classList.contains("mode-presentation");
+      let blockOption = "start";
+
+      if (isPresentation) {
+        // Wenn das Element kleiner als Viewport → mittig
+        if (el.offsetHeight < window.innerHeight) {
+          blockOption = "center";
+        } else {
+          blockOption = "start";
+        }
+      }
+
+      el.scrollIntoView({
+        behavior: "auto",
+        block: blockOption,
+      });
+
+      // Sidebar sofort updaten
+      if (el.id) {
+        const setActiveEvent = new CustomEvent("setActiveHeading", { detail: el.id });
+        document.dispatchEvent(setActiveEvent);
+      }
+    }
+
+    // Tastaturnavigation
+    document.addEventListener("keydown", (e) => {
+      if (!navTargets.length) return;
+      const isPresentation = root.classList.contains("mode-presentation");
+
+      if (e.key === "ArrowDown" || e.key === "PageDown") {
+        e.preventDefault();
+        goTo(Math.min(currentIndex + 1, navTargets.length - 1), isPresentation);
+      }
+      if (e.key === "ArrowUp" || e.key === "PageUp") {
+        e.preventDefault();
+        goTo(Math.max(currentIndex - 1, 0), isPresentation);
+      }
+    });
+
+    // ===============================
+    // Observer: Sync bei Scroll
+    // ===============================
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const idx = navTargets.indexOf(entry.target);
+            if (idx !== -1) {
+              currentIndex = idx;
+
+              // Sidebar sofort updaten
+              if (entry.target.id) {
+                const setActiveEvent = new CustomEvent("setActiveHeading", {
+                  detail: entry.target.id,
+                });
+                document.dispatchEvent(setActiveEvent);
+              }
+            }
+          }
+        });
+      },
+      { rootMargin: "0px 0px -70% 0px", threshold: 0 },
+    );
+
+    // NavTargets beim Update beobachten
+    function updateNavTargets() {
+      // alte Beobachtungen löschen
+      observer.disconnect();
+
+      const isPresentation = root.classList.contains("mode-presentation");
+
+      if (isPresentation) {
+        navTargets = Array.from(document.querySelectorAll("main h1, main .slide"));
+      } else {
+        navTargets = Array.from(document.querySelectorAll("main h1, main h2, main h3"));
+      }
+
+      // Beobachten starten
+      navTargets.forEach((el) => observer.observe(el));
+
+      // initial auf ersten Eintrag setzen
+      currentIndex = 0;
+    }
+
+    // ===============================
+    // Toggle Button
+    // ===============================
+    btn.addEventListener("click", () => {
+      // Aktuelles Element merken
+      let currentEl = navTargets[currentIndex] || null;
+
+      // Modus wechseln
+      const goingToPresentation = root.classList.contains("mode-reading");
+
+      if (goingToPresentation) {
+        root.classList.remove("mode-reading");
+        root.classList.add("mode-presentation");
+        localStorage.setItem("mode", "presentation");
+        path.setAttribute("d", ICONS.reading);
+      } else {
+        root.classList.remove("mode-presentation");
+        root.classList.add("mode-reading");
+        localStorage.setItem("mode", "reading");
+        path.setAttribute("d", ICONS.presentation);
+      }
+
+      // Neue Targets laden
+      updateNavTargets();
+
+      // Passendes Ziel im neuen Modus finden
+      let target = null;
+
+      if (goingToPresentation && currentEl) {
+        // Reading → Presentation
+        const slide = currentEl.closest(".slide");
+        if (slide) target = slide;
+      } else if (!goingToPresentation && currentEl) {
+        // Presentation → Reading
+        const slide = currentEl.closest(".slide");
+        if (slide) {
+          target = slide.querySelector("h2, h3") || slide.querySelector("h1");
+        }
+      }
+
+      // Falls gefunden: scrollen und Index updaten
+      if (target) {
+        const newIndex = navTargets.findIndex((el) => el === target);
+        if (newIndex >= 0) {
+          goTo(newIndex);
+        } else {
+          target.scrollIntoView({ behavior: "auto", block: "start" });
+        }
+      }
+    });
+
+    // ===============================
+    // Initial Navigation setzen
+    // ===============================
+    updateNavTargets();
   });
 </script>
